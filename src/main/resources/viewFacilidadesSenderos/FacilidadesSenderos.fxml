@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="426.0" prefWidth="751.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.FacilidadesSenderos">
+   <children>
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Accordion prefHeight="245.0" prefWidth="240.0">
+               <panes>
+                  <TitledPane fx:id="acrd_idiomas" text="Equipamiento">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
+                                       <children>
+                                          <JFXButton fx:id="btn_agregarEquipamiento" buttonType="RAISED" onAction="#agregarEquipamiento" text="Agregar" />
+                                          <JFXButton fx:id="btn_eliminarEquipamiento" buttonType="RAISED" onAction="#eliminarEquipamiento" text="Eliminar" />
+                                       </children>
+                                    </HBox>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <JFXListView fx:id="lst_listaEquipamiento" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane fx:id="acrd_contactos" text="Recorrido del sendero">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
+                                       <children>
+                                          <JFXButton fx:id="btn_agregarRecorrido" buttonType="RAISED" onAction="#agregarRecorrido" text="Agregar" />
+                                          <JFXButton fx:id="btn_eliminarRecorrido" buttonType="RAISED" onAction="#eliminarRecorrido" text="Eliminar" />
+                                          <JFXButton fx:id="btn_editarRecorrido" buttonType="RAISED" onAction="#editarRecorrido" text="Ver recorrido" />
+                                       </children>
+                                    </HBox>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <JFXListView fx:id="lst_listaRecorrido" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+               </panes>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Accordion>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <AnchorPane prefHeight="0.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <VBox prefHeight="296.0" prefWidth="512.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT">
+                                 <children>
+                                    <JFXTextField fx:id="txt_buscarTransportes" onInputMethodTextChanged="#buscarTransportesTextChange" promptText="Buscar transportes..." HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </JFXTextField>
+                                    <JFXButton fx:id="btn_BuscarTransportes" buttonType="RAISED" onAction="#buscarTransportes" text="Buscar">
+                                       <HBox.margin>
+                                          <Insets right="75.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btn_AgregarTransportes" buttonType="RAISED" onAction="#agregarTransportes" text="Agregar" />
+                                    <JFXButton fx:id="btn_eliminarTransportes" buttonType="RAISED" onAction="#eliminarTransportes" text="Eliminar" />
+                                    <JFXButton fx:id="btn_editarTransportes" buttonType="RAISED" onAction="#editarTransportes" text="Editar">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="7.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <TableView fx:id="tbl_listaTransportes" maxHeight="1.7976931348623157E308" prefHeight="500.0" prefWidth="200.0">
+                                 <columns>
+                                    <TableColumn prefWidth="153.0" text="Nombre" />
+                                    <TableColumn minWidth="0.0" prefWidth="176.0" text="Tipo transporte" />
+                                    <TableColumn minWidth="0.0" prefWidth="76.0" text="Distancia" />
+                                    <TableColumn prefWidth="75.0" text="Tiempo" />
+                                 </columns>
+                                 <VBox.margin>
+                                    <Insets left="5.0" />
+                                 </VBox.margin>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="anch_atractivos" VBox.vgrow="ALWAYS">
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                     <children>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                 <children>
+                                    <JFXTextField fx:id="txt_buscarAtractivos" onInputMethodTextChanged="#buscarAtractivosTextChange" promptText="Buscar atractivos..." HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </JFXTextField>
+                                    <JFXButton fx:id="btn_buscarAtractivos" buttonType="RAISED" onAction="#buscarAtractivos" text="Buscar">
+                                       <HBox.margin>
+                                          <Insets right="75.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btn_agregarAtractivos" buttonType="RAISED" onAction="#agregarAtractivos" text="Agregar" />
+                                    <JFXButton fx:id="btn_eliminarAtractivos" buttonType="RAISED" onAction="#eliminarAtractivos" text="Eliminar" />
+                                    <JFXButton fx:id="btn_editarAtractivos" buttonType="RAISED" onAction="#editarAtractivos" text="Editar">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </JFXButton>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="7.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <TableView fx:id="tbl_listaAtractivos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn prefWidth="204.0" text="Nombre" />
+                                    <TableColumn prefWidth="201.0" text="Coordenadas" />
+                                    <TableColumn prefWidth="95.0" text="Ver en mapa" />
+                                 </columns>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="5.0" />
+                                 </VBox.margin>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

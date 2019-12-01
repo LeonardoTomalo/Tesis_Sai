@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anch_rp" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="435.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.RecursoPrincipal">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" VBox.vgrow="SOMETIMES">
+                     <children>
+                        <JFXButton fx:id="btn_busqueda" buttonType="RAISED" onAction="#showBusqueda" prefHeight="35.0" prefWidth="30.0" text=" " HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </JFXButton>
+                        <Separator opacity="0.5" orientation="VERTICAL">
+                           <HBox.margin>
+                              <Insets bottom="7.0" top="7.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <JFXButton fx:id="btn_crear" blendMode="DARKEN" buttonType="RAISED" onAction="#crearRecurso" prefHeight="35.0" text="Crear">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.5" orientation="VERTICAL">
+                           <HBox.margin>
+                              <Insets bottom="7.0" top="7.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <JFXButton fx:id="btn_modificar" buttonType="RAISED" onAction="#modificarRecurso" prefHeight="35.0" text="Modificar">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.5" orientation="VERTICAL">
+                           <HBox.margin>
+                              <Insets bottom="7.0" top="7.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <JFXButton fx:id="btn_eliminar" buttonType="RAISED" onAction="#eliminarRecurso" prefHeight="35.0" text="Eliminar">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.5" orientation="VERTICAL">
+                           <HBox.margin>
+                              <Insets bottom="7.0" top="7.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <AnchorPane prefHeight="35.0" prefWidth="72.0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+                  <Separator opacity="0.5" prefWidth="200.0" />
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <HBox fx:id="hbx_busqueda" visible="false">
+                           <children>
+                              <AnchorPane fx:id="anch_busqueda" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="300.0" />
+                              <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0" />
+                           </children>
+                        </HBox>
+                        <AnchorPane fx:id="anch_mapa" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <HBox fx:id="hbx_contenedorInfBasica" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="170.0" prefWidth="300.0" HBox.hgrow="SOMETIMES">
+                           <children>
+                              <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Separator>
+                              <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="160.0" prefWidth="290.0" HBox.hgrow="SOMETIMES">
+                                 <children>
+                                    <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" text="Informacion Basica">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Separator opacity="0.5" prefWidth="200.0" />
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                                       <content>
+                                          <AnchorPane fx:id="anch_contenedor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                                       </content>
+                                    </ScrollPane>
+                                    <Separator opacity="0.5" prefWidth="200.0" />
+                                    <JFXButton fx:id="btn_masInformacion" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#showMasInformacion" prefHeight="35.0" prefWidth="289.0" text="Mas Informacion" VBox.vgrow="SOMETIMES">
+                                       <padding>
+                                          <Insets bottom="10.0" top="10.0" />
+                                       </padding>
+                                    </JFXButton>
+                                 </children>
+                              </VBox>
+                           </children></HBox>
+                        <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <JFXButton fx:id="btn_abrirInfBasica" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#showInformacionBasica" text="&gt;" />
+                     </children></HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

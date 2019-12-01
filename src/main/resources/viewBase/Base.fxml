@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.Base">
+   <top>
+      <VBox prefHeight="60.0" prefWidth="675.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="675.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fx:id="img_logoIzq" fitHeight="40.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox alignment="CENTER" prefHeight="50.0" prefWidth="415.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="lbl_empresa" text="EMPRESA">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="GUIA MOVIL DE RECURSOS NATURALES">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Separator opacity="0.5" prefWidth="5.0">
+                                 <HBox.margin>
+                                    <Insets left="7.0" right="7.0" />
+                                 </HBox.margin>
+                              </Separator>
+                              <Label text="SISTEMA ADMINISTRADOR DE INFORMACION">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="img_logoDer" fitHeight="40.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Separator opacity="0.5" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Separator>
+            <Separator opacity="0.5" prefWidth="200.0" />
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Separator opacity="0.5" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Separator>
+            <Separator opacity="0.5" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Separator>
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="675.0">
+               <children>
+                  <Label text="Creado por Don Teo" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+   <center>
+      <HBox alignment="CENTER_LEFT" BorderPane.alignment="TOP_LEFT">
+         <children>
+            <JFXDrawer fx:id="drw_drawer" alignment="CENTER_LEFT" defaultDrawerSize="230.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="0.0" prefWidth="0.0" resizeContent="true" HBox.hgrow="NEVER" />
+            <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" prefHeight="35.0">
+                     <children>
+                        <JFXHamburger fx:id="hmb_menu" alignment="CENTER_LEFT" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="40.0" HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </JFXHamburger>
+                        <AnchorPane prefHeight="39.0" prefWidth="72.0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </AnchorPane>
+                        <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets bottom="7.0" top="7.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Bienvenido, ">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="lbl_nombreUsuario" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Nombre de usuario">
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
+                        </Label>
+                        <JFXButton fx:id="btn_salir" buttonType="RAISED" onAction="#salir_CerrarCesion" text="Salir">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <Separator opacity="0.5" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Separator>
+                  <Separator opacity="0.5" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Separator>
+                  <AnchorPane fx:id="anch_contenido" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </AnchorPane>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <padding>
+                  <Insets right="40.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

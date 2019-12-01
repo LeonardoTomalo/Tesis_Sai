@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="353.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.Senderos">
+   <children>
+      <VBox prefHeight="296.0" prefWidth="512.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT">
+               <children>
+                  <JFXTextField fx:id="txt_buscarSenderos" onInputMethodTextChanged="#buscarSenderosTextChange" promptText="Buscar senderos.." HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </JFXTextField>
+                  <JFXButton fx:id="btn_BuscarSenderos" buttonType="RAISED" onAction="#buscarSenderos" text="Buscar">
+                     <HBox.margin>
+                        <Insets right="75.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_AgregarSenderos" buttonType="RAISED" onAction="#agregarSenderos" text="Agregar" />
+                  <JFXButton fx:id="btn_eliminarSenderos" buttonType="RAISED" onAction="#eliminarSenderos" text="Eliminar" />
+                  <JFXButton fx:id="btn_editarSenderos" buttonType="RAISED" onAction="#editarSenderos" text="Editar">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="7.0" />
+               </VBox.margin>
+            </HBox>
+            <TableView fx:id="tbl_listaSenderos" maxHeight="1.7976931348623157E308" prefHeight="500.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn prefWidth="181.0" text="Nombre" />
+                  <TableColumn minWidth="0.0" prefWidth="104.0" text="Distancia" />
+                  <TableColumn minWidth="0.0" prefWidth="110.0" text="Tiempo" />
+                  <TableColumn prefWidth="308.0" text="Descripcion" />
+               </columns>
+               <VBox.margin>
+                  <Insets left="5.0" />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

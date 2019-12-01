@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefWidth="355.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.BaseMenu">
+   <children>
+      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0">
+         <children>
+            <Label graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Menu Administrador" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
+      <Separator halignment="LEFT" opacity="0.5" VBox.vgrow="NEVER" />
+      <ScrollPane fitToHeight="true" fitToWidth="true" focusTraversable="false" VBox.vgrow="ALWAYS">
+         <content>
+            <JFXListView fx:id="lstv_Menu" focusTraversable="false" />
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>

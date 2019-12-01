@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="357.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.Animacion3D">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <children>
+                  <JFXTextField fx:id="txt_buscarAnimacion3D" onInputMethodTextChanged="#buscarVideoTextChange" promptText="Buscar animacion 3D..." HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </JFXTextField>
+                  <JFXButton fx:id="btn_buscarAnimacion3D" buttonType="RAISED" onAction="#buscarAnimacion3D" text="Buscar">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="4.0" left="100.0" right="100.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator opacity="0.5" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="3.0" top="3.0" />
+               </VBox.margin>
+            </Separator>
+            <SplitPane dividerPositions="0.34097421203438394" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+               <items>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" prefHeight="180.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Pane layoutY="265.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                        <HBox>
+                           <children>
+                              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                              <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                              <JFXButton fx:id="btn_maximizarAnimacion3D" buttonType="RAISED" onAction="#maximizarAnimacion3D" text="Max" />
+                              <JFXButton fx:id="btn_descargarAnimacion3D" buttonType="RAISED" onAction="#descargarAnimacion3D" text="Desc" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <children>
+                              <JFXButton fx:id="btn_agregarAnimacion3D" buttonType="RAISED" onAction="#agregarAnimacion3D" text="Agregar" />
+                              <JFXButton fx:id="btn_eliminarAnimacion3D" buttonType="RAISED" onAction="#eliminarAnimacion3D" text="Eliminar" />
+                              <JFXButton fx:id="btn_editarAnimacion3D" buttonType="RAISED" onAction="#editarAnimacion3D" text="Editar" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <TableView fx:id="tbl_listaAnimacion3D" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <columns>
+                              <TableColumn prefWidth="26.0" />
+                              <TableColumn maxWidth="1.7976931348623157E308" prefWidth="124.0" text="Nombre" />
+                              <TableColumn maxWidth="1.7976931348623157E308" prefWidth="166.0" text="Descripcion" />
+                              <TableColumn maxWidth="1.7976931348623157E308" prefWidth="64.0" text="Autor" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </items>
+            </SplitPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
