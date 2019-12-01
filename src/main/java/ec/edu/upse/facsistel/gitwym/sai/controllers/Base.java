@@ -29,8 +29,8 @@ public class Base {
     static String nombreUsuario = "Don Teo";    
 
 	public void initialize() {
-//		General.setImageView("upse.png", img_logoIzq);
-//		General.setImageView("upse.png", img_logoDer);
+		General.setImageView("Upse.png", img_logoIzq);
+		General.setImageView("Upse.png", img_logoDer);
 		General.setTexttoLabel(lbl_empresa, nombreEmpresa);
 		General.setTexttoLabel(lbl_nombreUsuario, nombreUsuario);
 		General.setContentToJFXDrawer("/viewBase/BaseMenu.fxml", drw_drawer);
