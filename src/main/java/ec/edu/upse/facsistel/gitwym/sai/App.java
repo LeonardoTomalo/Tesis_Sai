@@ -1,6 +1,5 @@
 package ec.edu.upse.facsistel.gitwym.sai;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javafx.application.Application;
@@ -28,7 +27,7 @@ public class App extends Application {
 	}
 
     public static void main(String[] args) {
-    	SpringApplication.run(App.class, args);
+//    	SpringApplication.run(App.class, args);
         launch();
     }
 
