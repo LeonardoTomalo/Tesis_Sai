@@ -37,16 +37,13 @@ public class RecursoController {
     @FXML private AnchorPane anch_video;
     @FXML private AnchorPane anch_animaciones3d;
     @FXML private AnchorPane anch_comentarios;
-    
-    private Recurso recurso;
 
 	public void initialize() {	
 		General.setContentParent("/viewGaleria/Galeria.fxml", anch_galeria);
 		General.setContentParent("/viewFacilidades/Facilidades.fxml", anch_facilidades);
 		General.setContentParent("/viewVideos/Videos.fxml", anch_video);
 		General.setContentParent("/viewAnimacion3D/Animacion3D.fxml", anch_animaciones3d);
-		General.setContentParent("/viewSenderos/Senderos.fxml", anch_senderos);
-		
+		General.setContentParent("/viewSenderos/Senderos.fxml", anch_senderos);		
 	}     
     
     @FXML
@@ -79,11 +76,13 @@ public class RecursoController {
     }
 
     private Recurso savePojoRecurso() {
-    	recurso.setNombre(txt_nombreRecurso.getText());
-    	recurso.setDescripcion(txt_descripcionRecurso.getText());
-    	recurso.setInformacionGeneral(txt_infGeneralRecurso.getText());
-    	recurso.setCoordenadas(txt_coordenadasRecurso.getText());
-    	recurso.setDireccion(txt_direccionRecurso.getText());
-		return recurso;
+    	Recurso r = new Recurso();
+    	System.out.println("PRESENTO LOS VALORES EN FXML: " + txt_nombreRecurso.getText());
+    	r.setNombre(txt_nombreRecurso.getText());
+    	r.setDescripcion(txt_descripcionRecurso.getText());
+    	r.setInformacionGeneral(txt_infGeneralRecurso.getText());
+    	r.setCoordenadas(txt_coordenadasRecurso.getText());
+    	r.setDireccion(txt_direccionRecurso.getText());
+		return r;
 	}
 }

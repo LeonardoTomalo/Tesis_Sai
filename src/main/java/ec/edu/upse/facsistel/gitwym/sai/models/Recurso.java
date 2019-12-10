@@ -11,6 +11,7 @@ import com.couchbase.client.java.repository.annotation.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 /**
@@ -22,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document
 public class Recurso {
-	@Id @GeneratedValue(strategy = GenerationStrategy.UNIQUE) private String id;
+	@Id private String id;
 	@Field private String rev;
 	@Field private String nombre;
 	@Field private String descripcion;
