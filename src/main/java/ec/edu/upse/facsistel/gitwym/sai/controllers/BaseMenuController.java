@@ -2,6 +2,8 @@ package ec.edu.upse.facsistel.gitwym.sai.controllers;
 
 import com.jfoenix.controls.JFXListView;
 
+import ec.edu.upse.facsistel.gitwym.sai.models.Menu;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.ConsumeWS;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -9,8 +11,10 @@ import javafx.scene.control.Label;
 public class BaseMenuController{
 
 	@FXML private JFXListView<Label> lstv_Menu;
-
+	
 	public void initialize() {
+//		ConsumeWS.getAll(Menu.class);
+		
 		for (int i = 0; i < 4; i++) {
 			Label lbl = new Label("OPCION " + i);
 			lbl.setPadding(new Insets(5, 0, 5, 20));
