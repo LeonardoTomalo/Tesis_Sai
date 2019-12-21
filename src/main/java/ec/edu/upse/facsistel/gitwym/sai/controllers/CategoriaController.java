@@ -10,7 +10,7 @@ import ec.edu.upse.facsistel.gitwym.sai.utilities.ConsumeWS;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class CategoriaController {
+public class CategoriaController extends ConsumeWS<Categoria>{
 
     @FXML private JFXButton btn_agregarCategoria;
     @FXML private JFXButton btn_eliminarCategoria;
@@ -39,6 +39,6 @@ public class CategoriaController {
     }
     
     public List<Categoria> getCategorias(){
-    	return ConsumeWS.getAll(Categoria.class);
+    	return getAll(Categoria.class);
     }
 }
