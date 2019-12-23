@@ -2,8 +2,6 @@ package ec.edu.upse.facsistel.gitwym.sai.controllers;
 
 import com.jfoenix.controls.JFXListView;
 
-import ec.edu.upse.facsistel.gitwym.sai.models.Menu;
-import ec.edu.upse.facsistel.gitwym.sai.utilities.ConsumeWS;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;

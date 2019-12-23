@@ -15,14 +15,13 @@ import com.jfoenix.controls.JFXTextField;
 
 import ec.edu.upse.facsistel.gitwym.sai.models.Menu;
 import ec.edu.upse.facsistel.gitwym.sai.models.Rol;
-import ec.edu.upse.facsistel.gitwym.sai.utilities.ConsumeWS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 
-public class MenuController extends ConsumeWS<Menu>{
+public class MenuController {
 
     @FXML private JFXListView<Menu> lst_listaMenus;
     @FXML private JFXButton btn_Nuevo;
@@ -36,42 +35,37 @@ public class MenuController extends ConsumeWS<Menu>{
     @FXML private JFXTextField txt_nombreMenuPadre;
     @FXML private JFXListView<Rol> lst_listaRoles;
     
-    Menu menu = new Menu();
-    private static ResponseEntity<List<Menu>> listResponse;
-	List<Menu> lista = new ArrayList<Menu>();
+    //CONSUMIR WEB SERVICES
 	RestTemplate rest = new RestTemplate();
-	String uri = "http://localhost:8082/menu/getAll";
-    
-	public void initialize(){    		
-    	listResponse = rest.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<List<Menu>>() {	});
-    	lista= listResponse.getBody();
-    	
-    	ObservableList<Menu> data = FXCollections.observableArrayList();
-		for(int i = 0 ; i < lista.size() ; i++ ){
-			data.add(lista.get(i));
-		}
-		lst_listaMenus.setItems(data);		
-    	lst_listaMenus.setCellFactory(param -> new ListCell<Menu>() {
-    		protected void updateItem(Menu item, boolean empty) {
-    			super.updateItem(item, empty);
-    			if (empty || item.getNombre() == null) {
-    		        setText("");
-    		    } else {
-    		        setText(item.getNombre());
-    		    }
-    		};
-    	});    	
+	String uriMenu = "http://localhost:8082/menu";
+	String uriRol = "http://localhost:8082/rol";
+
+	//DE LA CLASE MENU
+    Menu menu = new Menu();
+	List<Menu> listaMenu = new ArrayList<Menu>();
+    private static ResponseEntity<List<Menu>> listRespMenu;
+	ObservableList<Menu> obsListMenu = FXCollections.observableArrayList();
+	
+	//DE LA CLASE ROL
+    Rol rol = new Rol();
+	List<Rol> listaRol = new ArrayList<Rol>();
+    private static ResponseEntity<List<Rol>> listRespRol;
+	ObservableList<Rol> obsListRol = FXCollections.observableArrayList();
+			
+	public void initialize(){    	
+		loadMenus();
+		restoreToController();
     }
 
     @FXML
     void addNuevoMenu(ActionEvent event) {
-    	emptyToNew();
+    	restoreToController();
     	menu = new Menu();
     }
 
     @FXML
     void eliminarMenu(ActionEvent event) {
-
+    	loadMenus();
     }
 
     @FXML
@@ -90,24 +84,78 @@ public class MenuController extends ConsumeWS<Menu>{
     	menu.setUrl(txt_rutaFXML.getText());
     	menu.setLogoRuta(txt_rutaLogo.getText());
     	menu.setOrden(Integer.parseInt(txt_ordenMenu.getText()));
-    	menu.setIdPadre(null);
+    	if (rbtn_menuSecundario.isSelected()) {
+    		//debo buscar en ws el menu padre de acuerdo al nombre. 
+    		//Tambien debo validar que el nombre de cada menu no seaigual a otro menu
+    		//tambien debo cargarlos menus con sus respectivos hijos.
+//        	menu.setIdPadre(txt_nombreMenuPadre.getText());
+		} else {
+			menu.setIdPadre(null);
+		}
     	menu.setEstado(true);
-    	saveOrUpdate(menu, Menu.class);
-    	
+    	rest.postForObject(uriMenu + "/saveOrUpdate", menu, Menu.class);
+    	loadMenus();
+    	restoreToController();
     }
 
     @FXML
-    void selectedMenuSecundario(ActionEvent event) {
-
+    void selectedMenuSecundario() {
+    	if (rbtn_menuSecundario.isSelected()) {
+			txt_nombreMenuPadre.setDisable(false);
+		} else {
+			txt_nombreMenuPadre.setDisable(true);
+		}
     }
     
-    public void emptyToNew() {
+    public void restoreToController() {
     	txt_nombreMenu.clear();
     	txt_rutaFXML.clear();
     	txt_rutaLogo.clear();
     	txt_ordenMenu.clear();
     	txt_nombreMenuPadre.clear();
-    	rbtn_menuSecundario.setSelected(false);    	
+    	rbtn_menuSecundario.setSelected(false);
+    	selectedMenuSecundario();
     }
     
+    public void loadMenus(){
+    	obsListMenu.clear();
+    	listRespMenu = rest.exchange(uriMenu + "/getAll", HttpMethod.GET, null, new ParameterizedTypeReference<List<Menu>>() {	});
+    	listaMenu= listRespMenu.getBody();
+		for(int i = 0 ; i < listaMenu.size() ; i++ ){
+			obsListMenu.add(listaMenu.get(i));
+		}
+		lst_listaMenus.setItems(obsListMenu);	
+    	lst_listaMenus.setCellFactory(param -> new ListCell<Menu>() {
+    		protected void updateItem(Menu item, boolean empty) {
+    			super.updateItem(item, empty);
+    			if (empty || item.getNombre() == null) {
+    		        setText("");
+    		    } else {
+    		        setText(item.getNombre());
+    		    }
+    		};
+    	});   
+    }
+    
+    public void loadRoles(){
+    	obsListRol.clear();
+    	listRespRol = rest.exchange(uriRol + "/getAll", HttpMethod.GET, null, new ParameterizedTypeReference<List<Rol>>() {	});
+    	listaRol= listRespRol.getBody();
+		for(int i = 0 ; i < listaRol.size() ; i++ ){
+			obsListRol.add(listaRol.get(i));
+		}
+		//VALIDAR SI NO EXISTEN ROLES... DEBE MOSTRAR QUE NO EXISTEN ROLES. no solamente vacio
+		lst_listaRoles.setItems(obsListRol);	
+    	lst_listaRoles.setCellFactory(param -> new ListCell<Rol>() {
+    		protected void updateItem(Rol item, boolean empty) {
+    			super.updateItem(item, empty);
+    			if (empty || item.getRol() == null) {
+    		        setText("");
+    		    } else {
+    		        setText(item.getRol());
+    		        
+    		    }
+    		};    		
+    	});   
+    }
 }

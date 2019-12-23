@@ -7,21 +7,21 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public abstract class ConsumeWS<T> {
+public class ConsumeWS<T> {
 
 	RestTemplate rest = new RestTemplate();
-	
-	protected T saveOrUpdate(T pojo, Class<T> t) {
+
+	public T saveOrUpdate(T pojo, Class<T> t) {
 		try {
 	    	String uri = "http://localhost:8082/" + t.getSimpleName().toLowerCase() + "/saveOrUpdate";
-	    	return rest.postForObject(uri, pojo, t);					
+	    	return rest.postForObject(uri, pojo, t);	
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
-	protected List<T> getAll(Class<T> t){
+	public List<T> getAll(Class<T> t){
 		try {
 	    	String uri = "http://localhost:8082/" + t.getSimpleName().toLowerCase() + "/getAll";
 	    	ResponseEntity<List<T>> list = rest.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<List<T>>() { });	    		    	
