@@ -9,6 +9,8 @@ import ec.edu.upse.facsistel.gitwym.sai.App;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -97,6 +99,17 @@ public class General {
 	 */
 	public static void setTexttoLabel(Label label, String text) {
 		label.setText(text.toUpperCase());
+	}
+	
+	
+	/**
+	 * Configura un spinner numerico.
+	 * @param spinner
+	 */
+	public static void spinnerNumerico(Spinner<Integer> spinner) {
+        spinner.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
+		SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1); 
+        spinner.setValueFactory(valueFactory);
 	}
 	
 }

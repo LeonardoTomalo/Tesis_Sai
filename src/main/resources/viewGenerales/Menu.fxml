@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,7 +26,7 @@
                   <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
                   <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                      <content>
-                        <JFXListView fx:id="lst_listaMenus" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                        <JFXListView fx:id="lst_listaMenus" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#selectedItemMenu" />
                      </content>
                   </ScrollPane>
                </children>
@@ -82,7 +83,6 @@
                         <JFXTextField fx:id="txt_nombreMenu" promptText="nombre menu..." GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="2" />
                         <JFXTextField fx:id="txt_rutaFXML" promptText="ruta del archivo fxml..." GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                         <JFXTextField fx:id="txt_rutaLogo" promptText="ruta del logo..." GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                        <JFXTextField fx:id="txt_ordenMenu" promptText="orden en el menu; 1,2,3,4..." GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="5" />
                         <JFXRadioButton fx:id="rbtn_menuSecundario" onAction="#selectedMenuSecundario" text="Menu Secundario" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
                         <JFXTextField fx:id="txt_nombreMenuPadre" promptText="nombre menu padre..." GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6" />
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Escoger Roles:" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.rowSpan="2" />
@@ -91,6 +91,7 @@
                               <JFXListView fx:id="lst_listaRoles" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                            </content>
                         </ScrollPane>
+                        <Spinner fx:id="spin_orden" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
                </children>

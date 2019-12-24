@@ -15,11 +15,15 @@ import com.jfoenix.controls.JFXTextField;
 
 import ec.edu.upse.facsistel.gitwym.sai.models.Menu;
 import ec.edu.upse.facsistel.gitwym.sai.models.Rol;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.Spinner;
+import javafx.scene.input.MouseEvent;
 
 public class MenuController {
 
@@ -30,10 +34,10 @@ public class MenuController {
     @FXML private JFXTextField txt_nombreMenu;
     @FXML private JFXTextField txt_rutaFXML;
     @FXML private JFXTextField txt_rutaLogo;
-    @FXML private JFXTextField txt_ordenMenu;
     @FXML private JFXRadioButton rbtn_menuSecundario;
     @FXML private JFXTextField txt_nombreMenuPadre;
     @FXML private JFXListView<Rol> lst_listaRoles;
+    @FXML private Spinner<Integer> spin_orden;
     
     //CONSUMIR WEB SERVICES
 	RestTemplate rest = new RestTemplate();
@@ -52,8 +56,9 @@ public class MenuController {
     private static ResponseEntity<List<Rol>> listRespRol;
 	ObservableList<Rol> obsListRol = FXCollections.observableArrayList();
 			
-	public void initialize(){    	
+	public void initialize(){   
 		loadMenus();
+		loadRoles();
 		restoreToController();
     }
 
@@ -83,7 +88,8 @@ public class MenuController {
     	menu.setNombre(txt_nombreMenu.getText());
     	menu.setUrl(txt_rutaFXML.getText());
     	menu.setLogoRuta(txt_rutaLogo.getText());
-    	menu.setOrden(Integer.parseInt(txt_ordenMenu.getText()));
+//    	menu.setOrden(Integer.parseInt(txt_ordenMenu.getText()));
+    	menu.setOrden(spin_orden.getValue());
     	if (rbtn_menuSecundario.isSelected()) {
     		//debo buscar en ws el menu padre de acuerdo al nombre. 
     		//Tambien debo validar que el nombre de cada menu no seaigual a otro menu
@@ -107,14 +113,33 @@ public class MenuController {
 		}
     }
     
+    @FXML
+    void selectedItemMenu(MouseEvent event) {
+    	lst_listaMenus.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Menu> ov, Menu old_val, Menu new_val) -> {
+    		menu = lst_listaMenus.getSelectionModel().getSelectedItem();
+        	txt_nombreMenu.setText(menu.getNombre());
+        	txt_rutaFXML.setText(menu.getUrl());
+        	txt_rutaLogo.setText(menu.getLogoRuta());
+        	spin_orden.getValueFactory().setValue(menu.getOrden());
+        	if (menu.getIdPadre() == null || menu.getIdPadre().getId().isEmpty()) {
+        		rbtn_menuSecundario.setSelected(false);
+        		txt_nombreMenuPadre.clear();
+    		} else {
+    			rbtn_menuSecundario.setSelected(true);
+    			txt_nombreMenuPadre.setText(menu.getIdPadre().getNombre());
+    		}
+    	    });
+    	//validar lo de los roles.
+    }
+        
     public void restoreToController() {
     	txt_nombreMenu.clear();
     	txt_rutaFXML.clear();
     	txt_rutaLogo.clear();
-    	txt_ordenMenu.clear();
     	txt_nombreMenuPadre.clear();
     	rbtn_menuSecundario.setSelected(false);
     	selectedMenuSecundario();
+		General.spinnerNumerico(spin_orden);
     }
     
     public void loadMenus(){
