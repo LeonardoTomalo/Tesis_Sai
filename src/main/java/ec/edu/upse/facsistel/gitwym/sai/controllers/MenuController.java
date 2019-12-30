@@ -3,6 +3,7 @@ package ec.edu.upse.facsistel.gitwym.sai.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.controlsfx.control.textfield.TextFields;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -55,11 +56,12 @@ public class MenuController {
 	List<Rol> listaRol = new ArrayList<Rol>();
     private static ResponseEntity<List<Rol>> listRespRol;
 	ObservableList<Rol> obsListRol = FXCollections.observableArrayList();
-			
+				
 	public void initialize(){   
 		loadMenus();
 		loadRoles();
 		restoreToController();
+		changueTextMenu();
     }
 
     @FXML
@@ -88,15 +90,14 @@ public class MenuController {
     	menu.setNombre(txt_nombreMenu.getText());
     	menu.setUrl(txt_rutaFXML.getText());
     	menu.setLogoRuta(txt_rutaLogo.getText());
-//    	menu.setOrden(Integer.parseInt(txt_ordenMenu.getText()));
     	menu.setOrden(spin_orden.getValue());
+		menu.setIdPadre(null);
     	if (rbtn_menuSecundario.isSelected()) {
-    		//debo buscar en ws el menu padre de acuerdo al nombre. 
     		//Tambien debo validar que el nombre de cada menu no seaigual a otro menu
     		//tambien debo cargarlos menus con sus respectivos hijos.
-//        	menu.setIdPadre(txt_nombreMenuPadre.getText());
-		} else {
-			menu.setIdPadre(null);
+    		for (Menu m : listaMenu) {
+    			if (txt_nombreMenuPadre.getText().equals(m.getNombre())) menu.setIdPadre(m);
+			}    		
 		}
     	menu.setEstado(true);
     	rest.postForObject(uriMenu + "/saveOrUpdate", menu, Menu.class);
@@ -129,9 +130,19 @@ public class MenuController {
     			txt_nombreMenuPadre.setText(menu.getIdPadre().getNombre());
     		}
     	    });
+    	
     	//validar lo de los roles.
     }
         
+    @FXML
+    void changueTextMenu() {
+    	List<String> listAuto = new ArrayList<String>(); 		
+    	for (Menu menu : listaMenu) {
+			listAuto.add(menu.getNombre());	
+		}
+		TextFields.bindAutoCompletion(txt_nombreMenuPadre, listAuto);
+    }
+    
     public void restoreToController() {
     	txt_nombreMenu.clear();
     	txt_rutaFXML.clear();

@@ -84,7 +84,7 @@
                         <JFXTextField fx:id="txt_rutaFXML" promptText="ruta del archivo fxml..." GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                         <JFXTextField fx:id="txt_rutaLogo" promptText="ruta del logo..." GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="4" />
                         <JFXRadioButton fx:id="rbtn_menuSecundario" onAction="#selectedMenuSecundario" text="Menu Secundario" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
-                        <JFXTextField fx:id="txt_nombreMenuPadre" promptText="nombre menu padre..." GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                        <JFXTextField fx:id="txt_nombreMenuPadre" onAction="#changueTextMenu" promptText="nombre menu padre..." GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6" />
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Escoger Roles:" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.rowSpan="2" />
                         <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="4">
                            <content>
