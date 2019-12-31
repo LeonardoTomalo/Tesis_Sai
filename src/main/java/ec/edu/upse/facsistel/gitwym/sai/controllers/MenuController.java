@@ -2,7 +2,10 @@ package ec.edu.upse.facsistel.gitwym.sai.controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.controlsfx.control.CheckListView;
 import org.controlsfx.control.textfield.TextFields;
@@ -18,12 +21,15 @@ import com.jfoenix.controls.JFXTextField;
 
 import ec.edu.upse.facsistel.gitwym.sai.models.Menu;
 import ec.edu.upse.facsistel.gitwym.sai.models.Rol;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Spinner;
@@ -79,39 +85,75 @@ public class MenuController {
 
 	@FXML
 	void eliminarMenu(ActionEvent event) {
-		//preguntarsi desea eliminar
-		initialize();
+		try {
+			if(lst_listaMenus.getSelectionModel().getSelectedItems().isEmpty()){
+				Message.showWarningNotification("Seleccione el menu a eliminar.!!");
+				return;
+			}
+			
+			Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos del Menu: " + 
+			lst_listaMenus.getSelectionModel().getSelectedItem().getNombre() + " ?.", Context.getInstance().getStage());
+			if(result.get() == ButtonType.OK){
+				//Eliminar datos.
+				Map<String, Menu> params = new HashMap<String, Menu>();
+				params.put("c", menu);
+				rest.delete(uriMenu + "/delete/{c}", params);
+				//save ROL
+				for (Rol r : listaRol) {
+					if (r.getMenusIds().contains(menu.getId())) r.getMenusIds().remove(menu.getId()); 
+					rest.postForObject(uriRol + "/saveOrUpdate", r, Rol.class);
+				}
+				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
+				initialize();
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al eliminar datos.!!");
+		}
 	}
 
 	@FXML
 	void guardarMenu(ActionEvent event) {
-		// validaciones respectivas
-		//SAVE MENU
-		menu.setNombre(txt_nombreMenu.getText());
-		menu.setUrl(txt_rutaFXML.getText());
-		menu.setLogoRuta(txt_rutaLogo.getText());
-		menu.setOrden(spin_orden.getValue());
-		menu.setIdPadre(null);
-		if (rbtn_menuSecundario.isSelected()) {
-			// Tambien debo validar que el nombre de cada menu no seaigual a otro menu
-			for (Menu m : listaMenu) {
-				if (txt_nombreMenuPadre.getText().equals(m.getNombre()))
-					menu.setIdPadre(m);
+		try {
+			// validaciones respectivas
+			if (txt_nombreMenu.getText().isEmpty() || txt_nombreMenu.getText().isBlank()) {
+				Message.showWarningNotification("Debe ingresar un nombre al Menu.!!");
+				return;
 			}
-		}
-		menu.setEstado(true);
-		rest.postForObject(uriMenu + "/saveOrUpdate", menu, Menu.class);
-		//SAVE ROL
-		for (Rol r : chklst_listaRoles.getItems()) {
-			if (chklst_listaRoles.getCheckModel().isChecked(r)) {					
-				if (!r.getMenusIds().contains(menu.getId())) r.getMenusIds().add(menu.getId()); 
-			}else {
-				if (r.getMenusIds().contains(menu.getId())) r.getMenusIds().remove(menu.getId());
+			
+			Optional<ButtonType> result = Message.showQuestion("Desea continuar y grabar los datos?.", Context.getInstance().getStage());
+			if(result.get() == ButtonType.OK){
+				menu.setNombre(txt_nombreMenu.getText());
+				menu.setUrl(txt_rutaFXML.getText());
+				menu.setLogoRuta(txt_rutaLogo.getText());
+				menu.setOrden(spin_orden.getValue());
+				menu.setIdPadre(null);
+				if (rbtn_menuSecundario.isSelected()) {
+					// Tambien debo validar que el nombre de cada menu no seaigual a otro menu
+					for (Menu m : listaMenu) {
+						if (txt_nombreMenuPadre.getText().equals(m.getNombre()))
+							menu.setIdPadre(m);
+					}
+				}
+				menu.setEstado(true);
+				rest.postForObject(uriMenu + "/saveOrUpdate", menu, Menu.class);
+				//SAVE ROL
+				for (Rol r : chklst_listaRoles.getItems()) {
+					if (chklst_listaRoles.getCheckModel().isChecked(r)) {					
+						if (!r.getMenusIds().contains(menu.getId())) r.getMenusIds().add(menu.getId()); 
+					}else {
+						if (r.getMenusIds().contains(menu.getId())) r.getMenusIds().remove(menu.getId());
+					}
+					rest.postForObject(uriRol + "/saveOrUpdate", r, Rol.class);
+				}
+				Message.showSuccessNotification("Se guardaron exitosamente los datos.!! ");
+				menu = new Menu();
+				initialize();
 			}
-			rest.postForObject(uriRol + "/saveOrUpdate", r, Rol.class);
-		}
-//		Mensaje.transaccion_ok();
-		initialize();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al guardar datos.!!");			
+		}		
 	}
 
 	@FXML
@@ -207,6 +249,5 @@ public class MenuController {
 				}
 			});
 		}
-//		chklst_listaRoles.getCheckModel().getCheckedItems()
 	}
 }
