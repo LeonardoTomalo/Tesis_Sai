@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class Menu {
+public class Menu implements Comparable<Menu>{
 	@JsonProperty @Id private String id;
 	@JsonProperty @Field private String nombre;
 	@JsonProperty @Field private String url;
@@ -26,4 +26,12 @@ public class Menu {
 	@JsonProperty @Field private Integer orden;
 	@JsonProperty @Field private Boolean estado;
 	@JsonProperty @Field private Menu idPadre;
+	
+	@Override
+	public int compareTo(Menu o) {
+		if (orden < o.getOrden()) return -1;
+		if (orden > o.getOrden()) return 1;
+		return 0;
+	}
+		
 }
