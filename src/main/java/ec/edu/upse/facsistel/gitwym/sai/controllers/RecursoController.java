@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
 import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,7 +49,7 @@ public class RecursoController {
     
     @FXML
     void atras(ActionEvent event) {
-    	General.setContentParent("/viewPrincipal/RecursoPrincipal.fxml", (AnchorPane) anch_recurso.getParent());
+    	General.setContentParent("/viewPrincipal/RecursoPrincipal.fxml", Context.getInstance().getAnch_Contenido());
     }
 
     @FXML

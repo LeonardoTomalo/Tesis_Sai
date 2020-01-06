@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -83,7 +90,319 @@
                      <children>
                         <HBox fx:id="hbx_busqueda" visible="false">
                            <children>
-                              <AnchorPane fx:id="anch_busqueda" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="300.0" />
+                              <AnchorPane fx:id="anch_busqueda" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="300.0">
+                                 <children>
+                                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="778.0" prefWidth="225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="35.0" VBox.vgrow="NEVER">
+                                             <children>
+                                                <JFXTextField fx:id="txt_buscarRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Buscar recurso..." HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </HBox.margin>
+                                                </JFXTextField>
+                                                <JFXButton fx:id="btn_buscar" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="51.0" onAction="#buscarRecursoBTN" prefWidth="71.0" text="Buscar" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                          <Separator opacity="0.5" prefWidth="200.0" />
+                                          <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                                             <content>
+                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <Label fx:id="lbl_filtros" maxWidth="1.7976931348623157E308" onMousePressed="#abrirCerrarFiltros" text="Filtros" underline="true">
+                                                                     <font>
+                                                                        <Font name="System Italic" size="12.0" />
+                                                                     </font>
+                                                                     <padding>
+                                                                        <Insets top="10.0" />
+                                                                     </padding>
+                                                                  </Label>
+                                                                  <AnchorPane fx:id="anch_filtros" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                                     <children>
+                                                                        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <columnConstraints>
+                                                                              <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="14.0" />
+                                                                              <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="60.0" prefWidth="89.0" />
+                                                                              <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="9.0" prefWidth="14.0" />
+                                                                           </columnConstraints>
+                                                                           <rowConstraints>
+                                                                              <RowConstraints maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                                              <RowConstraints maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                                              <RowConstraints maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                                              <RowConstraints maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                                              <RowConstraints maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                                              <RowConstraints maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                                           </rowConstraints>
+                                                                           <children>
+                                                                              <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
+                                                                                 <children>
+                                                                                    <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Provincia" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
+                                                                                 <children>
+                                                                                    <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Canton" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
+                                                                                 <children>
+                                                                                    <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Parroquia" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="3">
+                                                                                 <children>
+                                                                                    <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Categoria" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
+                                                                                 <children>
+                                                                                    <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Atractivo" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="5">
+                                                                                 <children>
+                                                                                    <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Idioma" textAlignment="CENTER" HBox.hgrow="NEVER">
+                                                                                       <HBox.margin>
+                                                                                          <Insets left="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </Label>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                                                                 <children>
+                                                                                    <JFXComboBox fx:id="cmb_provincia" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="5.0" promptText="Escoger opcion" HBox.hgrow="ALWAYS">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </JFXComboBox>
+                                                                                 </children>
+                                                                                 <GridPane.margin>
+                                                                                    <Insets />
+                                                                                 </GridPane.margin>
+                                                                                 <padding>
+                                                                                    <Insets left="5.0" />
+                                                                                 </padding>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                                                 <children>
+                                                                                    <JFXComboBox fx:id="cmb_canton" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="5.0" promptText="Escoger opcion" HBox.hgrow="ALWAYS">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </JFXComboBox>
+                                                                                 </children>
+                                                                                 <GridPane.margin>
+                                                                                    <Insets />
+                                                                                 </GridPane.margin>
+                                                                                 <padding>
+                                                                                    <Insets left="5.0" />
+                                                                                 </padding>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                                                 <children>
+                                                                                    <JFXComboBox fx:id="cmb_parroquia" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="5.0" promptText="Escoger opcion" HBox.hgrow="ALWAYS">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </JFXComboBox>
+                                                                                 </children>
+                                                                                 <GridPane.margin>
+                                                                                    <Insets />
+                                                                                 </GridPane.margin>
+                                                                                 <padding>
+                                                                                    <Insets left="5.0" />
+                                                                                 </padding>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                                                 <children>
+                                                                                    <JFXComboBox fx:id="cmb_categoria" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Escoger opcion " HBox.hgrow="ALWAYS">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </JFXComboBox>
+                                                                                 </children>
+                                                                                 <GridPane.margin>
+                                                                                    <Insets />
+                                                                                 </GridPane.margin>
+                                                                                 <padding>
+                                                                                    <Insets left="5.0" />
+                                                                                 </padding>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                                                 <children>
+                                                                                    <JFXComboBox fx:id="cmb_atractivo" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Escoger opcion " HBox.hgrow="ALWAYS">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </JFXComboBox>
+                                                                                 </children>
+                                                                                 <GridPane.margin>
+                                                                                    <Insets />
+                                                                                 </GridPane.margin>
+                                                                                 <padding>
+                                                                                    <Insets left="5.0" />
+                                                                                 </padding>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                                                 <children>
+                                                                                    <JFXComboBox fx:id="cmb_idioma" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Escoger opcion " HBox.hgrow="ALWAYS">
+                                                                                       <HBox.margin>
+                                                                                          <Insets right="10.0" />
+                                                                                       </HBox.margin>
+                                                                                    </JFXComboBox>
+                                                                                 </children>
+                                                                                 <GridPane.margin>
+                                                                                    <Insets />
+                                                                                 </GridPane.margin>
+                                                                                 <padding>
+                                                                                    <Insets left="5.0" />
+                                                                                 </padding>
+                                                                              </HBox>
+                                                                           </children>
+                                                                        </GridPane>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <Separator opacity="0.5" prefWidth="200.0">
+                                                         <VBox.margin>
+                                                            <Insets bottom="4.0" top="4.0" />
+                                                         </VBox.margin>
+                                                      </Separator>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <Label maxWidth="1.7976931348623157E308" text="Lista de Recursos" underline="true">
+                                                                     <font>
+                                                                        <Font name="System Italic" size="12.0" />
+                                                                     </font>
+                                                                     <padding>
+                                                                        <Insets top="10.0" />
+                                                                     </padding>
+                                                                  </Label>
+                                                                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="293.0">
+                                                                     <children>
+                                                                        <TableView fx:id="tbl_listaRecurso" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                                                                           <columns>
+                                                                              <TableColumn editable="false" maxWidth="43.0" prefWidth="43.0" text="Ir" />
+                                                                              <TableColumn editable="false" maxWidth="1.7976931348623157E308" prefWidth="76.0" text="Nombre" />
+                                                                           </columns>
+                                                                        </TableView>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <Separator opacity="0.5" prefWidth="200.0">
+                                                         <VBox.margin>
+                                                            <Insets bottom="4.0" top="4.0" />
+                                                         </VBox.margin>
+                                                      </Separator>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <Label maxWidth="1.7976931348623157E308" text="Informaciòn Bàsica" underline="true">
+                                                                     <font>
+                                                                        <Font name="System Italic" size="12.0" />
+                                                                     </font>
+                                                                     <padding>
+                                                                        <Insets top="10.0" />
+                                                                     </padding>
+                                                                  </Label>
+                                                                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="293.0">
+                                                                     <children>
+                                                                        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <columnConstraints>
+                                                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="0.0" prefWidth="13.0" />
+                                                                              <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="237.0" />
+                                                                              <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="237.0" />
+                                                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="0.0" prefWidth="13.0" />
+                                                                           </columnConstraints>
+                                                                           <rowConstraints>
+                                                                              <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="NEVER" />
+                                                                              <RowConstraints minHeight="150.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                                                           </rowConstraints>
+                                                                           <children>
+                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                                                                 <children>
+                                                                                    <Label text="Imagen Principal" />
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                                 <children>
+                                                                                    <ImageView fx:id="img_imagenPrincipalB" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                                                                 <children>
+                                                                                    <Label text="Descripcion" />
+                                                                                 </children>
+                                                                              </HBox>
+                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                                                 <children>
+                                                                                    <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                                                                                       <content>
+                                                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                                                                             <children>
+                                                                                                <Label fx:id="lbl_descripcionB" alignment="TOP_CENTER" text="Texto de la descripcion " wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                                   <padding>
+                                                                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                                                                   </padding>
+                                                                                                </Label>
+                                                                                             </children>
+                                                                                          </AnchorPane>
+                                                                                       </content>
+                                                                                    </ScrollPane>
+                                                                                 </children>
+                                                                              </HBox>
+                                                                           </children>
+                                                                        </GridPane>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </VBox>
+                                             </content>
+                                          </ScrollPane>
+                                       </children>
+                                    </VBox>
+                                 </children></AnchorPane>
                               <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0" />
                            </children>
                         </HBox>
@@ -108,7 +427,60 @@
                                     <Separator opacity="0.5" prefWidth="200.0" />
                                     <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                                        <content>
-                                          <AnchorPane fx:id="anch_contenedor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                                          <AnchorPane fx:id="anch_contenedor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                             <children>
+                                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="150.0" prefWidth="290.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="150.0" text="Nombre Recurso">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="25.0" right="25.0" top="15.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label fx:id="lbl_nombreRecurso" alignment="TOP_CENTER" maxHeight="80.0" maxWidth="1.7976931348623157E308" minWidth="110.0" text="...h..." wrapText="true" VBox.vgrow="ALWAYS">
+                                                         <VBox.margin>
+                                                            <Insets bottom="7.0" left="25.0" right="25.0" top="1.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="150.0" text="Descripcion">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="25.0" right="25.0" top="15.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label fx:id="lbl_descripcion" alignment="TOP_CENTER" maxHeight="80.0" maxWidth="1.7976931348623157E308" minWidth="110.0" text="...h..." wrapText="true" VBox.vgrow="ALWAYS">
+                                                         <VBox.margin>
+                                                            <Insets bottom="7.0" left="25.0" right="25.0" top="1.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="150.0" text="Ubicacion">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="25.0" right="25.0" top="15.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label fx:id="lbl_ubicacionZonal" alignment="TOP_CENTER" maxHeight="80.0" maxWidth="1.7976931348623157E308" minWidth="110.0" text="...h..." wrapText="true" VBox.vgrow="ALWAYS">
+                                                         <VBox.margin>
+                                                            <Insets bottom="7.0" left="25.0" right="25.0" top="1.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="150.0" text="Imagen Principal">
+                                                         <VBox.margin>
+                                                            <Insets bottom="5.0" left="25.0" right="25.0" top="15.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="180.0" prefWidth="220.0">
+                                                         <children>
+                                                            <VBox alignment="CENTER" layoutX="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <ImageView fx:id="img_imagenPrincipal" fitHeight="177.0" fitWidth="240.0" pickOnBounds="true" preserveRatio="true" />
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="7.0" top="2.0" />
+                                                         </VBox.margin>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </VBox>
+                                             </children></AnchorPane>
                                        </content>
                                     </ScrollPane>
                                     <Separator opacity="0.5" prefWidth="200.0" />

@@ -1,5 +1,7 @@
 package ec.edu.upse.facsistel.gitwym.sai.controllers;
 
+import java.util.Optional;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -7,8 +9,10 @@ import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -33,10 +37,9 @@ public class BaseController {
 		General.setImageView("Upse.png", img_logoDer);
 		General.setTexttoLabel(lbl_empresa, nombreEmpresa);
 		General.setTexttoLabel(lbl_nombreUsuario, nombreUsuario);
-		General.setContentToJFXDrawer("/viewBase/BaseMenu.fxml", drw_drawer);
+		General.setContentToJFXDrawer("/viewBase/BaseMenu.fxml", drw_drawer);//
 		Context.getInstance().setAnch_Contenido(anch_contenido);
-//		General.setContentParent("/viewPrincipal/RecursoPrincipal.fxml", anch_contenido);
-		General.setContentParent("/viewGenerales/Menu.fxml", anch_contenido);
+		General.setContentParent("/viewPrincipal/RecursoPrincipal.fxml", anch_contenido);
 
 		HamburgerBackArrowBasicTransition hmb1 = new HamburgerBackArrowBasicTransition(hmb_menu);
 		hmb1.setRate(-1);		
@@ -46,10 +49,12 @@ public class BaseController {
 			General.setAbriCerrarDRW(drw_drawer);
 		});
 
+		//validar el usuario ingresado y darle la bienvenida.
 	}
 	
 	@FXML
 	void salir_CerrarCesion(ActionEvent event) {
-		System.exit(0);
+		Optional<ButtonType> result = Message.showQuestion("Desea continuar y salir del sistema?.", Context.getInstance().getStage());
+		if(result.get() == ButtonType.OK) System.exit(0);			
 	}
 }

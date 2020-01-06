@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefWidth="355.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.BaseMenuController">
+<VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefWidth="355.0" stylesheets="/styles.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.BaseMenuController">
    <children>
       <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0">
          <children>

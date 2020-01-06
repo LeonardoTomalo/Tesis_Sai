@@ -18,6 +18,7 @@ public class App extends Application {
 			Context.getInstance().setStage(primaryStage);
 			Parent root = FXMLLoader.load(getClass().getResource("/viewBase/Base.fxml"));
 			Scene scene = new Scene(root);
+			scene.getStylesheets().add("/styles.css");
 			primaryStage.setScene(scene);
 			primaryStage.setMaximized(true);
 			primaryStage.setMinWidth(500);

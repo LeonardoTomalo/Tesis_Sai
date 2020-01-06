@@ -1,6 +1,6 @@
 package ec.edu.upse.facsistel.gitwym.sai.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.couchbase.core.mapping.Document;
 
@@ -24,5 +24,5 @@ public class Rol {
 	@Field private String rol;
 	@Field private String descripcion;
 	@Field private Boolean estado;
-	@Field private ArrayList<String> menusIds;
+	@Field private List<String> menusIds;
 }

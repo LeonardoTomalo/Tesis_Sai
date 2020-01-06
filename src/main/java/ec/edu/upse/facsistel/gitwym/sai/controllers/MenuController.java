@@ -131,15 +131,19 @@ public class MenuController {
 				if (rbtn_menuSecundario.isSelected()) {
 					// Tambien debo validar que el nombre de cada menu no seaigual a otro menu
 					for (Menu m : listaMenu) {
-						if (txt_nombreMenuPadre.getText().equals(m.getNombre()))
-							menu.setIdPadre(m);
+						if (txt_nombreMenuPadre.getText().equals(m.getNombre())) {
+							menu.setIdPadre(m);							
+						}else {
+							Message.showErrorNotification("El nombre del Menu Padre no coincide con ningun Menu de la base de datos.!! ");
+							return;
+						}
 					}
 				}
 				menu.setEstado(true);
 				rest.postForObject(uriMenu + "/saveOrUpdate", menu, Menu.class);
 				//SAVE ROL
 				for (Rol r : chklst_listaRoles.getItems()) {
-					if (chklst_listaRoles.getCheckModel().isChecked(r)) {					
+					if (chklst_listaRoles.getCheckModel().isChecked(r)) {
 						if (!r.getMenusIds().contains(menu.getId())) r.getMenusIds().add(menu.getId()); 
 					}else {
 						if (r.getMenusIds().contains(menu.getId())) r.getMenusIds().remove(menu.getId());
@@ -220,11 +224,11 @@ public class MenuController {
 					rbtn_menuSecundario.setSelected(true);
 					txt_nombreMenuPadre.setText(menu.getIdPadre().getNombre());
 				}
-				//
+				//si este menu se encuentra en este rol checkea
+				chklst_listaRoles.getCheckModel().clearChecks();
 				for (Rol rol : chklst_listaRoles.getItems()) {
-					for (String idMenu : rol.getMenusIds()) {
-						if (idMenu.equals(menu.getId())) chklst_listaRoles.getCheckModel().check(rol);
-					}
+					if (rol.getMenusIds().contains(menu.getId())) 
+						chklst_listaRoles.getCheckModel().check(rol);
 				}
 			}			
 		});
