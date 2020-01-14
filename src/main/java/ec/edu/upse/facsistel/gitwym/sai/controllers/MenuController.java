@@ -95,8 +95,8 @@ public class MenuController {
 			lst_listaMenus.getSelectionModel().getSelectedItem().getNombre() + " ?.", Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				//Eliminar datos.
-				Map<String, Menu> params = new HashMap<String, Menu>();
-				params.put("c", menu);
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("c", menu.getId());
 				rest.delete(uriMenu + "/delete/{c}", params);
 				//save ROL
 				for (Rol r : listaRol) {
@@ -140,13 +140,13 @@ public class MenuController {
 					}
 				}
 				menu.setEstado(true);
-				rest.postForObject(uriMenu + "/saveOrUpdate", menu, Menu.class);
+				Menu mnew = rest.postForObject(uriMenu + "/saveOrUpdate", menu, Menu.class);
 				//SAVE ROL
 				for (Rol r : chklst_listaRoles.getItems()) {
 					if (chklst_listaRoles.getCheckModel().isChecked(r)) {
-						if (!r.getMenusIds().contains(menu.getId())) r.getMenusIds().add(menu.getId()); 
+						if (!r.getMenusIds().contains(mnew.getId())) r.getMenusIds().add(mnew.getId()); 
 					}else {
-						if (r.getMenusIds().contains(menu.getId())) r.getMenusIds().remove(menu.getId());
+						if (r.getMenusIds().contains(mnew.getId())) r.getMenusIds().remove(mnew.getId());
 					}
 					rest.postForObject(uriRol + "/saveOrUpdate", r, Rol.class);
 				}

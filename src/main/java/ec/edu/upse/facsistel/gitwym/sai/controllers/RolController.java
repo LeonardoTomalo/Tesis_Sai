@@ -33,26 +33,16 @@ import javafx.scene.control.SelectionMode;
 
 public class RolController {
 
-	@FXML
-	private JFXListView<Rol> lst_listaRoles;
-	@FXML
-	private JFXButton btn_Nuevo;
-	@FXML
-	private JFXButton btn_Eliminar;
-	@FXML
-	private JFXButton btn_Guardar;
-	@FXML
-	private JFXTextField txt_nombreRol;
-	@FXML
-	private JFXTextArea txt_descripRol;
-	@FXML
-	private JFXListView<Menu> lst_menuSeleccionados;
-	@FXML
-	private JFXListView<Menu> lst_menuDisponibles;
-	@FXML
-	private JFXButton btn_addAllMenus;
-	@FXML
-	private JFXButton btn_quitAllMenus;
+	@FXML private JFXListView<Rol> lst_listaRoles;
+	@FXML private JFXButton btn_Nuevo;
+	@FXML private JFXButton btn_Eliminar;
+	@FXML private JFXButton btn_Guardar;
+	@FXML private JFXTextField txt_nombreRol;
+	@FXML private JFXTextArea txt_descripRol;
+	@FXML private JFXListView<Menu> lst_menuSeleccionados;
+	@FXML private JFXListView<Menu> lst_menuDisponibles;
+	@FXML private JFXButton btn_addAllMenus;
+	@FXML private JFXButton btn_quitAllMenus;
 
 	// CONSUMIR WEB SERVICES
 	RestTemplate rest = new RestTemplate();
@@ -96,9 +86,9 @@ public class RolController {
 					Context.getInstance().getStage());
 			if (result.get() == ButtonType.OK) {
 				//Eliminar datos.
-				Map<String, Rol> params = new HashMap<String, Rol>();
-				params.put("c", rol);
-				rest.delete(uriMenu + "/delete/{c}", params);
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("c", rol.getId());
+				rest.delete(uriRol + "/delete/{c}", params);
 				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
 				initialize();
 			}
