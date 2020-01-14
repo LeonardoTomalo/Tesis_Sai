@@ -17,10 +17,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class Comodidades {
+public class TipoComodidad {
 	@Id private String id;
 	@Field private String descripcion;
-	@Field private String idRecurso;
-	@Field private String idTipoComodidad;
-	@Field private String coordenadas;
+	
+	@Override
+	public String toString() {
+		return descripcion;
+	}
+	
 }
