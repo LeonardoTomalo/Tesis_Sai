@@ -6,6 +6,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -83,63 +84,69 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <JFXTextField fx:id="txt_nombre" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                        <JFXTextField fx:id="txt_nombre" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="nombre del contacto..." GridPane.columnIndex="1" GridPane.columnSpan="3">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextArea fx:id="txt_descripcion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                        <JFXTextArea fx:id="txt_descripcion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="descripcion del contacto..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
                            <GridPane.margin>
                               <Insets bottom="5.0" right="10.0" />
                            </GridPane.margin>
                         </JFXTextArea>
-                        <JFXTextField fx:id="txt_telefono" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
+                        <JFXTextField fx:id="txt_telefono" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="telefono del contacto..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="txt_celular" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4">
+                        <JFXTextField fx:id="txt_celular" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="celular del contacto..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="txt_correo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5">
+                        <JFXTextField fx:id="txt_correo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="correo del contacto..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="txt_facebook" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
+                        <JFXTextField fx:id="txt_facebook" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="facebook del contacto..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="txt_instagram" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
+                        <JFXTextField fx:id="txt_instagram" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="instagram del contacto..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="txt_twitter" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
+                        <JFXTextField fx:id="txt_twitter" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="twitter del contacto..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </JFXTextField>
                      </children>
                   </GridPane>
+                  <Separator opacity="0.5" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Separator>
                   <HBox alignment="CENTER">
                      <children>
-                        <JFXButton fx:id="btn_guardarContacto" buttonType="RAISED" onAction="#guardarContacto" prefWidth="100.0" text="Guardar">
+                        <JFXButton fx:id="btn_guardar" buttonType="RAISED" onAction="#guardarContacto" prefWidth="100.0" text="Guardar">
                            <HBox.margin>
-                              <Insets right="25.0" />
+                              <Insets />
                            </HBox.margin>
                         </JFXButton>
+                        <JFXButton fx:id="btn_eliminar" buttonType="RAISED" onAction="#eliminarContacto" prefWidth="100.0" text="Eliminar" />
                         <JFXButton fx:id="btn_salir" buttonType="RAISED" onAction="#salirContacto" prefWidth="100.0" text="Salir">
                            <HBox.margin>
-                              <Insets left="25.0" />
+                              <Insets />
                            </HBox.margin>
                         </JFXButton>
                      </children>
                      <padding>
-                        <Insets bottom="10.0" top="20.0" />
+                        <Insets bottom="10.0" top="10.0" />
                      </padding>
                   </HBox>
                </children>
