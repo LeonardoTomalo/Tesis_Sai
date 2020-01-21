@@ -37,9 +37,9 @@ public class Recurso {
 	@Field private ArrayList<String> senderosIds;
 //	@Field private ArrayList<String> comodidadesIds;
 	@Field private ArrayList<String> accesibilidadesIds;
-	@Field private ArrayList<String> atractivosIds;
+//	@Field private ArrayList<String> atractivosIds;
 	@Field private ArrayList<String> idiomasIds;
-	@Field private ArrayList<Imagen> imagenes;
+	@Field private ArrayList<String> imagenes;
 	@Field private ArrayList<Contacto> contactos;
 	@Field private ArrayList<Video> videos;
 	@Field private ArrayList<Animacion3D> animaciones3d;

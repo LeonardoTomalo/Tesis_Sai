@@ -11,6 +11,30 @@
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
+		<dependency>
+    		<groupId>org.openjfx</groupId>
+    		<artifactId>javafx-swing</artifactId>
+    		<version>11.0.2</version>
+		</dependency>
+	
+		<!-- Google Cloud Storage para almacenamiento de contenido rico -->
+		<dependency>
+		    <groupId>com.google.cloud</groupId>
+		    <artifactId>google-cloud-storage</artifactId>
+		    <version>1.0.1</version>
+		</dependency>
+		<!-- Para procesar la imagen y evitar esos colores raros -->
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-jpeg</artifactId>
+			<version>3.3.2</version> <!-- Alternatively, build your own version -->
+		</dependency>
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-tiff</artifactId>
+			<version>3.3.2</version>
+		</dependency>		
 		<!-- ********* CONTROLSFX para notificaciones push ******** -->
 		<dependency>
 			<groupId>org.controlsfx</groupId>

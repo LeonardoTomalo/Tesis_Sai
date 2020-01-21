@@ -1,53 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="353.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.AtractivosController">
+<AnchorPane prefHeight="516.0" prefWidth="749.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.AtractivosController">
    <children>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox prefHeight="448.0" prefWidth="716.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <VBox prefHeight="286.0" prefWidth="429.0">
                <children>
-                  <JFXTextField fx:id="txt_buscarAtractivos" onInputMethodTextChanged="#buscarAtractivosTextChange" promptText="Buscar atractivos..." HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </HBox.margin>
-                  </JFXTextField>
-                  <JFXButton fx:id="btn_buscarAtractivos" buttonType="RAISED" onAction="#buscarAtractivos" text="Buscar">
-                     <HBox.margin>
-                        <Insets right="75.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="btn_agregarAtractivos" buttonType="RAISED" onAction="#agregarAtractivos" text="Agregar" />
-                  <JFXButton fx:id="btn_eliminarAtractivos" buttonType="RAISED" onAction="#eliminarAtractivos" text="Eliminar" />
-                  <JFXButton fx:id="btn_editarAtractivos" buttonType="RAISED" onAction="#editarAtractivos" text="Editar">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </JFXButton>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="35.0" text="Lista de Atractivos" />
+                  <Separator opacity="0.5" prefWidth="200.0" />
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <JFXComboBox fx:id="cmb_tipoAtractivos" labelFloat="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Tipo de Atractivos..." HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="10.0" right="15.0" top="10.0" />
+                           </HBox.margin>
+                        </JFXComboBox>
+                        <JFXButton fx:id="btn_verAllMapa" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#showAllAtractivosMapa" text="Ver Mapa" HBox.hgrow="NEVER" />
+                     </children>
+                  </HBox>
+                  <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
+                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <content>
+                        <JFXListView fx:id="lst_listaAtractivos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                     </content>
+                  </ScrollPane>
                </children>
-               <VBox.margin>
-                  <Insets bottom="7.0" />
-               </VBox.margin>
-            </HBox>
-            <TableView fx:id="tbl_listaAtractivos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-               <columns>
-                  <TableColumn prefWidth="204.0" text="Nombre" />
-                  <TableColumn prefWidth="201.0" text="Coordenadas" />
-                  <TableColumn prefWidth="95.0" text="Ver en mapa" />
-               </columns>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="5.0" />
-               </VBox.margin>
-            </TableView>
+            </VBox>
+            <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
+               <padding>
+                  <Insets left="7.0" right="5.0" />
+               </padding>
+            </Separator>
+            <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_RIGHT">
+                     <children>
+                        <JFXButton fx:id="btn_Nuevo" buttonType="RAISED" onAction="#addNuevaAtractivos" prefHeight="35.0" text="Nuevo" HBox.hgrow="NEVER" />
+                        <JFXButton fx:id="btn_Eliminar" buttonType="RAISED" maxHeight="-Infinity" minHeight="-Infinity" onAction="#eliminarAtractivos" prefHeight="35.0" text="Eliminar" HBox.hgrow="NEVER" />
+                        <JFXButton fx:id="btn_Guardar" buttonType="RAISED" onAction="#guardarAtractivos" prefHeight="35.0" text="Guardar">
+                           <HBox.margin>
+                              <Insets left="50.0" right="10.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <Separator opacity="0.5" prefWidth="200.0" />
+                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="140.0" prefWidth="140.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="ATRACTIVO DETALLE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                        <Label text="Recurso al que pertenece:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                        <Label text="Ubicación:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Descripción:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <JFXTextField fx:id="txt_descripcionAtractivo" labelFloat="true" promptText="Descripción de atractivo..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                        <HBox alignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                           <children>
+                              <JFXTextField fx:id="txt_coordenadasAtractivos" labelFloat="true" promptText="Coordenadas de atractivo..." HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <JFXButton fx:id="btn_buscarMapa" maxHeight="1.7976931348623157E308" onAction="#showMapaUbicacion" text="Buscar Mapa" HBox.hgrow="NEVER" />
+                           </children>
+                        </HBox>
+                        <JFXComboBox fx:id="cmb_recursos" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Seleccione recurso..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                        <Label text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <JFXTextField fx:id="txt_nombreAtractivo" labelFloat="true" promptText="Nombre de atractivo..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                        <Label text="Tipo de atractivo:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <JFXComboBox fx:id="cmb_tipoAtractivoDetalles" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Seleccione tipo de atractivo..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                        <Label text="Lista de imagenes:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <JFXListView fx:id="lst_listaImagenes" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.rowSpan="4" />
+                        <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.rowSpan="4">
+                           <children>
+                              <ImageView fx:id="img_imagenAtractivo" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8">
+                           <children>
+                              <JFXButton fx:id="btn_addImagen" onAction="#agregarImagen" text="add" />
+                              <JFXButton fx:id="btn_modificarImagen" onAction="#modificarImagen" text="update" />
+                              <JFXButton fx:id="btn_eliminarImagen" onAction="#eliminarImagen" text="delete" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </AnchorPane>

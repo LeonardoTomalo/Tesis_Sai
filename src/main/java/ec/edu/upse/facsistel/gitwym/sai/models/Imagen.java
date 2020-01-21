@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document
 public class Imagen {
-	@Id private String codigo;
+	@Id private String id;
 	@Field private String nombre;
 	@Field private String descripcion;
 	@Field private String autor;

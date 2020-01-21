@@ -36,7 +36,7 @@ public class FacilidadesController {
     @FXML private AnchorPane anch_atractivos;
 
 	public void initialize() {	
-		General.setContentParent("/viewAtractivos/Atractivos.fxml", anch_atractivos);
+//		General.setContentParent("/viewAtractivos/Atractivos.fxml", anch_atractivos);
 		
 	}     
         
