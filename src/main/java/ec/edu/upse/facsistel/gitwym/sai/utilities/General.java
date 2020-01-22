@@ -1,5 +1,8 @@
 package ec.edu.upse.facsistel.gitwym.sai.utilities;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
 import java.io.IOException;
 
 import com.gluonhq.maps.MapView;
@@ -26,6 +29,21 @@ public class General {
 		Image img = new Image(nombreImagen);
 		imgView.setImage(img);
 	}	
+	
+	public static byte[] converterImageToByteArray(BufferedImage bufferImage) {
+		try {
+			// get DataBufferBytes from Raster
+			 WritableRaster raster = bufferImage .getRaster();
+			 DataBufferByte data   = (DataBufferByte) raster.getDataBuffer();
+
+			 return data.getData();
+		}catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al convertir imagen en Array.!!");
+			return null;
+		}
+	}
+	
 	
 	/**
 	 * Establece la interfaz de la URI como contenido del anchorPane.

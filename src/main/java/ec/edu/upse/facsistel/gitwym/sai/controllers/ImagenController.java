@@ -2,6 +2,7 @@ package ec.edu.upse.facsistel.gitwym.sai.controllers;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -165,9 +166,6 @@ public class ImagenController {
 				imagen.setIsPrincipal(rbtn_esPrincipal.isSelected());
 				imagen.setIsReportado(rbtn_esReportado.isSelected());
 				imagen.setNombre(txt_nombreImagen.getText());
-//				imagen.setRanking();
-				//REALIZAR LO REFERENTE A GOOGLE CLOUD PARA TRAER URL DE ALMACENAMIENTO
-				imagen.setUrl(txt_urlAlmacenamiento.getText());
 				imagen.setUsuarioIngresa(Context.getInstance().getUserLogged());
 				
 				ArrayList<String> ls = new ArrayList<String>();
@@ -200,8 +198,17 @@ public class ImagenController {
 						ls.add(e.getId());	
 					}
 				}				
-				imagen.setEtiquetasIds(ls);				
-//				rest.postForObject(uriImagen + "/saveOrUpdate", imagen, Imagen.class);
+				imagen.setEtiquetasIds(ls);	
+//				imagen.setRanking();
+				String url;
+				if(imagen.getId() != null) {//ya tiene id debe modificar la imagen en google cloud
+					url = gcsw.saveImage(imagen.getId(), General.converterImageToByteArray(bufferedImageToExchage));
+				}else {//es nueva imagen
+					Imagen newImg = rest.postForObject(uriImagen + "/saveOrUpdate", imagen, Imagen.class);
+					url = gcsw.saveImage(newImg.getId(), General.converterImageToByteArray(bufferedImageToExchage));
+				}
+				imagen.setUrl(url);
+				rest.postForObject(uriImagen + "/saveOrUpdate", imagen, Imagen.class);
 				Message.showSuccessNotification("Se guardaron exitosamente los datos.!! ");
 				imagen = new Imagen();
 				initialize();
@@ -214,23 +221,31 @@ public class ImagenController {
 
     @FXML
     void findImageFile(ActionEvent event) {
-    	FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Buscar Imagen");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                new FileChooser.ExtensionFilter("PNG", "*.png"),
-                new FileChooser.ExtensionFilter("JPEG", "*.jpeg")                
-        );
-
-        // Obtener la imagen seleccionada
-        File imgFile = fileChooser.showOpenDialog(Context.getInstance().getStage());
-
-        // Mostar la imagen
-        if (imgFile != null) {
-            Image image = new Image("file:" + imgFile.getAbsolutePath());
-            img_imagen.setImage(image);
-        }
+		try {
+			FileChooser fileChooser = new FileChooser();
+		    fileChooser.setTitle("Buscar Imagen");
+		    fileChooser.getExtensionFilters().addAll(
+		            new FileChooser.ExtensionFilter("All Images", "*.*"),
+		            new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+		            new FileChooser.ExtensionFilter("PNG", "*.png"),
+		            new FileChooser.ExtensionFilter("JPEG", "*.jpeg")                
+		    );
+		
+		    // Obtener la imagen seleccionada
+		    File imgFile = fileChooser.showOpenDialog(Context.getInstance().getStage());
+		
+		    //Almacenar en memoria.
+		    BufferedImage bufferedImage = ImageIO.read(imgFile);
+			bufferedImageToExchage = bufferedImage;
+		    // Mostar la imagen
+		    if (imgFile != null) {
+		        Image image = new Image("file:" + imgFile.getAbsolutePath());
+		        img_imagen.setImage(image);
+		    }
+		} catch (IOException e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al cargar imagen.!!");
+		}
     }
 
     @FXML
