@@ -23,5 +23,5 @@ public class Transporte {
 	@Field private Float distanciaAproximada;
 	@Field private Float tiempoRecorrido; 
 	@Field private Boolean estado;
-	@Field private TipoTransporte tipoTransporte;
+	@Field private String idTipoTransporte;
 }

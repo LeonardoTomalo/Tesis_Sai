@@ -20,18 +20,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class Imagen {
+public class MediaCloudResources {
 	@Id private String id;
 	@Field private String nombre;
 	@Field private String descripcion;
 	@Field private String autor;
 	@Field private Usuario usuarioIngresa;
-	@Field private String coordenadas;
 	@Field private Date fecha;
-	@Field private Boolean isReportado;
-	@Field private String url;
 	@Field private Boolean isPrincipal;
+	@Field private Boolean isReportado;
+	@Field private String coordenadas;
+	@Field private String extensionFile;
+	@Field private String urlAlmacenamiento;
 	@Field private Boolean estado;
-	@Field private ArrayList<String> etiquetasIds;
+	@Field private ArrayList<String> idsEtiqueta;
 	@Field private Ranking ranking;
+	@Field private TipoMedia tipoMedia;
 }

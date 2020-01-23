@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document
 public class Provincia {
-	@Id private String codigo;
+	@Id private String id;
 	@Field private String descripcion;
 	@Field private ArrayList<Canton> cantones;
 }

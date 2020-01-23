@@ -27,23 +27,19 @@ public class Recurso {
 	@Field private String informacionGeneral;
 	@Field private String direccion;
 	@Field private String coordenadas;
-	@Field private String documentClass;
 	@Field private String propietario;
 	@Field private Boolean estado;
-	@Field private Seguridad seguridad;
-	@Field private ArrayList<String> categoriasIds;
+	@Field private String idLocalizacion;
+	@Field private ArrayList<Costo> costoServicio;
+	@Field private ArrayList<String> idsSenderos;
+	@Field private ArrayList<String> idsCategoria;//hacerlo con un checkList
+	@Field private ArrayList<String> idsAccesibilidades;
 	@Field private Ranking ranking;
-	@Field private ArrayList<Costo> costos;
-	@Field private ArrayList<String> senderosIds;
-//	@Field private ArrayList<String> comodidadesIds;
-	@Field private ArrayList<String> accesibilidadesIds;
-//	@Field private ArrayList<String> atractivosIds;
-	@Field private ArrayList<String> idiomasIds;
-	@Field private ArrayList<String> imagenes;
+	@Field private ArrayList<String> idiomas;
+	@Field private Seguridad seguridad;
 	@Field private ArrayList<Contacto> contactos;
-	@Field private ArrayList<Video> videos;
-	@Field private ArrayList<Animacion3D> animaciones3d;
-	@Field private ArrayList<Comentario> comentarios;
+	@Field private ArrayList<Comentario> comentarios;	
+	@Field private ArrayList<String> idsMediaCloudResources;	
 	
 	@Override
 	public String toString() {

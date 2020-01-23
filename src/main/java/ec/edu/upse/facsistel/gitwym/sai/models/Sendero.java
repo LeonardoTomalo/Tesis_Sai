@@ -27,16 +27,13 @@ public class Sendero {
 	@Field private Float tiempoRecorrido; 
 	@Field private String instrucciones;
 	@Field private Boolean estado;
-	@Field private String dificultadRecorridoIds;
+	@Field private String idDificultadRecorrido;
 	@Field private Seguridad seguridad;
-	@Field private String senalCelularIds;
-	@Field private ArrayList<Costo> costos;
+	@Field private String idSenalCelular;
+	@Field private ArrayList<Costo> costoServicio;
 	@Field private ArrayList<Recorrido> recorridoRuta;
-	@Field private ArrayList<String> equipamientoIds;
-	@Field private ArrayList<String> transportesIds;
-	@Field private ArrayList<String> atractivosIds;
-	@Field private ArrayList<Imagen> imagenes;
-	@Field private ArrayList<Video> videos;
-	@Field private ArrayList<Animacion3D> animaciones3d;
+	@Field private ArrayList<String> idsEquipamiento;
+	@Field private ArrayList<String> idsTransporte;
+	@Field private ArrayList<String> idsMediaCloudResources;
 	@Field private ArrayList<Comentario> comentarios;
 }

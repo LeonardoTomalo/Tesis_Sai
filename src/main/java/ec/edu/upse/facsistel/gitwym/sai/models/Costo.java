@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document
 public class Costo {
-	@Id private String codigo;
+	@Id private String id;
 	@Field private String descripcion;
 	@Field private Float valor;
 }

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document
 public class Contacto {
-	@Id private String codigo;
+	@Id private String id;
 	@Field private String nombre;
 	@Field private String descripcion;
 	@Field private String telefono;

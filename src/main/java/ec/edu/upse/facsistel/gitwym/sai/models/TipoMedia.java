@@ -17,13 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document
-public class Animacion3D {
-	@Id private String codigo;
- 	@Field private String nombre;
- 	@Field private String descripcion;
- 	@Field private String autor;
- 	@Field private String animacionPathHTML; //*** No se realmente si es lo que Carmen necesita.
- 	@Field private String url; //ruta del objeto 3d.
- 	@Field private Boolean estado;
- 	@Field private Ranking ranking;	
+public class TipoMedia {
+	@Id private String id;
+	@Field private String descripcion;
 }

@@ -21,12 +21,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document
 public class Comentario {
-	@Id private String codigo;
+	@Id private String id;
 	@Field private String descripcion;
 	@Field private Usuario autor;
 	@Field private Date fecha;
 	@Field private Boolean isReportado;
 	@Field private Boolean estado;
-	@Field private ArrayList<Comentario> comentarios;
+	@Field private ArrayList<Comentario> respuestas;
 	@Field private Ranking ranking;	
 }

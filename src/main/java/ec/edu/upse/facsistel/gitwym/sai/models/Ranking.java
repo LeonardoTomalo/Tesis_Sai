@@ -20,9 +20,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document
 public class Ranking {
-	@Id private String codigo;
+	@Id private String id;
 	@Field private String descripcion;
 	@Field private long votosFavor;
 	@Field private long votosContra;
-	@Field private ArrayList<String> usuariosIds;  //*** Para validar que no se repita el voto.
+	@Field private ArrayList<String> idsUsuarioFavor;  //*** Para validar que no se repita el voto.
+	@Field private ArrayList<String> idsUsuarioContra;  //*** Para validar que no se repita el voto.
 }

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document
 public class Parroquia {
-	@Id private String codigo;
+	@Id private String id;
 	@Field private String descripcion;
 	@Field private String codCanton;
 }

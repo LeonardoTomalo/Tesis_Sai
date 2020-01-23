@@ -20,5 +20,4 @@ import lombok.NoArgsConstructor;
 public class DisponibilidadCelular {
 	@Id private String id;
 	@Field private String descripcion;
-	@Field private Boolean isSelect;
 }

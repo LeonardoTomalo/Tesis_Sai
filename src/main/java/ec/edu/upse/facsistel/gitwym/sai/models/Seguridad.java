@@ -20,11 +20,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Document
 public class Seguridad {
-	@Id private String codigo;
+	@Id private String id;
 	@Field private String descripcion;
 	@Field private long votosBaja;
 	@Field private long votosMedia;
 	@Field private long votosAlta;
 	@Field private long votosMuyAlta;
-	@Field private ArrayList<String> usuariosIds;  //*** Para validar que el voto no se repita.
+	@Field private ArrayList<String> idsUsuarioBaja;  //*** Para validar que el voto no se repita.
+	@Field private ArrayList<String> idsUsuarioMedia;  //*** Para validar que el voto no se repita.
+	@Field private ArrayList<String> idsUsuarioAlta;  //*** Para validar que el voto no se repita.
+	@Field private ArrayList<String> idsUsuarioMuyAlta;  //*** Para validar que el voto no se repita.
 }
