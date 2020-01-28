@@ -39,6 +39,7 @@ public class BaseController {
 		General.setTexttoLabel(lbl_nombreUsuario, nombreUsuario);
 		General.setContentToJFXDrawer("/viewBase/BaseMenu.fxml", drw_drawer);//
 		Context.getInstance().setAnch_Contenido(anch_contenido);
+//		General.setContentParent("/viewAcceso/Menu.fxml", anch_contenido);
 		General.setContentParent("/viewPrincipal/RecursoPrincipal.fxml", anch_contenido);
 
 		HamburgerBackArrowBasicTransition hmb1 = new HamburgerBackArrowBasicTransition(hmb_menu);

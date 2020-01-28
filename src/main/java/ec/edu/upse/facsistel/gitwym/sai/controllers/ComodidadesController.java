@@ -21,6 +21,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoComodidad;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,9 +47,10 @@ public class ComodidadesController {
 
  // CONSUMIR WEB SERVICES
  	RestTemplate rest = new RestTemplate();
- 	String uriTipoComodidad = "http://localhost:8082/tipoComodidad";
- 	String uriComodidades = "http://localhost:8082/comodidades";
- 	String uriRecurso = "http://localhost:8082/recurso";
+	String urlBase = PropertyManager.getBaseUrl();
+ 	String uriTipoComodidad = urlBase + "/tipoComodidad";
+ 	String uriComodidades = urlBase + "/comodidades";
+ 	String uriRecurso = urlBase + "/recurso";
      
  	// DE LA CLASE COMODIDADES
  	Comodidades comodidad = new Comodidades();

@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXTextField;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoComodidad;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +38,8 @@ public class TipoComodidadController {
 
     // CONSUMIR WEB SERVICES
  	RestTemplate rest = new RestTemplate();
- 	String uriTipoComodidad = "http://localhost:8082/tipoComodidad";
+	String urlBase = PropertyManager.getBaseUrl();
+ 	String uriTipoComodidad = urlBase + "/tipoComodidad";
     
  	// DE LA CLASE IDIOMAS
  	TipoComodidad tipoComodidad = new TipoComodidad();

@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXTextField;
 import ec.edu.upse.facsistel.gitwym.sai.models.Categoria;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +38,8 @@ public class CategoriaController{
 
     // CONSUMIR WEB SERVICES
  	RestTemplate rest = new RestTemplate();
- 	String uriCategoria = "http://localhost:8082/categoria";
+	String urlBase = PropertyManager.getBaseUrl();
+ 	String uriCategoria = urlBase + "/categoria";
     
  	// DE LA CLASE IDIOMAS
  	Categoria categoria = new Categoria();

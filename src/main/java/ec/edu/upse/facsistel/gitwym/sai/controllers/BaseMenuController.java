@@ -14,6 +14,8 @@ import com.jfoenix.controls.JFXListView;
 import ec.edu.upse.facsistel.gitwym.sai.models.Menu;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +29,7 @@ public class BaseMenuController{
 	
 	// CONSUMIR WEB SERVICES
 		RestTemplate rest = new RestTemplate();
-		String uriMenu = "http://localhost:8082/menu";
+		String uriMenu = PropertyManager.getBaseUrl() + "/menu";
 		
 	// DE LA CLASE MENU
 		Menu menu = new Menu();
@@ -36,7 +38,12 @@ public class BaseMenuController{
 		ObservableList<Menu> obsListMenu = FXCollections.observableArrayList();
 	
 	public void initialize() {
-		loadMenus();
+		try {
+			loadMenus();			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showWarningNotification("NO SE HA PODIDO OBTENER LOS MENUS, CONTACTESE CON EL ADMINISTRADOR");
+		}
 	}
 	
 	public void loadMenus() {

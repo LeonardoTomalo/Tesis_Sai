@@ -19,6 +19,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Rol;
 import ec.edu.upse.facsistel.gitwym.sai.models.Usuario;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,8 +53,9 @@ public class UsuarioController {
 
 	// CONSUMIR WEB SERVICES
 	RestTemplate rest = new RestTemplate();
-	String uriUsuario = "http://localhost:8082/usuario";
-	String uriRol = "http://localhost:8082/rol";
+	String urlBase = PropertyManager.getBaseUrl();
+	String uriUsuario = urlBase + "/usuario";
+	String uriRol = urlBase + "/rol";
     
 	// DE LA CLASE USUARIOS
 	Usuario usuario = new Usuario();

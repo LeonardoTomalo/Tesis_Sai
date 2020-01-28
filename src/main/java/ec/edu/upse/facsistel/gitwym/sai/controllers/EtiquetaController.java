@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXTextField;
 import ec.edu.upse.facsistel.gitwym.sai.models.Etiquetas;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +38,8 @@ public class EtiquetaController {
 
     // CONSUMIR WEB SERVICES
  	RestTemplate rest = new RestTemplate();
- 	String uriEtiquetas = "http://localhost:8082/etiquetas";
+	String urlBase = PropertyManager.getBaseUrl();
+ 	String uriEtiquetas = urlBase + "/etiquetas";
     
  	// DE LA CLASE IDIOMAS
  	Etiquetas etiquetas = new Etiquetas();

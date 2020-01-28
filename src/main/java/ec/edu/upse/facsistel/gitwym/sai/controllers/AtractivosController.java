@@ -17,11 +17,12 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
 import ec.edu.upse.facsistel.gitwym.sai.models.Atractivo;
-import ec.edu.upse.facsistel.gitwym.sai.models.Imagen;
+import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
 import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoAtractivo;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,7 +47,7 @@ public class AtractivosController {
     @FXML private JFXButton btn_buscarMapa;
     @FXML private JFXComboBox<Recurso> cmb_recursos;
     @FXML private JFXTextField txt_nombreAtractivo;
-    @FXML private JFXListView<Imagen> lst_listaImagenes;
+    @FXML private JFXListView<MediaCloudResources> lst_listaImagenes;
     @FXML private ImageView img_imagenAtractivo;
     @FXML private JFXButton btn_addImagen;
     @FXML private JFXButton btn_modificarImagen;
@@ -54,10 +55,11 @@ public class AtractivosController {
 
     // CONSUMIR WEB SERVICES
 	RestTemplate rest = new RestTemplate();
-	String uriTipoAtractivo = "http://localhost:8082/tipoAtractivo";
-	String uriAtractivo = "http://localhost:8082/atractivo";
-	String uriRecurso = "http://localhost:8082/recurso";
-	String uriImagen = "http://localhost:8082/imagen";
+	String urlBase = PropertyManager.getBaseUrl();
+	String uriTipoAtractivo = urlBase + "/tipoAtractivo";
+	String uriAtractivo = urlBase + "/atractivo";
+	String uriRecurso = urlBase + "/recurso";
+	String uriImagen = urlBase + "/mediaCloudResources";
     
 	// DE LA CLASE ATRACTIVOS
 	Atractivo atractivo = new Atractivo();
@@ -78,10 +80,10 @@ public class AtractivosController {
 	ObservableList<Recurso> obsListRecurso = FXCollections.observableArrayList();
 
 	//DE LA CLASE IMAGEN
-	Imagen imagen = new Imagen();
-	List<Imagen> listaImagen = new ArrayList<Imagen>();
-	private static ResponseEntity<List<Imagen>> listRespImagen;
-	ObservableList<Imagen> obsListImagen = FXCollections.observableArrayList();
+	MediaCloudResources imagen = new MediaCloudResources();
+	List<MediaCloudResources> listaImagen = new ArrayList<MediaCloudResources>();
+	private static ResponseEntity<List<MediaCloudResources>> listRespImagen;
+	ObservableList<MediaCloudResources> obsListImagen = FXCollections.observableArrayList();
 		
 		
 	public void initialize() {

@@ -1,9 +1,10 @@
 package ec.edu.upse.facsistel.gitwym.sai.utilities;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import com.gluonhq.maps.MapView;
 import com.jfoenix.controls.JFXDrawer;
@@ -33,10 +34,23 @@ public class General {
 	public static byte[] converterImageToByteArray(BufferedImage bufferImage) {
 		try {
 			// get DataBufferBytes from Raster
-			 WritableRaster raster = bufferImage .getRaster();
-			 DataBufferByte data   = (DataBufferByte) raster.getDataBuffer();
+//			 WritableRaster raster = bufferImage .getRaster();
+//			 DataBufferByte data   = (DataBufferByte) raster.getDataBuffer();
+//			 return data.getData();
+			
+			BufferedImage bufferedImage = bufferImage;
+			ByteArrayOutputStream s = new ByteArrayOutputStream();
+			if(!ImageIO.write(bufferedImage, "png", s)) {
+				System.err.println("Error al escribir imagen al byte Array Output Stream");
+			}
 
-			 return data.getData();
+			byte[] res = s.toByteArray();
+			s.flush();
+			s.close();
+			//Metodo para convertir ByteArray en Archivo de imagen. Solo usado para pruebas.
+			//convertirByteArrayEnImagenArchivo();
+			return res;
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 			Message.showErrorNotification("Ha surgido un error al convertir imagen en Array.!!");

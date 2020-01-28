@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXTextField;
 import ec.edu.upse.facsistel.gitwym.sai.models.Idiomas;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +38,8 @@ public class IdiomaController {
 
     // CONSUMIR WEB SERVICES
  	RestTemplate rest = new RestTemplate();
- 	String uriIdiomas = "http://localhost:8082/idiomas";
+	String urlBase = PropertyManager.getBaseUrl();
+ 	String uriIdiomas = urlBase + "/idiomas";
     
  	// DE LA CLASE IDIOMAS
  	Idiomas idioma = new Idiomas();

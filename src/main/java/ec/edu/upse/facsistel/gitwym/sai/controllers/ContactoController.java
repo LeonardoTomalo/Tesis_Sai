@@ -64,7 +64,7 @@ public class ContactoController {
 			if (result.get() == ButtonType.OK) {
 				//Eliminar datos.
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("c", contacto.getCodigo());
+				params.put("c", contacto.getId());
 				rest.delete(uriContacto + "/delete/{c}", params);
 				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
 				salirContacto();

@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXTextField;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoAtractivo;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +38,8 @@ public class TipoAtractivoController {
 
     // CONSUMIR WEB SERVICES
  	RestTemplate rest = new RestTemplate();
- 	String uriTipoAtractivo = "http://localhost:8082/tipoAtractivo";
+	String urlBase = PropertyManager.getBaseUrl();
+ 	String uriTipoAtractivo = urlBase + "/tipoAtractivo";
     
  	// DE LA CLASE IDIOMAS
  	TipoAtractivo tipoAtractivo = new TipoAtractivo();

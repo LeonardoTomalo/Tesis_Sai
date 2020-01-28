@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXTextField;
 import ec.edu.upse.facsistel.gitwym.sai.models.Accesibilidad;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +38,8 @@ public class AccesibilidadController {
 
     // CONSUMIR WEB SERVICES
  	RestTemplate rest = new RestTemplate();
- 	String uriAccesibilidad = "http://localhost:8082/accesibilidad";
+	String urlBase = PropertyManager.getBaseUrl();
+ 	String uriAccesibilidad = urlBase + "/accesibilidad";
     
  	// DE LA CLASE IDIOMAS
  	Accesibilidad accesibilidad = new Accesibilidad();

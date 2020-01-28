@@ -24,6 +24,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Rol;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,8 +56,9 @@ public class MenuController {
 
 	// CONSUMIR WEB SERVICES
 	RestTemplate rest = new RestTemplate();
-	String uriMenu = "http://localhost:8082/menu";
-	String uriRol = "http://localhost:8082/rol";
+	String urlBase = PropertyManager.getBaseUrl();
+	String uriMenu = urlBase + "/menu";
+	String uriRol = urlBase + "/rol";
 
 	// DE LA CLASE MENU
 	Menu menu = new Menu();
