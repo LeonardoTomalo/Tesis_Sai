@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 
 import ec.edu.upse.facsistel.gitwym.sai.models.Menu;
@@ -19,6 +20,7 @@ import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -26,6 +28,7 @@ import javafx.scene.control.ListCell;
 public class BaseMenuController{
 
 	@FXML private JFXListView<Menu> lstv_Menu;
+    @FXML private JFXButton btn_actualizar;
 	
 	// CONSUMIR WEB SERVICES
 		RestTemplate rest = new RestTemplate();
@@ -45,7 +48,12 @@ public class BaseMenuController{
 			Message.showWarningNotification("NO SE HA PODIDO OBTENER LOS MENUS, CONTACTESE CON EL ADMINISTRADOR");
 		}
 	}
-	
+
+    @FXML
+    void actualizarListaMenus(ActionEvent event) {
+    	loadMenus();
+    }
+    
 	public void loadMenus() {
 		obsListMenu.clear();
 		listRespMenu = rest.exchange(uriMenu + "/getAll", HttpMethod.GET, null,

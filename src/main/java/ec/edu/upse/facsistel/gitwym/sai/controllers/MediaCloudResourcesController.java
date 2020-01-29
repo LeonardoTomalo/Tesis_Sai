@@ -343,30 +343,31 @@ public class MediaCloudResourcesController {
 		txt_buscarNombre.textProperty().addListener((observable, oldValue, newValue) -> {
     	    System.out.println("textfield changed from " + oldValue + " to " + newValue);
     	    
-			ObservableList<MediaCloudResources> obsAux = FXCollections.observableArrayList();
-			
+    	    ObservableList<MediaCloudResources> obsAux = FXCollections.observableArrayList();			
     	    for (MediaCloudResources mcr : lst_listaMedios.getItems()) {    	    	
     	    	String nombre = mcr.getNombre();
     	    	if (newValue.length() >0) {
-        	    	for (int i = 0; i < newValue.length(); i++) {
-        	    		for (int j = 0; j < nombre.length(); j++) {
-        	    			if (nombre.trim().toLowerCase().charAt(j) == newValue.trim().toLowerCase().charAt(i)) {
-        						if (!obsAux.isEmpty()) {
-    								if (!obsAux.contains(mcr)) {
-    									obsAux.add(mcr);
-    								}
-    							}else {
-    								obsAux.add(mcr);
-    							}    						
-        					}	
-						}    					
+    	    		for (int i = 0; i < newValue.length(); i++) {
+    	    			if (nombre.trim().toLowerCase().charAt(i) == newValue.trim().toLowerCase().charAt(i)) {
+    	    				if (!obsAux.isEmpty()) {
+    	    					if (!obsAux.contains(mcr)) {
+    	    						obsAux.add(mcr);
+    	    					}
+    	    				}else {
+    	    					obsAux.add(mcr);
+    	    				}
+    	    			} 
     				}
 				}
 			}
-    	    
     	    //enviamos la lista.
     	    lst_listaMedios.setItems(obsAux);
-    	    
+    	    if (newValue.isBlank() || newValue.isEmpty()) {
+				loadMedios();
+				obsListTipoMedia.clear();
+				loadTipoMedios();
+				
+			}
     	});
     }
 
