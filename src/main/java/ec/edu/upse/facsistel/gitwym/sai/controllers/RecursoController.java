@@ -1,89 +1,196 @@
 package ec.edu.upse.facsistel.gitwym.sai.controllers;
 
-import org.springframework.web.client.RestTemplate;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
-import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
-import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
-import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TitledPane;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
+import org.controlsfx.control.CheckListView;
 
 public class RecursoController {
 
+    @FXML private AnchorPane anch_recurso;
     @FXML private JFXButton btn_guardar;
     @FXML private JFXButton btn_atras;
-    @FXML private JFXButton btn_buscarCoordenadas;
     @FXML private JFXComboBox<?> cmb_provinciaRecurso;
     @FXML private JFXComboBox<?> cmb_cantonRecurso;
     @FXML private JFXComboBox<?> cmb_parroquiaRecurso;
-    @FXML private JFXComboBox<?> cmb_categoriaRecurso;
+    @FXML private JFXTextField txt_nombreRecurso;
     @FXML private JFXTextArea txt_descripcionRecurso;
     @FXML private JFXTextArea txt_infGeneralRecurso;
-    @FXML private JFXTextField txt_nombreRecurso;
     @FXML private JFXTextField txt_coordenadasRecurso;
+    @FXML private JFXButton btn_buscarCoordRecurso;
     @FXML private JFXTextField txt_direccionRecurso;
-    @FXML private JFXTabPane tbp_recurso;
-    @FXML private AnchorPane anch_recurso;
+    @FXML private JFXTextField txt_propietarioRecurso;
     @FXML private AnchorPane anch_tabs;
+    @FXML private JFXTabPane tbp_recurso;
     @FXML private AnchorPane anch_galeria;
+    @FXML private JFXComboBox<?> cmb_tipoMediaBusqueda;
+    @FXML private JFXButton btn_verMediaMapa;
+    @FXML private JFXListView<?> lst_listaMedios;
+    @FXML private JFXTextField txt_buscarNombreMedio;
+    @FXML private JFXButton btn_nuevoMedio;
+    @FXML private JFXButton btn_EliminarMedio;
+    @FXML private JFXButton btn_modificarMedio;
+    @FXML private AnchorPane contenedorDeMedios;
     @FXML private AnchorPane anch_facilidades;
+    @FXML private TitledPane accd_costosRecurso;
+    @FXML private JFXButton btn_addCosto;
+    @FXML private JFXButton btn_eliminarCosto;
+    @FXML private JFXButton btn_modificarCosto;
+    @FXML private JFXListView<?> lst_listaCostosRecurso;
+    @FXML private TitledPane accd_ContactosRecurso;
+    @FXML private JFXButton btn_addContacto;
+    @FXML private JFXButton btn_eliminarContacto;
+    @FXML private JFXButton btn_editarContacto;
+    @FXML private JFXListView<?> lst_listaContactosRecurso;
+    @FXML private JFXButton btn_verComodidadMapa;
+    @FXML private JFXTextField txt_buscarComodidadesRecurso;
+    @FXML private JFXButton btn_addComodidades;
+    @FXML private JFXButton btn_eliminarComodidades;
+    @FXML private JFXButton btn_modificarComodidades;
+    @FXML private JFXListView<?> lst_listaComodidadesRecurso;
+    @FXML private TitledPane accd_accesibilidadesRecurso;
+    @FXML private CheckListView<?> chklst_accesibilidadesRecurso;
+    @FXML private TitledPane accd_categoriasRecurso;
+    @FXML private CheckListView<?> chklst_categoriasRecurso;
+    @FXML private TitledPane acc_idiomasRecurso;
+    @FXML private CheckListView<?> chklst_idiomasRecurso;
+    @FXML private AnchorPane anch_comentarios1;
+    @FXML private JFXComboBox<?> cmb_tipoAtractivoBusqueda;
+    @FXML private JFXButton btn_verAtractivoMapa;
+    @FXML private JFXListView<?> lst_listaAtractivos;
+    @FXML private JFXTextField txt_buscarNombreAtractivos;
+    @FXML private JFXButton btn_nuevoAtractivo;
+    @FXML private JFXButton btn_EliminarAtractivo;
+    @FXML private JFXButton btn_modificarAtractivo;
+    @FXML private AnchorPane contenedorDeAtractivos;
     @FXML private AnchorPane anch_senderos;
-    @FXML private AnchorPane anch_video;
-    @FXML private AnchorPane anch_animaciones3d;
     @FXML private AnchorPane anch_comentarios;
-
+	
 	public void initialize() {	
-		General.setContentParent("/viewGaleria/Galeria.fxml", anch_galeria);
-		General.setContentParent("/viewFacilidades/Facilidades.fxml", anch_facilidades);
-		General.setContentParent("/viewVideos/Videos.fxml", anch_video);
-		General.setContentParent("/viewAnimacion3D/Animacion3D.fxml", anch_animaciones3d);
-		General.setContentParent("/viewSenderos/Senderos.fxml", anch_senderos);		
+//		General.setContentParent("/viewGaleria/Galeria.fxml", anch_galeria);
+//		General.setContentParent("/viewFacilidades/Facilidades.fxml", anch_facilidades);
+//		General.setContentParent("/viewVideos/Videos.fxml", anch_video);
+//		General.setContentParent("/viewAnimacion3D/Animacion3D.fxml", anch_animaciones3d);
+//		General.setContentParent("/viewSenderos/Senderos.fxml", anch_senderos);		
 	}     
-    
+
+    @FXML
+    void addComodidadesRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addContactoRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addCostoRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addNuevaMedia(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addNuevoAtractivo(ActionEvent event) {
+
+    }
+
     @FXML
     void atras(ActionEvent event) {
-    	General.setContentParent("/viewPrincipal/RecursoPrincipal.fxml", Context.getInstance().getAnch_Contenido());
+
     }
 
     @FXML
-    void guardar(ActionEvent event) {
-    	Recurso r = savePojoRecurso();
-    	
-    	//esto se debe poner en utilities haciendo generico para tener mejor codigo
-    	RestTemplate rest = new RestTemplate();
-    	final String uri = "http://localhost:8082/recurso/saveOrUpdate";
-    	Recurso p = rest.postForObject(uri, r, Recurso.class);
-    	System.out.println("Aqui empieza el POST FOR OBJECT" + p.toString());
-    	
-//    	RestTemplate rest = new RestTemplate();
-//    	final String uri = "http://localhost:8080/persons1";
-//    	ResponseEntity<List<Person>> rateResponse =
-//    	        rest.exchange(uri, HttpMethod.GET, null, new ParameterizedTypeReference<List<Person>>() { });
-//    	List<Person> persons = rateResponse.getBody();
-//    	
-//    	lst_personas.getItems().addAll(persons);
+    void buscarComodidadesTextChange(InputMethodEvent event) {
+
     }
 
     @FXML
-    void buscarCoordenadasEnMapa(ActionEvent event) {
-    	
+    void buscarRecursoEnMapa(ActionEvent event) {
+
     }
 
-    private Recurso savePojoRecurso() {
-    	Recurso r = new Recurso();
-    	System.out.println("PRESENTO LOS VALORES EN FXML: " + txt_nombreRecurso.getText());
-    	r.setNombre(txt_nombreRecurso.getText());
-    	r.setDescripcion(txt_descripcionRecurso.getText());
-    	r.setInformacionGeneral(txt_infGeneralRecurso.getText());
-    	r.setCoordenadas(txt_coordenadasRecurso.getText());
-    	r.setDireccion(txt_direccionRecurso.getText());
-		return r;
-	}
+    @FXML
+    void eliminarAtractivo(ActionEvent event) {
+
+    }
+
+    @FXML
+    void eliminarComodidadesRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void eliminarContactoRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void eliminarCostoRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void eliminarMedia(ActionEvent event) {
+
+    }
+
+    @FXML
+    void guardarRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void modificarAtractivo(ActionEvent event) {
+
+    }
+
+    @FXML
+    void modificarComodidadesRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void modificarContactoRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void modificarCostoRecurso(ActionEvent event) {
+
+    }
+
+    @FXML
+    void modificarMedio(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showAtractivoMapa(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showComodidadMapa(ActionEvent event) {
+
+    }
+
+    @FXML
+    void showMediaMapa(ActionEvent event) {
+
+    }
+
 }

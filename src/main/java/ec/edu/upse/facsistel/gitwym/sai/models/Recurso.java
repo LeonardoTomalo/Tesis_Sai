@@ -29,7 +29,7 @@ public class Recurso {
 	@Field private String coordenadas;
 	@Field private String propietario;
 	@Field private Boolean estado;
-	@Field private String idLocalizacion;
+	@Field private String idLocalizacion;//parroquia||provincia||pais
 	@Field private ArrayList<Costo> costoServicio;
 	@Field private ArrayList<String> idsSenderos;
 	@Field private ArrayList<String> idsCategoria;//hacerlo con un checkList
@@ -38,7 +38,7 @@ public class Recurso {
 	@Field private ArrayList<String> idiomas;
 	@Field private Seguridad seguridad;
 	@Field private ArrayList<Contacto> contactos;
-	@Field private ArrayList<Comentario> comentarios;	
+	@Field private ArrayList<Comentario> comentarios;
 	@Field private ArrayList<String> idsMediaCloudResources;	
 	
 	@Override

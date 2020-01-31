@@ -1,6 +1,9 @@
 package ec.edu.upse.facsistel.gitwym.sai.utilities;
 
+import com.gluonhq.maps.MapView;
+
 import ec.edu.upse.facsistel.gitwym.sai.models.Contacto;
+import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.models.Usuario;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -14,6 +17,8 @@ public class Context {
 	private Stage stage;
 	private Contacto contactoP;
 	private Usuario userLogged;
+	private Recurso recursoContext;
+	private MapView mapViewContext;
 	
 	public static Context getInstance() {
 		return instance;

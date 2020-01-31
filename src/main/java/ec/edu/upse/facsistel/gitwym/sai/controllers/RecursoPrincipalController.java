@@ -4,70 +4,68 @@ import com.gluonhq.maps.MapPoint;
 import com.gluonhq.maps.MapView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
+import ec.edu.upse.facsistel.gitwym.sai.models.Categoria;
+import ec.edu.upse.facsistel.gitwym.sai.models.Idiomas;
+import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 public class RecursoPrincipalController {
 
+    @FXML private AnchorPane anch_rp;
     @FXML private JFXButton btn_busqueda;
     @FXML private JFXButton btn_crear;
     @FXML private JFXButton btn_modificar;
     @FXML private JFXButton btn_eliminar;
+    @FXML private HBox hbx_busqueda;
+    @FXML private AnchorPane anch_busqueda;
+    @FXML private JFXTextField txt_buscarRecurso;
+    @FXML private JFXButton btn_buscarRecurso;
+    @FXML private Label lbl_filtros;
+    @FXML private AnchorPane anch_filtros;
+    @FXML private JFXComboBox<Categoria> cmb_categoria;
+    @FXML private JFXTextField txt_coordenadas;
+    @FXML private JFXComboBox<Idiomas> cmb_idioma;
+    @FXML private JFXListView<Recurso> lst_listaRecursos;
+    @FXML private AnchorPane anch_contImgPrinBusqueda;
+    @FXML private Label lbl_descripcionBusqueda;
+    @FXML private AnchorPane anch_mapa;
+    @FXML private HBox hbx_contenedorInfBasica;
+    @FXML private AnchorPane anch_contenedor;
+    @FXML private Label lbl_nombreRecurso;
+    @FXML private Label lbl_infGeneral;
+    @FXML private Label lbl_ubicacionZonal;
+    @FXML private AnchorPane anch_contImgPrin;
     @FXML private JFXButton btn_masInformacion;
     @FXML private JFXButton btn_abrirInfBasica;
-    @FXML private HBox hbx_busqueda;
-    @FXML private HBox hbx_contenedorInfBasica;
-    @FXML private AnchorPane anch_busqueda;
-    @FXML private AnchorPane anch_mapa;
-    @FXML private AnchorPane anch_contenedor;
-    @FXML private AnchorPane anch_rp;
-    
 
-    @FXML private Label lbl_nombreRecurso;
-    @FXML private Label lbl_descripcion;
-    @FXML private Label lbl_ubicacionZonal;
-    @FXML private ImageView img_imagenPrincipal;
-    
-
-    @FXML private JFXTextField txt_buscarRecurso;
-    @FXML private JFXButton btn_buscar;    
-    @FXML private AnchorPane anch_contenedorBusqueda;
-    @FXML private AnchorPane anch_filtros;
-    @FXML private ImageView img_imagenPrincipalB;
-    @FXML private Label lbl_descripcionB;
-    @FXML private Label lbl_filtros;
-    @FXML private JFXComboBox<?> cmb_provincia;
-    @FXML private JFXComboBox<?> cmb_canton;
-    @FXML private JFXComboBox<?> cmb_parroquia;
-    @FXML private JFXComboBox<?> cmb_categoria;
-    @FXML private JFXComboBox<?> cmb_atractivo;
-    @FXML private JFXComboBox<?> cmb_idioma;
-    @FXML private TableView<?> tbl_listaRecurso;
-
-	MapView map = new MapView();		
+	MapView map = new MapView();
 	MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
 	
 	public void initialize() {	
-		showBusqueda();		
-        map.setCenter(mapPoint);
-        map.setZoom(10);
-        map.flyTo(1., mapPoint, 2.);      
+		showInformacionBasica();
+		if (Context.getInstance().getMapViewContext() != null) {
+			map = Context.getInstance().getMapViewContext();
+		}else {
+	        map.setCenter(mapPoint);
+	        map.setZoom(9.5);
+	        map.flyTo(1., mapPoint, 2.);
+		}
         General.setMapatoAnchorPane(map, anch_mapa);
 	}        
 
     @FXML
     void crearRecurso(ActionEvent event) {
     	General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());
+    	Context.getInstance().setMapViewContext(map);
     }
 
     @FXML
@@ -92,7 +90,7 @@ public class RecursoPrincipalController {
     }
 
     @FXML
-    void showInformacionBasica(ActionEvent event) {
+    void showInformacionBasica() {
     	if (hbx_contenedorInfBasica.isVisible()) {
 			hbx_contenedorInfBasica.setVisible(false);
 			hbx_contenedorInfBasica.setManaged(false);
@@ -104,13 +102,12 @@ public class RecursoPrincipalController {
 
     @FXML
     void showMasInformacion(ActionEvent event) {
-//    	Context.getInstance().setAnch_Contenido(anch_rp); 
     	General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());
     }
     
     
     @FXML
-    void buscarRecursoBTN(ActionEvent event) {
+    void buscarRecursoNombre(ActionEvent event) {
     	if (anch_filtros.isVisible()) {
         	anch_filtros.setVisible(false);
     		anch_filtros.setManaged(false);
@@ -118,7 +115,7 @@ public class RecursoPrincipalController {
     }
 
     @FXML
-    void abrirCerrarFiltros(MouseEvent event) {
+    void abrirCerrarFiltros() {
     	if (anch_filtros.isVisible()) {
 			anch_filtros.setVisible(false);
 			anch_filtros.setManaged(false);

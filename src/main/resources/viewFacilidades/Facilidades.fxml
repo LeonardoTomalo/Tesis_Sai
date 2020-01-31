@@ -13,14 +13,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import org.controlsfx.control.CheckListView?>
 
-<AnchorPane prefHeight="484.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.FacilidadesController">
+<AnchorPane prefHeight="484.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.FacilidadesController">
    <children>
       <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Accordion prefHeight="245.0" prefWidth="240.0">
               <panes>
-                <TitledPane fx:id="acrd_idiomas" text="Idiomas">
+                  <TitledPane fx:id="acrd_contactos1" text="Servicios con costo">
                      <content>
                         <AnchorPane>
                            <children>
@@ -28,13 +29,14 @@
                                  <children>
                                     <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
                                        <children>
-                                          <JFXButton fx:id="btn_agregarIdiomas" buttonType="RAISED" onAction="#agregarIdiomas" text="Agregar" />
-                                          <JFXButton fx:id="btn_eliminarIdiomas" buttonType="RAISED" onAction="#eliminarIdiomas" text="Eliminar" />
+                                          <JFXButton fx:id="btn_agregarContacto1" buttonType="RAISED" onAction="#agregarContacto" text="Agregar" />
+                                          <JFXButton fx:id="btn_eliminarContacto1" buttonType="RAISED" onAction="#eliminarContacto" text="Eliminar" />
+                                          <JFXButton fx:id="btn_editarContacto1" buttonType="RAISED" onAction="#editarContacto" text="Editar" />
                                        </children>
                                     </HBox>
                                     <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
                                        <content>
-                                          <JFXListView fx:id="lst_listaIdiomas" />
+                                          <JFXListView fx:id="lst_listaContactos1" />
                                        </content>
                                     </ScrollPane>
                                  </children>
@@ -42,30 +44,16 @@
                            </children>
                         </AnchorPane>
                      </content>
-                </TitledPane>
-                <TitledPane fx:id="acrd_Accesibilidad" text="Accesibilidad">
+                  </TitledPane>
+                  <TitledPane fx:id="acrd_idiomas11" text="Accesibilidades">
                      <content>
                         <AnchorPane>
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
-                                       <children>
-                                          <JFXButton fx:id="btn_agregarAccesibilidad" buttonType="RAISED" onAction="#agregarAccesibilidad" text="Agregar" />
-                                          <JFXButton fx:id="btn_eliminarAccesibilidad" buttonType="RAISED" onAction="#eliminarAccesibilidad" text="Eliminar" />
-                                       </children>
-                                    </HBox>
-                                    <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
-                                       <content>
-                                          <JFXListView fx:id="lst_listaAccesibilidad" />
-                                       </content>
-                                    </ScrollPane>
-                                 </children>
-                              </VBox>
+                              <CheckListView prefHeight="420.0" prefWidth="268.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </content>
-                </TitledPane>
+                  </TitledPane>
                   <TitledPane fx:id="acrd_contactos" text="Contactos">
                      <content>
                         <AnchorPane>
@@ -86,6 +74,24 @@
                                     </ScrollPane>
                                  </children>
                               </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane fx:id="acrd_idiomas1" text="Categorias">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <CheckListView prefHeight="420.0" prefWidth="268.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane fx:id="acrd_idiomas12" text="Idiomas">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <CheckListView prefHeight="420.0" prefWidth="268.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </content>
