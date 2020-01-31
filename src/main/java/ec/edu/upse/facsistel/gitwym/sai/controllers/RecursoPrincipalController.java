@@ -75,7 +75,8 @@ public class RecursoPrincipalController {
 
     @FXML
     void modificarRecurso(ActionEvent event) {
-    	
+    	General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());
+    	Context.getInstance().setMapViewContext(map);
     }
 
     @FXML

@@ -67,12 +67,11 @@
                 <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="40.0" prefWidth="50.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints prefHeight="35.0" />
-                  <RowConstraints prefHeight="35.0" />
-                  <RowConstraints prefHeight="35.0" />
-                  <RowConstraints prefHeight="35.0" />
-                <RowConstraints prefHeight="35.0" />
-                <RowConstraints prefHeight="35.0" />
+                <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
+                  <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
+                  <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
+                <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
+                <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
               </rowConstraints>
                <children>
                   <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Recurso">
@@ -88,12 +87,12 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Direccion" GridPane.rowIndex="4">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Direccion" GridPane.rowIndex="3">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Provincia" GridPane.rowIndex="5">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Provincia" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -108,22 +107,22 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Parroquia" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Parroquia" GridPane.columnIndex="6" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Canton" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Canton" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ranking" GridPane.columnIndex="9" GridPane.rowIndex="5">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ranking" GridPane.columnIndex="9" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Seguridad" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Seguridad" GridPane.columnIndex="6" GridPane.rowIndex="3">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -133,17 +132,17 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <JFXComboBox fx:id="cmb_provinciaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                  <JFXComboBox fx:id="cmb_provinciaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="5.0" right="10.0" />
                      </padding>
                   </JFXComboBox>
-                  <JFXComboBox fx:id="cmb_cantonRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                  <JFXComboBox fx:id="cmb_cantonRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="5.0" right="10.0" />
                      </padding>
                   </JFXComboBox>
-                  <JFXComboBox fx:id="cmb_parroquiaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                  <JFXComboBox fx:id="cmb_parroquiaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="5.0" right="10.0" />
                      </padding>
@@ -156,7 +155,7 @@
                         <Insets left="5.0" right="10.0" />
                      </padding>
                   </JFXTextField>
-                  <JFXTextArea fx:id="txt_descripcionRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Descripcion breve..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                  <JFXTextArea fx:id="txt_descripcionRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Descripcion breve..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="2">
                      <padding>
                         <Insets left="5.0" right="10.0" top="8.0" />
                      </padding>
@@ -164,7 +163,7 @@
                         <Insets bottom="7.0" />
                      </GridPane.margin>
                   </JFXTextArea>
-                  <JFXTextArea fx:id="txt_infGeneralRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Informacion general..." GridPane.columnIndex="7" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                  <JFXTextArea fx:id="txt_infGeneralRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Informacion general..." GridPane.columnIndex="7" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="2">
                      <padding>
                         <Insets left="5.0" right="10.0" top="8.0" />
                      </padding>
@@ -185,7 +184,7 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </JFXButton>
-                  <JFXTextField fx:id="txt_direccionRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Direccion especifica..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="4">
+                  <JFXTextField fx:id="txt_direccionRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Direccion especifica..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="3">
                      <padding>
                         <Insets left="5.0" right="10.0" />
                      </padding>
@@ -202,7 +201,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
                <children>
-                  <JFXTabPane fx:id="tbp_recurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="40.0" tabMinWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <JFXTabPane fx:id="tbp_recurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" tabMinHeight="20.0" tabMinWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
                         <Tab text="Multimedia">
                            <content>
@@ -210,7 +209,7 @@
                                  <children>
                                     <HBox prefHeight="568.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <VBox prefHeight="286.0" prefWidth="429.0">
+                                          <VBox prefWidth="350.0">
                                              <children>
                                                 <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <children>
@@ -452,7 +451,7 @@
                                  <children>
                                     <HBox prefHeight="330.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <VBox prefHeight="286.0" prefWidth="429.0">
+                                          <VBox prefWidth="350.0">
                                              <children>
                                                 <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <children>

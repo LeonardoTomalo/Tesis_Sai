@@ -76,12 +76,18 @@ public class RecursoController {
     @FXML private AnchorPane anch_comentarios;
 	
 	public void initialize() {	
-//		General.setContentParent("/viewGaleria/Galeria.fxml", anch_galeria);
-//		General.setContentParent("/viewFacilidades/Facilidades.fxml", anch_facilidades);
-//		General.setContentParent("/viewVideos/Videos.fxml", anch_video);
-//		General.setContentParent("/viewAnimacion3D/Animacion3D.fxml", anch_animaciones3d);
-//		General.setContentParent("/viewSenderos/Senderos.fxml", anch_senderos);		
+		
 	}     
+
+    @FXML
+    void atras(ActionEvent event) {
+
+    }
+
+    @FXML
+    void guardarRecurso(ActionEvent event) {
+
+    }
 
     @FXML
     void addComodidadesRecurso(ActionEvent event) {
@@ -105,11 +111,6 @@ public class RecursoController {
 
     @FXML
     void addNuevoAtractivo(ActionEvent event) {
-
-    }
-
-    @FXML
-    void atras(ActionEvent event) {
 
     }
 
@@ -145,11 +146,6 @@ public class RecursoController {
 
     @FXML
     void eliminarMedia(ActionEvent event) {
-
-    }
-
-    @FXML
-    void guardarRecurso(ActionEvent event) {
 
     }
 
