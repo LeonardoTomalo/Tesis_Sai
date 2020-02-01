@@ -1,5 +1,18 @@
 package ec.edu.upse.facsistel.gitwym.sai.controllers;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.controlsfx.control.CheckListView;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -7,21 +20,47 @@ import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import ec.edu.upse.facsistel.gitwym.sai.cloud.GoogleCloudStorageWorker;
+import ec.edu.upse.facsistel.gitwym.sai.models.Accesibilidad;
+import ec.edu.upse.facsistel.gitwym.sai.models.Atractivo;
+import ec.edu.upse.facsistel.gitwym.sai.models.Canton;
+import ec.edu.upse.facsistel.gitwym.sai.models.Categoria;
+import ec.edu.upse.facsistel.gitwym.sai.models.Comodidades;
+import ec.edu.upse.facsistel.gitwym.sai.models.Contacto;
+import ec.edu.upse.facsistel.gitwym.sai.models.Costo;
+import ec.edu.upse.facsistel.gitwym.sai.models.Idiomas;
+import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
+import ec.edu.upse.facsistel.gitwym.sai.models.Parroquia;
+import ec.edu.upse.facsistel.gitwym.sai.models.Provincia;
+import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
+import ec.edu.upse.facsistel.gitwym.sai.models.TipoAtractivo;
+import ec.edu.upse.facsistel.gitwym.sai.models.TipoMedia;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
-import org.controlsfx.control.CheckListView;
+import javafx.scene.media.Media;
 
 public class RecursoController {
 
     @FXML private AnchorPane anch_recurso;
     @FXML private JFXButton btn_guardar;
     @FXML private JFXButton btn_atras;
-    @FXML private JFXComboBox<?> cmb_provinciaRecurso;
-    @FXML private JFXComboBox<?> cmb_cantonRecurso;
-    @FXML private JFXComboBox<?> cmb_parroquiaRecurso;
+    @FXML private JFXComboBox<Provincia> cmb_provinciaRecurso;
+    @FXML private JFXComboBox<Canton> cmb_cantonRecurso;
+    @FXML private JFXComboBox<Parroquia> cmb_parroquiaRecurso;
     @FXML private JFXTextField txt_nombreRecurso;
     @FXML private JFXTextArea txt_descripcionRecurso;
     @FXML private JFXTextArea txt_infGeneralRecurso;
@@ -32,9 +71,9 @@ public class RecursoController {
     @FXML private AnchorPane anch_tabs;
     @FXML private JFXTabPane tbp_recurso;
     @FXML private AnchorPane anch_galeria;
-    @FXML private JFXComboBox<?> cmb_tipoMediaBusqueda;
+    @FXML private JFXComboBox<TipoMedia> cmb_tipoMediaBusqueda;
     @FXML private JFXButton btn_verMediaMapa;
-    @FXML private JFXListView<?> lst_listaMedios;
+    @FXML private JFXListView<MediaCloudResources> lst_listaMedios;
     @FXML private JFXTextField txt_buscarNombreMedio;
     @FXML private JFXButton btn_nuevoMedio;
     @FXML private JFXButton btn_EliminarMedio;
@@ -45,28 +84,28 @@ public class RecursoController {
     @FXML private JFXButton btn_addCosto;
     @FXML private JFXButton btn_eliminarCosto;
     @FXML private JFXButton btn_modificarCosto;
-    @FXML private JFXListView<?> lst_listaCostosRecurso;
+    @FXML private JFXListView<Costo> lst_listaCostosRecurso;
     @FXML private TitledPane accd_ContactosRecurso;
     @FXML private JFXButton btn_addContacto;
     @FXML private JFXButton btn_eliminarContacto;
     @FXML private JFXButton btn_editarContacto;
-    @FXML private JFXListView<?> lst_listaContactosRecurso;
+    @FXML private JFXListView<Contacto> lst_listaContactosRecurso;
     @FXML private JFXButton btn_verComodidadMapa;
     @FXML private JFXTextField txt_buscarComodidadesRecurso;
     @FXML private JFXButton btn_addComodidades;
     @FXML private JFXButton btn_eliminarComodidades;
     @FXML private JFXButton btn_modificarComodidades;
-    @FXML private JFXListView<?> lst_listaComodidadesRecurso;
+    @FXML private JFXListView<Comodidades> lst_listaComodidadesRecurso;
     @FXML private TitledPane accd_accesibilidadesRecurso;
-    @FXML private CheckListView<?> chklst_accesibilidadesRecurso;
+    @FXML private CheckListView<Accesibilidad> chklst_accesibilidadesRecurso;
     @FXML private TitledPane accd_categoriasRecurso;
-    @FXML private CheckListView<?> chklst_categoriasRecurso;
+    @FXML private CheckListView<Categoria> chklst_categoriasRecurso;
     @FXML private TitledPane acc_idiomasRecurso;
-    @FXML private CheckListView<?> chklst_idiomasRecurso;
+    @FXML private CheckListView<Idiomas> chklst_idiomasRecurso;
     @FXML private AnchorPane anch_comentarios1;
-    @FXML private JFXComboBox<?> cmb_tipoAtractivoBusqueda;
+    @FXML private JFXComboBox<TipoAtractivo> cmb_tipoAtractivoBusqueda;
     @FXML private JFXButton btn_verAtractivoMapa;
-    @FXML private JFXListView<?> lst_listaAtractivos;
+    @FXML private JFXListView<Atractivo> lst_listaAtractivos;
     @FXML private JFXTextField txt_buscarNombreAtractivos;
     @FXML private JFXButton btn_nuevoAtractivo;
     @FXML private JFXButton btn_EliminarAtractivo;
@@ -75,7 +114,50 @@ public class RecursoController {
     @FXML private AnchorPane anch_senderos;
     @FXML private AnchorPane anch_comentarios;
 	
+    
+	// CONSUMIR WEB SERVICES
+	RestTemplate rest = new RestTemplate();
+	String urlBase = PropertyManager.getBaseUrl();
+	String uriRecurso = urlBase + "/recurso";
+	String uriMediaCloud = urlBase + "/mediaCloudResources";
+ 	String uriTipoMedia = urlBase + "/tipoMedia";
+
+	// DE LA CLASE RECURSO
+	Recurso recurso = new Recurso();
+	Boolean isModificar = false;
+	Boolean exitPopup = false;
+	
+
+	// DE LA CLASE MEDIA CLOUD
+ 	MediaCloudResources media = new MediaCloudResources();
+	List<MediaCloudResources> listaMedia = new ArrayList<MediaCloudResources>();
+	List<MediaCloudResources> listaMediaTemporal = new ArrayList<MediaCloudResources>();
+	private static ResponseEntity<List<MediaCloudResources>> listRespMedia;
+	ObservableList<MediaCloudResources> obsListMedia = FXCollections.observableArrayList();
+	GoogleCloudStorageWorker gcsw = new GoogleCloudStorageWorker();
+    
+	// DE LA CLASE TIPOMEDIA
+ 	TipoMedia tipoMedia = new TipoMedia();
+ 	List<TipoMedia> listaTipoMedia = new ArrayList<TipoMedia>();
+ 	private static ResponseEntity<List<TipoMedia>> listRespTipoMedia;
+ 	ObservableList<TipoMedia> obsListTipoMedia = FXCollections.observableArrayList();
+ 	
+
 	public void initialize() {	
+		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios);
+		
+		if (Context.getInstance().getRecursoContext() != null) {//para modificar recurso
+			recurso = Context.getInstance().getRecursoContext();
+			isModificar = true;
+			loadMedios();
+			buscarPorNombre();
+		}
+		
+		//cargar provincia, canton y parroquia
+		
+		//MEDIA CLOUD RESOURCES
+		loadTipoMedios();
+		
 		
 	}     
 
@@ -106,7 +188,24 @@ public class RecursoController {
 
     @FXML
     void addNuevaMedia(ActionEvent event) {
-
+    	try {
+    		//abro interfaz para crear un medio.
+    		General.showModalWithParent("/viewRecurso/PopoverMediaCloud.fxml");
+    		//obtengo el medio recien creado sin ID    		
+    		if (Context.getInstance().getMediaContext() != null) {
+//        		lst_listaMedios.getItems().add(Context.getInstance().getMediaContext());
+    			listaMediaTemporal.add(Context.getInstance().getMediaContext());
+    			exitPopup = true;
+    			//cargar datos de lista al listview
+    			cargarListaMedios(listaMediaTemporal);    			
+			}
+    		Context.getInstance().setMediaContext(null);
+    		exitPopup = false;
+    		System.out.println("¨********************* SALIO DEL POPUP *****************");
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error !! ");
+		}
     }
 
     @FXML
@@ -146,7 +245,29 @@ public class RecursoController {
 
     @FXML
     void eliminarMedia(ActionEvent event) {
-
+    	try {//Con eliminar el medio ya no traera el id de google cloud, asi que no importa por el momento eliminar tambien de la nube.
+			if (lst_listaMedios.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el medio a eliminar.!!");
+				return;
+			}
+			Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos del medio: "
+							+ lst_listaMedios.getSelectionModel().getSelectedItem().getNombre() + " ?.",
+					Context.getInstance().getStage());
+			if (result.get() == ButtonType.OK) {
+				if (lst_listaMedios.getSelectionModel().getSelectedItem().getId() != null) {
+					//eliminar de la base de datos.
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("c", media.getId());
+					rest.delete(uriMediaCloud + "/delete/{c}", params);
+				}//eliminar de lista temporal.
+				lst_listaMedios.getItems().remove(lst_listaMedios.getSelectionModel().getSelectedItem());
+				listaMediaTemporal.remove(lst_listaMedios.getSelectionModel().getSelectedItem());
+				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al eliminar datos.!!");
+		}
     }
 
     @FXML
@@ -189,4 +310,173 @@ public class RecursoController {
 
     }
 
+    /*
+     * Empiezan los metodos  
+     */
+    
+    void buscarPorNombre() {
+		txt_buscarNombreMedio.textProperty().addListener((observable, oldValue, newValue) -> {
+    	    System.out.println("textfield changed from " + oldValue + " to " + newValue);
+    	    
+    	    ObservableList<MediaCloudResources> obsAux = FXCollections.observableArrayList();			
+    	    for (MediaCloudResources mcr : lst_listaMedios.getItems()) {    	    	
+    	    	String nombre = mcr.getNombre();
+    	    	if (newValue.length() >0) {
+    	    		for (int i = 0; i < newValue.length(); i++) {
+    	    			if (nombre.trim().toLowerCase().charAt(i) == newValue.trim().toLowerCase().charAt(i)) {
+    	    				if (!obsAux.isEmpty()) {
+    	    					if (!obsAux.contains(mcr)) {
+    	    						obsAux.add(mcr);
+    	    					}
+    	    				}else {
+    	    					obsAux.add(mcr);
+    	    				}
+    	    			} 
+    				}
+				}
+			}
+    	    //enviamos la lista.
+    	    lst_listaMedios.setItems(obsAux);
+    	    if (newValue.isBlank() || newValue.isEmpty()) {
+				loadMedios();
+				obsListTipoMedia.clear();
+				loadTipoMedios();
+				
+			}
+    	});
+    }    
+
+	private void loadMedios() {
+		if (isModificar) {
+			if(!obsListMedia.isEmpty())	obsListMedia.clear();
+			listRespMedia = rest.exchange(uriMediaCloud + "/getAll", HttpMethod.GET, null,
+					new ParameterizedTypeReference<List<MediaCloudResources>>() {
+					});
+			listaMedia = listRespMedia.getBody();
+			if (!listaMedia.isEmpty()) {
+				if (!recurso.getIdsMediaCloudResources().isEmpty()) {
+					for (int i = 0; i < listaMedia.size(); i++) {
+						if (recurso.getIdsMediaCloudResources().contains(listaMedia.get(i).getId())) {
+							if (!listaMediaTemporal.contains(listaMedia.get(i))) {
+								listaMediaTemporal.add(listaMedia.get(i));
+							}		
+						}					
+					}
+					obsListMedia.addAll(listaMediaTemporal);
+					lst_listaMedios.setItems(obsListMedia);	
+				}					    	
+			}
+		}else {//es nuevo recurso la lista de medios esta vacia.
+			//al crear un media se agrega a la lista temporal.
+			cargarListaMedios(listaMediaTemporal);			
+		}		
+	}
+
+    private void loadTipoMedios() {
+    	listRespTipoMedia = rest.exchange(uriTipoMedia + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<TipoMedia>>() {
+				});
+		listaTipoMedia = listRespTipoMedia.getBody();
+		if (!listaTipoMedia.isEmpty()) {
+			TipoMedia auxTipo = new TipoMedia("", "Todos los medios");
+			obsListTipoMedia.add(auxTipo);
+			for (int i = 0; i < listaTipoMedia.size(); i++) {
+				obsListTipoMedia.add(listaTipoMedia.get(i));
+			}			
+			cmb_tipoMediaBusqueda.setItems(obsListTipoMedia);	
+			cmb_tipoMediaBusqueda.getSelectionModel().select(auxTipo);
+	    	cmb_tipoMediaBusqueda.setCellFactory(param -> new ListCell<TipoMedia>() {
+	    		protected void updateItem(TipoMedia item, boolean empty) {
+	    			super.updateItem(item, empty);
+	    			setText(empty ? "" : item.getDescripcion());
+	    		};
+	    	}); 
+	    	
+	    	cmb_tipoMediaBusqueda.getSelectionModel().selectedItemProperty()
+			.addListener((ObservableValue<? extends TipoMedia> ov, TipoMedia old_val, TipoMedia new_val) -> {
+				if (cmb_tipoMediaBusqueda.getSelectionModel().getSelectedItem() != null) {
+					tipoMedia = cmb_tipoMediaBusqueda.getSelectionModel().getSelectedItem();
+
+					ObservableList<MediaCloudResources> obsAux = FXCollections.observableArrayList();
+					//utilizar solo valores del obstemporal					
+					if (!listaMediaTemporal.isEmpty()) {
+						if (tipoMedia.getDescripcion().equals(auxTipo.getDescripcion())) {
+							//muestra todos los valores de la lista temporal que existen para el recurso
+							for (int i = 0; i < listaMediaTemporal.size(); i++) {
+								obsAux.add(listaMediaTemporal.get(i));
+							}	
+						}else {
+							//mostrar lista de MEDIOS por el tipo.
+							for (MediaCloudResources mcr : listaMediaTemporal) {						
+								if (mcr.getTipoMedia().getDescripcion().equals(tipoMedia.getDescripcion())) {
+									obsAux.add(mcr);									
+								}
+							}
+						}
+						List<MediaCloudResources> auxList = new ArrayList<>();
+						auxList.addAll(obsAux);
+						cargarListaMedios(auxList);
+//						lst_listaMedios.getItems().addAll(obsAux);
+					}
+				}
+			});
+		}				
+	}
+    
+    private void cargarListaMedios(List<MediaCloudResources> lista) {
+    	obsListMedia = FXCollections.observableArrayList();
+    	lst_listaMedios.setPlaceholder(new Label("---  La lista de medios se encuentra vacia. ---"));
+		if (!lista.isEmpty()) {
+    		for (int i = 0; i < lista.size(); i++) {
+				obsListMedia.add(lista.get(i));
+			}			
+			lst_listaMedios.setItems(obsListMedia);	
+    		//
+	    	lst_listaMedios.setCellFactory(param -> new ListCell<MediaCloudResources>() {
+	    		protected void updateItem(MediaCloudResources item, boolean empty) {
+	    			super.updateItem(item, empty);
+	    			setText(empty ? "" : item.getNombre() );
+	    		};
+	    	});  			    	
+		}
+		//
+		lst_listaMedios.getSelectionModel().selectedItemProperty()
+				.addListener((ObservableValue<? extends MediaCloudResources> ov, MediaCloudResources old_val, MediaCloudResources new_val) -> {
+					media = lst_listaMedios.getSelectionModel().getSelectedItem();
+					if (exitPopup) {
+						return;
+					}
+					if (media.getId() != null) {
+						//traer la imagen con la url y presentar en el ImageView.
+						if (media.getTipoMedia() != null) {
+							if (media.getTipoMedia().getDescripcion().equals("Imagen")) {
+								Image img = gcsw.getImageMediaCR(media.getId());
+								gcsw.showMediaInContenedor(img, contenedorDeMedios);	
+							}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
+								Media video = gcsw.getMediaFromMediaCR(media.getId());
+						        gcsw.showMediaInContenedor(video, contenedorDeMedios);	
+							}else {
+								//CONTENIDO 3D
+							}	
+						}
+					}else {//cargar con el file
+						if (media.getTipoMedia().getDescripcion().equals("Imagen")) {
+						    if (media.getFileTemporal() != null) {
+						        Image image = new Image("file:" + media.getFileTemporal().getAbsolutePath());
+						        gcsw.showMediaInContenedor(image, contenedorDeMedios);
+						    }
+						}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
+							if (media.getFileTemporal() != null) {
+								File d = new File(media.getFileTemporal().getAbsolutePath().replace("\\","/"));
+						        Media video = new Media(d.toURI().toString());
+						        gcsw.showMediaInContenedor(video, contenedorDeMedios);						        
+							}
+						}else {
+							//CONTENIDO 3D
+						}	
+					}
+				});
+    }
+
+    
 }

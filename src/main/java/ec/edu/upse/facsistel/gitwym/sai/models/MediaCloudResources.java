@@ -1,8 +1,10 @@
 package ec.edu.upse.facsistel.gitwym.sai.models;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.couchbase.core.mapping.Document;
 
 import com.couchbase.client.java.repository.annotation.Field;
@@ -36,4 +38,6 @@ public class MediaCloudResources {
 	@Field private ArrayList<String> idsEtiqueta;
 	@Field private Ranking ranking;
 	@Field private TipoMedia tipoMedia;
+	
+	@Transient private File fileTemporal;
 }

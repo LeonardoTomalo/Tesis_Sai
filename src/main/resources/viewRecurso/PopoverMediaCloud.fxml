@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXChipView?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="621.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.PopoverMediaCloudController">
+   <children>
+      <VBox layoutX="41.0" layoutY="172.0" maxWidth="1.7976931348623157E308" prefHeight="776.0" prefWidth="670.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="70.0" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Etiquetas:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="16">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Fecha:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="14">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <Label text="Ubicación:" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                  <HBox alignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="15">
+                     <children>
+                        <JFXTextField fx:id="txt_coordenadasMedio" promptText="Coordenadas del medio..." HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXButton fx:id="btn_buscarMapa" buttonType="RAISED" maxHeight="1.7976931348623157E308" onAction="#showMapaUbicacion" text="Buscar Mapa" HBox.hgrow="NEVER" />
+                     </children>
+                  </HBox>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="16" GridPane.rowSpan="2">
+                     <content>
+                        <JFXChipView fx:id="chpv_etiquetasEscogidas" />
+                     </content>
+                  </ScrollPane>
+                  <Label text="Autor:" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                  <Label text="Descripción:" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <Label text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <JFXDatePicker fx:id="dtp_fechaMedio" maxWidth="1.7976931348623157E308" promptText="Fecha que fue tomada..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="14" />
+                  <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="10">
+                     <children>
+                        <JFXRadioButton fx:id="rbtn_esReportado" text="Está Reportado" />
+                        <JFXRadioButton fx:id="rbtn_esPrincipal" text="Es Principal">
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </JFXRadioButton>
+                     </children>
+                  </HBox>
+                  <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="URL:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="15">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Label>
+                  <JFXTextField fx:id="txt_urlAlmacenamiento" editable="false" promptText="almacenamiento en la nube..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="15" />
+                  <Label text="Ranking:" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                  <HBox GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="11">
+                     <children>
+                        <JFXTextField fx:id="txt_nombreMedio" promptText="Nombre de medio..." HBox.hgrow="ALWAYS" />
+                        <JFXButton fx:id="btn_cargarMedio" buttonType="RAISED" onAction="#findMedioFile" text="Cargar imagen de archivo" />
+                     </children>
+                  </HBox>
+                  <JFXTextArea fx:id="txt_descripcionMedio" promptText="Descripción de medio..." GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="12" GridPane.rowSpan="2">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin>
+                  </JFXTextArea>
+                  <JFXTextField fx:id="txt_autorMedio" promptText="Autor del medio..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="14" />
+                  <JFXComboBox fx:id="cmb_tipoMedia" maxWidth="1.7976931348623157E308" promptText="Tipo de medio..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+                  <AnchorPane fx:id="contenedorDeMedios" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" GridPane.rowSpan="9" GridPane.vgrow="NEVER" />
+               </children>
+            </GridPane>
+            <Separator opacity="0.5" prefWidth="200.0" />
+            <HBox alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btn_Guardar" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="45.0" onAction="#guardarMedia" text="Guardar" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_Cancelar" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="45.0" onAction="#cancelarMedia" text="Cancelar" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
