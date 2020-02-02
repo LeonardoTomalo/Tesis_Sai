@@ -150,13 +150,13 @@ public class RecursoController {
 			recurso = Context.getInstance().getRecursoContext();
 			isModificar = true;
 			loadMedios();
-			buscarPorNombre();
 		}
 		
 		//cargar provincia, canton y parroquia
 		
 		//MEDIA CLOUD RESOURCES
 		loadTipoMedios();
+		buscarPorNombre();
 		
 		
 	}     
@@ -260,8 +260,13 @@ public class RecursoController {
 					params.put("c", media.getId());
 					rest.delete(uriMediaCloud + "/delete/{c}", params);
 				}//eliminar de lista temporal.
-				lst_listaMedios.getItems().remove(lst_listaMedios.getSelectionModel().getSelectedItem());
-				listaMediaTemporal.remove(lst_listaMedios.getSelectionModel().getSelectedItem());
+				if (listaMediaTemporal.size() > 0) 	
+					listaMediaTemporal.remove(media);
+				if (lst_listaMedios.getItems().size() > 0)	{
+					exitPopup = true;
+					lst_listaMedios.getItems().remove(media);
+					exitPopup = false;
+				}
 				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");				
 			}
 		} catch (Exception e) {
@@ -335,13 +340,21 @@ public class RecursoController {
     				}
 				}
 			}
+    	    
     	    //enviamos la lista.
-    	    lst_listaMedios.setItems(obsAux);
+//    	    lst_listaMedios.setItems(obsAux);
     	    if (newValue.isBlank() || newValue.isEmpty()) {
-				loadMedios();
+				cargarListaMedios(listaMediaTemporal);
 				obsListTipoMedia.clear();
 				loadTipoMedios();
 				
+			}else {
+	    	    List<MediaCloudResources> auxList = new ArrayList<>();
+				auxList.addAll(obsAux);
+				exitPopup = true;
+				lst_listaMedios.getItems().clear();
+				cargarListaMedios(auxList);
+				exitPopup = false;
 			}
     	});
     }    
@@ -396,10 +409,10 @@ public class RecursoController {
 			.addListener((ObservableValue<? extends TipoMedia> ov, TipoMedia old_val, TipoMedia new_val) -> {
 				if (cmb_tipoMediaBusqueda.getSelectionModel().getSelectedItem() != null) {
 					tipoMedia = cmb_tipoMediaBusqueda.getSelectionModel().getSelectedItem();
-
 					ObservableList<MediaCloudResources> obsAux = FXCollections.observableArrayList();
 					//utilizar solo valores del obstemporal					
 					if (!listaMediaTemporal.isEmpty()) {
+						System.out.println("TIPO MEDIA SELECT: " + tipoMedia);
 						if (tipoMedia.getDescripcion().equals(auxTipo.getDescripcion())) {
 							//muestra todos los valores de la lista temporal que existen para el recurso
 							for (int i = 0; i < listaMediaTemporal.size(); i++) {
@@ -415,7 +428,10 @@ public class RecursoController {
 						}
 						List<MediaCloudResources> auxList = new ArrayList<>();
 						auxList.addAll(obsAux);
+						exitPopup = true;
+						lst_listaMedios.getItems().clear();
 						cargarListaMedios(auxList);
+						exitPopup = false;
 //						lst_listaMedios.getItems().addAll(obsAux);
 					}
 				}
@@ -443,6 +459,8 @@ public class RecursoController {
 		lst_listaMedios.getSelectionModel().selectedItemProperty()
 				.addListener((ObservableValue<? extends MediaCloudResources> ov, MediaCloudResources old_val, MediaCloudResources new_val) -> {
 					media = lst_listaMedios.getSelectionModel().getSelectedItem();
+					gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios);
+					
 					if (exitPopup) {
 						return;
 					}
