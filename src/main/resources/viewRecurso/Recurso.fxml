@@ -22,7 +22,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckListView?>
 
-<AnchorPane fx:id="anch_recurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="520.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.RecursoController">
+<AnchorPane fx:id="anch_recurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="520.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.RecursoController">
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -239,7 +239,7 @@
                                           </Separator>
                                           <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                              <children>
-                                                <HBox alignment="CENTER_RIGHT">
+                                                <HBox alignment="CENTER_RIGHT" VBox.vgrow="NEVER">
                                                    <children>
                                                       <JFXTextField fx:id="txt_buscarNombreMedio" maxWidth="1.7976931348623157E308" promptText="Nombre de medio..." HBox.hgrow="ALWAYS">
                                                          <HBox.margin>
@@ -256,12 +256,10 @@
                                                    </children>
                                                 </HBox>
                                                 <Separator opacity="0.5" prefWidth="200.0" />
-                                                <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                <GridPane>
                                                    <columnConstraints>
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
                                                       <ColumnConstraints hgrow="NEVER" minWidth="70.0" prefWidth="70.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -275,12 +273,10 @@
                                                       <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
                                                       <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
                                                       <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                    </rowConstraints>
                                                    <children>
-                                                      <AnchorPane fx:id="contenedorDeMedios" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" GridPane.rowSpan="8" GridPane.vgrow="NEVER" />
+                                                      <AnchorPane fx:id="contenedorDeMedios" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.rowSpan="6" GridPane.vgrow="NEVER" />
                                                    </children>
                                                 </GridPane>
                                              </children>

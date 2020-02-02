@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.WritableByteChannel;
 
 import javax.imageio.ImageIO;
 
@@ -18,6 +20,7 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Bucket.BlobTargetOption;
 import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.Storage.BlobGetOption;
 import com.google.cloud.storage.StorageOptions;
 
 import javafx.application.Platform;
@@ -81,6 +84,22 @@ public class GoogleCloudStorageWorker {
 			return blob.getMediaLink();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String updateMediaCR(String blobId, byte[] content) {
+		try {
+			Storage storage = StorageOptions.getDefaultInstance().getService();
+			Bucket bucket = storage.get(bucketName);
+			Blob blob = bucket.get(blobId, BlobGetOption.generationMatch());
+			WritableByteChannel channel = blob.writer();
+			channel.write(ByteBuffer.wrap(content));
+			channel.close();
+			return blob.getMediaLink();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("error al modificar medio Cloud");
 			return null;
 		}
 	}
@@ -180,8 +199,8 @@ public class GoogleCloudStorageWorker {
 	    	if (!image.getUrl().equals("file:/D:/WSPC_TEO_11/TESIS_SAI/target/classes/albums.png")) 
 			    img.fitWidthProperty().bind(contenedor .widthProperty()); 
 		}
-		
-	    img.fitHeightProperty().bind(contenedor.heightProperty());
+//	    img.fitHeightProperty().bind(contenedor.heightProperty());
+		img.fitHeightProperty().set(288);
 	    img.setPreserveRatio(true);
 	    bp.setCenter(img);
 	    

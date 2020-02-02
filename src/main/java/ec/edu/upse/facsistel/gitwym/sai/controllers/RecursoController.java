@@ -297,7 +297,31 @@ public class RecursoController {
 
     @FXML
     void modificarMedio(ActionEvent event) {
-
+    	try {
+    		if (lst_listaMedios.getSelectionModel().getSelectedItems().isEmpty()) {
+    			Message.showWarningNotification("Seleccione el medio a modificar.!!");
+    			return;
+    		}
+    		Context.getInstance().setMediaContext(media);
+    		General.showModalWithParent("/viewRecurso/PopoverMediaCloud.fxml");
+    		//obtengo el medio modificado    		
+    		if (Context.getInstance().getMediaContext() != null) {
+//        		lst_listaMedios.getItems().add(Context.getInstance().getMediaContext());
+    			media = Context.getInstance().getMediaContext();
+    			exitPopup = true;
+    			//cargar datos de lista al listview
+    			cargarListaMedios(listaMediaTemporal);    			
+			}
+    		Context.getInstance().setMediaContext(null);
+    		exitPopup = false;
+    		System.out.println("¨********************* SALIO DEL POPUP *****************");
+	
+    		
+    		Message.showSuccessNotification("Se modificaron exitosamente los datos.!!");	
+    	} catch (Exception e) {
+    		e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
+		}
     }
 
     @FXML

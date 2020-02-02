@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="621.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.PopoverMediaCloudController">
+<AnchorPane prefHeight="621.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.PopoverMediaCloudController">
    <children>
       <VBox layoutX="41.0" layoutY="172.0" maxWidth="1.7976931348623157E308" prefHeight="776.0" prefWidth="670.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -115,7 +115,7 @@
                   </JFXTextArea>
                   <JFXTextField fx:id="txt_autorMedio" promptText="Autor del medio..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="14" />
                   <JFXComboBox fx:id="cmb_tipoMedia" maxWidth="1.7976931348623157E308" promptText="Tipo de medio..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="10" />
-                  <AnchorPane fx:id="contenedorDeMedios" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" GridPane.rowSpan="9" GridPane.vgrow="NEVER" />
+                  <AnchorPane fx:id="contenedorDeMedios" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.rowSpan="9" GridPane.vgrow="NEVER" />
                </children>
             </GridPane>
             <Separator opacity="0.5" prefWidth="200.0" />
