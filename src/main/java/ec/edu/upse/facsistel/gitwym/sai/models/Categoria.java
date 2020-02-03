@@ -21,4 +21,8 @@ public class Categoria {
 	@Id private String id;
 	@Field private String descripcion;
 	@Field private Boolean isSelect;
+	@Override
+	public String toString() {
+		return descripcion;
+	}
 }

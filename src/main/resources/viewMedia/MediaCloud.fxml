@@ -100,22 +100,21 @@
                         <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
                         <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
                         <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Etiquetas:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="16">
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Etiquetas:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="15">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Fecha:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="14">
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="Fecha:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="13">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Ubicación:" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-                        <HBox alignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="15">
+                        <Label text="Ubicación:" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                        <HBox alignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="14">
                            <children>
                               <JFXTextField fx:id="txt_coordenadasMedio" promptText="Coordenadas del medio..." HBox.hgrow="ALWAYS">
                                  <HBox.margin>
@@ -125,16 +124,16 @@
                               <JFXButton fx:id="btn_buscarMapa" buttonType="RAISED" maxHeight="1.7976931348623157E308" onAction="#showMapaUbicacion" text="Buscar Mapa" HBox.hgrow="NEVER" />
                            </children>
                         </HBox>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="16" GridPane.rowSpan="2">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="15" GridPane.rowSpan="2">
                            <content>
                               <JFXChipView fx:id="chpv_etiquetasEscogidas" />
                            </content>
                         </ScrollPane>
-                        <Label text="Autor:" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                        <Label text="Descripción:" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                        <Label text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                        <JFXDatePicker fx:id="dtp_fechaMedio" maxWidth="1.7976931348623157E308" promptText="Fecha que fue tomada..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="14" />
-                        <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="10">
+                        <Label text="Autor:" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                        <Label text="Descripción:" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                        <Label text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <JFXDatePicker fx:id="dtp_fechaMedio" maxWidth="1.7976931348623157E308" promptText="Fecha que fue tomada..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="13" />
+                        <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="9">
                            <children>
                               <JFXRadioButton fx:id="rbtn_esReportado" text="Está Reportado" />
                               <JFXRadioButton fx:id="rbtn_esPrincipal" text="Es Principal">
@@ -144,28 +143,27 @@
                               </JFXRadioButton>
                            </children>
                         </HBox>
-                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="URL:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="15">
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="URL:" textAlignment="RIGHT" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="14">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <JFXTextField fx:id="txt_urlAlmacenamiento" editable="false" promptText="almacenamiento en la nube..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="15" />
-                        <Label text="Ranking:" GridPane.columnIndex="1" GridPane.rowIndex="16" />
-                        <HBox GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="11">
+                        <JFXTextField fx:id="txt_urlAlmacenamiento" editable="false" promptText="almacenamiento en la nube..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="14" />
+                        <Label text="Ranking:" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                        <HBox GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="10">
                            <children>
                               <JFXTextField fx:id="txt_nombreMedio" promptText="Nombre de medio..." HBox.hgrow="ALWAYS" />
                               <JFXButton fx:id="btn_cargarMedio" buttonType="RAISED" onAction="#findMedioFile" text="Cargar imagen de archivo" />
                            </children>
                         </HBox>
-                        <JFXTextArea fx:id="txt_descripcionMedio" promptText="Descripción de medio..." GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="12" GridPane.rowSpan="2">
+                        <JFXTextArea fx:id="txt_descripcionMedio" promptText="Descripción de medio..." GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="11" GridPane.rowSpan="2">
                            <GridPane.margin>
                               <Insets bottom="10.0" />
                            </GridPane.margin>
                         </JFXTextArea>
-                        <JFXTextField fx:id="txt_autorMedio" promptText="Autor del medio..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="14" />
-                        <JFXComboBox fx:id="cmb_tipoMedia" maxWidth="1.7976931348623157E308" promptText="Tipo de medio..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="10" />
-                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="DETALLE DE MEDIOS" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" />
-                        <AnchorPane fx:id="contenedorDeMedios" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="2" GridPane.rowSpan="8" GridPane.vgrow="NEVER" />
+                        <JFXTextField fx:id="txt_autorMedio" promptText="Autor del medio..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="13" />
+                        <JFXComboBox fx:id="cmb_tipoMedia" maxWidth="1.7976931348623157E308" promptText="Tipo de medio..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+                        <AnchorPane fx:id="contenedorDeMedios" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" GridPane.rowSpan="8" GridPane.vgrow="NEVER" />
                      </children>
                   </GridPane>
                </children>
