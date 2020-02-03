@@ -15,11 +15,14 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 
+import ec.edu.upse.facsistel.gitwym.sai.cloud.GoogleCloudStorageWorker;
 import ec.edu.upse.facsistel.gitwym.sai.models.Categoria;
 import ec.edu.upse.facsistel.gitwym.sai.models.Idiomas;
+import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
 import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,6 +31,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -45,18 +49,15 @@ public class RecursoPrincipalController {
     @FXML private Label lbl_filtros;
     @FXML private AnchorPane anch_filtros;
     @FXML private JFXComboBox<Categoria> cmb_categoria;
-    @FXML private JFXTextField txt_coordenadas;
     @FXML private JFXComboBox<Idiomas> cmb_idioma;
     @FXML private JFXListView<Recurso> lst_listaRecursos;
     @FXML private AnchorPane anch_contImgPrinBusqueda;
-    @FXML private Label lbl_descripcionBusqueda;
     @FXML private AnchorPane anch_mapa;
     @FXML private HBox hbx_contenedorInfBasica;
     @FXML private AnchorPane anch_contenedor;
     @FXML private Label lbl_nombreRecurso;
     @FXML private Label lbl_infGeneral;
     @FXML private Label lbl_ubicacionZonal;
-    @FXML private AnchorPane anch_contImgPrin;
     @FXML private JFXButton btn_masInformacion;
     @FXML private JFXButton btn_abrirInfBasica;
 
@@ -69,25 +70,32 @@ public class RecursoPrincipalController {
 	String uriRecurso = urlBase + "/recurso";
 	String uriCategoria = urlBase + "/categoria";
 	String uriIdioma = urlBase + "/idiomas";
+ 	String uriMediaCloud = urlBase + "/mediaCloudResources";
 
-	// DE LA CLASE MEDIA CLOUD
+	// DE LA CLASE RECURSO
 	Recurso recurso = new Recurso();
 	List<Recurso> listaRecurso = new ArrayList<Recurso>();
 	private static ResponseEntity<List<Recurso>> listRespRecurso;
 	ObservableList<Recurso> obsListRecurso = FXCollections.observableArrayList();
 
-	// DE LA CLASE MEDIA CLOUD
+	// DE LA CLASE CATEGORIA
 	Categoria categoria = new Categoria();
 	List<Categoria> listaCategoria = new ArrayList<Categoria>();
 	private static ResponseEntity<List<Categoria>> listRespCategoria;
 	ObservableList<Categoria> obsListCategoria = FXCollections.observableArrayList();
 
-	// DE LA CLASE MEDIA CLOUD
+	// DE LA CLASE IDIOMAS
 	Idiomas idiomas = new Idiomas();
 	List<Idiomas> listaIdiomas = new ArrayList<Idiomas>();
 	private static ResponseEntity<List<Idiomas>> listRespIdiomas;
 	ObservableList<Idiomas> obsListIdiomas = FXCollections.observableArrayList();
 
+	// DE LA CLASE MEDIA CLOUD
+//	MediaCloudResources media = new MediaCloudResources();
+	List<MediaCloudResources> listaMedia = new ArrayList<MediaCloudResources>();
+	private static ResponseEntity<List<MediaCloudResources>> listRespMedia;
+	GoogleCloudStorageWorker gcsw = new GoogleCloudStorageWorker();
+    
 	
 	public void initialize() {	
 		showInformacionBasica();
@@ -99,10 +107,11 @@ public class RecursoPrincipalController {
 	        map.flyTo(1., mapPoint, 2.);
 		}
         General.setMapatoAnchorPane(map, anch_mapa);
-        restoreToController();
+        gcsw.showMediaInContenedor(new Image("albums.png",140,300,true,false), anch_contImgPrinBusqueda, (double) 150);
+		restoreToController();
 		loadTipoMedios();
 		loadCategorias();
-		loadMedios();
+		loadRecursos();
 		buscarPorNombre();
 	}        
 
@@ -110,7 +119,7 @@ public class RecursoPrincipalController {
     void crearRecurso(ActionEvent event) {
     	Context.getInstance().setRecursoContext(null);
     	General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());
-    	//Context.getInstance().setMapViewContext(map);
+    	Context.getInstance().setMapViewContext(map);
     }
 
     @FXML
@@ -120,8 +129,19 @@ public class RecursoPrincipalController {
 
     @FXML
     void modificarRecurso(ActionEvent event) {
-    	General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());
-    	Context.getInstance().setMapViewContext(map);
+    	try {
+    		if (lst_listaRecursos.getSelectionModel().getSelectedItems().isEmpty()) {
+    			Message.showWarningNotification("Seleccione el recurso a modificar.!!");
+    			return;
+    		}
+        	Context.getInstance().setRecursoContext(recurso);
+        	Context.getInstance().setMapViewContext(map);	
+        	General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());
+        			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
+		}
     }
 
     @FXML
@@ -203,71 +223,14 @@ public class RecursoPrincipalController {
 //    	});
     }    
 
-	private void loadMedios() {
-//		if(!obsListMedia.isEmpty())	obsListMedia.clear();
-//		listRespMedia = rest.exchange(uriMediaCloud + "/getAll", HttpMethod.GET, null,
-//				new ParameterizedTypeReference<List<MediaCloudResources>>() {
-//				});
-//		listaMedia = listRespMedia.getBody();
-//		lst_listaMedios.setPlaceholder(new Label("---  No se encontraron datos en la Base. ---"));
-//		if (!listaMedia.isEmpty()) {
-//			for (int i = 0; i < listaMedia.size(); i++) {
-//				obsListMedia.add(listaMedia.get(i));
-//			}			
-//			lst_listaMedios.setItems(obsListMedia);	
-//	    	lst_listaMedios.setCellFactory(param -> new ListCell<MediaCloudResources>() {
-//	    		protected void updateItem(MediaCloudResources item, boolean empty) {
-//	    			super.updateItem(item, empty);
-//	    			setText(empty ? "" : item.getNombre() );
-//	    		};
-//	    	});  	    	
-//		}
-//		//
-//		lst_listaMedios.getSelectionModel().selectedItemProperty()
-//				.addListener((ObservableValue<? extends MediaCloudResources> ov, MediaCloudResources old_val, MediaCloudResources new_val) -> {
-//					if (lst_listaMedios.getSelectionModel().getSelectedItem() != null) {
-//						media = lst_listaMedios.getSelectionModel().getSelectedItem();
-//						txt_autorMedio.setText(media.getAutor());
-//						txt_coordenadasMedio.setText(media.getCoordenadas());
-//						txt_descripcionMedio.setText(media.getDescripcion());
-//						txt_nombreMedio.setText(media.getNombre());
-//						txt_urlAlmacenamiento.setText(media.getUrlAlmacenamiento());
-//						if(!media.getIdsEtiqueta().isEmpty()) {
-//							List<Etiquetas> auxEt = listaEtiquetas;
-//							for (String idEt : media.getIdsEtiqueta()) {
-//								for (Etiquetas e : auxEt) {
-//									if (idEt.equals(e.getId())) {
-//										chpv_etiquetasEscogidas.getChips().add(e);
-//									}
-//								}
-//							}
-//						}
-//						rbtn_esPrincipal.setSelected(media.getIsPrincipal());
-//						rbtn_esReportado.setSelected(media.getIsReportado());
-//						cmb_tipoMedia.getSelectionModel().select(media.getTipoMedia());
-//						
-//						//traer la imagen con la url y presentar en el ImageView.
-//						if (media.getTipoMedia() != null) {
-//							if (media.getTipoMedia().getDescripcion().equals("Imagen")) {
-//								Image img = gcsw.getImageMediaCR(media.getId());
-//								gcsw.showMediaInContenedor(img, contenedorDeMedios);	
-//								fileTraer = true;
-//							}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
-//								Media video = gcsw.getMediaFromMediaCR(media.getId());
-//						        gcsw.showMediaInContenedor(video, contenedorDeMedios);		
-//						        fileTraer = true;
-//							}else {
-//								//CONTENIDO 3D
-//								fileTraer = true;
-//							}	
-//						}					
-//						
-//						//ranking
-//						if(media.getFecha() != null) {
-//							dtp_fechaMedio.setValue(media.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-//						}
-//					}
-//				});
+	private void loadRecursos() {
+		if(!obsListRecurso.isEmpty())	obsListRecurso.clear();
+		listRespRecurso = rest.exchange(uriRecurso + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Recurso>>() {
+				});
+		listaRecurso = listRespRecurso.getBody();
+		cargarListaRecursos(listaRecurso);
+		//
 	}
 
 	private void loadTipoMedios() {
@@ -392,19 +355,35 @@ public class RecursoPrincipalController {
 		}
 		//
 		lst_listaRecursos.getSelectionModel().selectedItemProperty()
-				.addListener((ObservableValue<? extends Recurso> ov, Recurso old_val, Recurso new_val) -> {
-					recurso = lst_listaRecursos.getSelectionModel().getSelectedItem();
-					
+			.addListener((ObservableValue<? extends Recurso> ov, Recurso old_val, Recurso new_val) -> {
+				recurso = lst_listaRecursos.getSelectionModel().getSelectedItem();
+				
 //					if (exitPopup) {
 //						return;
 //					}
-					
-					//presentar todos los datos del recurso en el mapa.
-					//hemos seleccionado un recurso y 
-					//debemos presentar en el mapa 
-					
-					
-				});		
+				
+				//resaltar el punto en el mapa.
+				
+				lbl_nombreRecurso.setText(recurso.getNombre());
+				lbl_infGeneral.setText(recurso.getInformacionGeneral());
+				lbl_ubicacionZonal.setText(recurso.getDireccion());
+				
+				if(recurso.getIdsMediaCloudResources() != null) {
+					listRespMedia = rest.exchange(uriMediaCloud + "/getAll", HttpMethod.GET, null,
+							new ParameterizedTypeReference<List<MediaCloudResources>>() {
+							});
+					listaMedia = listRespMedia.getBody();
+					for (MediaCloudResources mcr : listaMedia) {
+						if(recurso.getIdsMediaCloudResources().contains(mcr.getId())) {
+							if (mcr.getIsPrincipal()) {
+								Image img = gcsw.getImageMediaCR(mcr.getId());
+								gcsw.showMediaInContenedor(img, anch_contImgPrinBusqueda, (double) 150);
+								return;
+							}
+						}
+					}
+				}
+			});		
 	}
 
     private void restoreToController() {

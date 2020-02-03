@@ -188,7 +188,7 @@ public class GoogleCloudStorageWorker {
 	}
 	
 	
-	public void showMediaInContenedor(Image image, AnchorPane contenedor) {
+	public void showMediaInContenedor(Image image, AnchorPane contenedor, Double height) {
 		if (!contenedor.getChildren().isEmpty()) {
 			contenedor.getChildren().clear();
 		}
@@ -200,7 +200,7 @@ public class GoogleCloudStorageWorker {
 			    img.fitWidthProperty().bind(contenedor .widthProperty()); 
 		}
 //	    img.fitHeightProperty().bind(contenedor.heightProperty());
-		img.fitHeightProperty().set(288);
+		img.fitHeightProperty().set(height);
 	    img.setPreserveRatio(true);
 	    bp.setCenter(img);
 	    

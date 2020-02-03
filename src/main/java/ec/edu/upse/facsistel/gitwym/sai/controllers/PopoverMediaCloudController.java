@@ -95,7 +95,7 @@ public class PopoverMediaCloudController {
  	
  	
  	public void initialize() {
-		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios);		
+		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);		
 //		restoreToController();
 		loadTipoMedios();
 		loadEtiquetas();
@@ -142,7 +142,7 @@ public class PopoverMediaCloudController {
 			    //Mostar la imagen
 			    if (medioFile != null) {
 			        Image image = new Image("file:" + medioFile.getAbsolutePath());
-			        gcsw.showMediaInContenedor(image, contenedorDeMedios);
+			        gcsw.showMediaInContenedor(image, contenedorDeMedios, (double) 288);
 			        fileTraer = true;
 			    }
 			}else if (cmb_tipoMedia.getValue().getDescripcion().equals("Video")) {
@@ -375,7 +375,7 @@ public class PopoverMediaCloudController {
 			if (media.getTipoMedia() != null) {
 				if (media.getTipoMedia().getDescripcion().equals("Imagen")) {
 					Image img = gcsw.getImageMediaCR(media.getId());
-					gcsw.showMediaInContenedor(img, contenedorDeMedios);	
+					gcsw.showMediaInContenedor(img, contenedorDeMedios, (double) 288);	
 					fileTraer = true;
 				}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
 					Media video = gcsw.getMediaFromMediaCR(media.getId());
@@ -390,7 +390,7 @@ public class PopoverMediaCloudController {
 			if (media.getTipoMedia().getDescripcion().equals("Imagen")) {
 			    if (media.getFileTemporal() != null) {
 			        Image image = new Image("file:" + media.getFileTemporal().getAbsolutePath());
-			        gcsw.showMediaInContenedor(image, contenedorDeMedios);
+			        gcsw.showMediaInContenedor(image, contenedorDeMedios, (double) 288);
 			    }
 			}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
 				if (media.getFileTemporal() != null) {

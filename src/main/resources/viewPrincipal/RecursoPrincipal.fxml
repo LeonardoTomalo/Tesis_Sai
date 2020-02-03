@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anch_rp" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="496.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.RecursoPrincipalController">
+<AnchorPane fx:id="anch_rp" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="496.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.RecursoPrincipalController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -125,21 +125,11 @@
                                                                            <rowConstraints>
                                                                               <RowConstraints maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                                               <RowConstraints maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                                                              <RowConstraints maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                                            </rowConstraints>
                                                                            <children>
                                                                               <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
                                                                                  <children>
                                                                                     <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Categoria" textAlignment="CENTER" HBox.hgrow="NEVER">
-                                                                                       <HBox.margin>
-                                                                                          <Insets left="10.0" />
-                                                                                       </HBox.margin>
-                                                                                    </Label>
-                                                                                 </children>
-                                                                              </HBox>
-                                                                              <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="40.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
-                                                                                 <children>
-                                                                                    <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Coordenadas" textAlignment="CENTER" HBox.hgrow="NEVER">
                                                                                        <HBox.margin>
                                                                                           <Insets left="10.0" />
                                                                                        </HBox.margin>
@@ -169,21 +159,6 @@
                                                                                  <padding>
                                                                                     <Insets left="5.0" />
                                                                                  </padding>
-                                                                              </HBox>
-                                                                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                                                                 <GridPane.margin>
-                                                                                    <Insets />
-                                                                                 </GridPane.margin>
-                                                                                 <padding>
-                                                                                    <Insets left="5.0" />
-                                                                                 </padding>
-                                                                                 <children>
-                                                                                    <JFXTextField fx:id="txt_coordenadas" maxWidth="1.7976931348623157E308" promptText="Coordenadas..." HBox.hgrow="ALWAYS">
-                                                                                       <HBox.margin>
-                                                                                          <Insets right="10.0" />
-                                                                                       </HBox.margin>
-                                                                                    </JFXTextField>
-                                                                                 </children>
                                                                               </HBox>
                                                                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                                                  <children>
@@ -257,42 +232,13 @@
                                                                            <columnConstraints>
                                                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="0.0" prefWidth="13.0" />
                                                                               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="237.0" />
-                                                                              <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="237.0" />
                                                                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="0.0" prefWidth="13.0" />
                                                                            </columnConstraints>
                                                                            <rowConstraints>
-                                                                              <RowConstraints minHeight="30.0" prefHeight="40.0" vgrow="NEVER" />
                                                                               <RowConstraints minHeight="150.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                                                            </rowConstraints>
                                                                            <children>
-                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                                                                 <children>
-                                                                                    <Label text="Imagen Principal" />
-                                                                                 </children>
-                                                                              </HBox>
-                                                                              <AnchorPane fx:id="anch_contImgPrinBusqueda" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
-                                                                                 <children>
-                                                                                    <Label text="Descripcion" />
-                                                                                 </children>
-                                                                              </HBox>
-                                                                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                                                                 <children>
-                                                                                    <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
-                                                                                       <content>
-                                                                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-                                                                                             <children>
-                                                                                                <Label fx:id="lbl_descripcionBusqueda" alignment="TOP_CENTER" text="Texto de la descripcion " wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                                                   <padding>
-                                                                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                                                                                   </padding>
-                                                                                                </Label>
-                                                                                             </children>
-                                                                                          </AnchorPane>
-                                                                                       </content>
-                                                                                    </ScrollPane>
-                                                                                 </children>
-                                                                              </HBox>
+                                                                              <AnchorPane fx:id="anch_contImgPrinBusqueda" GridPane.columnIndex="1" />
                                                                            </children>
                                                                         </GridPane>
                                                                      </children>
@@ -366,16 +312,6 @@
                                                             <Insets bottom="7.0" left="25.0" right="25.0" top="1.0" />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="150.0" text="Imagen Principal">
-                                                         <VBox.margin>
-                                                            <Insets bottom="5.0" left="25.0" right="25.0" top="15.0" />
-                                                         </VBox.margin>
-                                                      </Label>
-                                                      <AnchorPane fx:id="anch_contImgPrin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="180.0" prefWidth="220.0">
-                                                         <VBox.margin>
-                                                            <Insets bottom="7.0" top="2.0" />
-                                                         </VBox.margin>
-                                                      </AnchorPane>
                                                    </children>
                                                 </VBox>
                                              </children></AnchorPane>

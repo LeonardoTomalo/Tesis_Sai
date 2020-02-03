@@ -146,7 +146,7 @@ public class RecursoController {
  	
 
 	public void initialize() {	
-		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios);
+		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		//cargar provincia, canton y parroquia
 		
 		//cargar Media Cloud
@@ -558,7 +558,7 @@ public class RecursoController {
 		lst_listaMedios.getSelectionModel().selectedItemProperty()
 				.addListener((ObservableValue<? extends MediaCloudResources> ov, MediaCloudResources old_val, MediaCloudResources new_val) -> {
 					media = lst_listaMedios.getSelectionModel().getSelectedItem();
-					gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios);
+					gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 					
 					if (exitPopup) {
 						return;
@@ -568,7 +568,7 @@ public class RecursoController {
 						if (media.getTipoMedia() != null) {
 							if (media.getTipoMedia().getDescripcion().equals("Imagen")) {
 								Image img = gcsw.getImageMediaCR(media.getId());
-								gcsw.showMediaInContenedor(img, contenedorDeMedios);	
+								gcsw.showMediaInContenedor(img, contenedorDeMedios, (double) 288);	
 							}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
 								Media video = gcsw.getMediaFromMediaCR(media.getId());
 						        gcsw.showMediaInContenedor(video, contenedorDeMedios);	
@@ -580,7 +580,7 @@ public class RecursoController {
 						if (media.getTipoMedia().getDescripcion().equals("Imagen")) {
 						    if (media.getFileTemporal() != null) {
 						        Image image = new Image("file:" + media.getFileTemporal().getAbsolutePath());
-						        gcsw.showMediaInContenedor(image, contenedorDeMedios);
+						        gcsw.showMediaInContenedor(image, contenedorDeMedios, (double) 288);
 						    }
 						}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
 							if (media.getFileTemporal() != null) {
