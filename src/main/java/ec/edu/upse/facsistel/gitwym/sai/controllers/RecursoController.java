@@ -1,11 +1,14 @@
 package ec.edu.upse.facsistel.gitwym.sai.controllers;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.imageio.ImageIO;
 
 import org.controlsfx.control.CheckListView;
 import org.springframework.core.ParameterizedTypeReference;
@@ -125,8 +128,7 @@ public class RecursoController {
 	// DE LA CLASE RECURSO
 	Recurso recurso = new Recurso();
 	Boolean isModificar = false;
-	Boolean exitPopup = false;
-	
+	Boolean exitPopup = false;	
 
 	// DE LA CLASE MEDIA CLOUD
  	MediaCloudResources media = new MediaCloudResources();
@@ -145,30 +147,102 @@ public class RecursoController {
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios);
-		
-		if (Context.getInstance().getRecursoContext() != null) {//para modificar recurso
-			recurso = Context.getInstance().getRecursoContext();
-			isModificar = true;
-			loadMedios();
-		}
-		
 		//cargar provincia, canton y parroquia
 		
-		//MEDIA CLOUD RESOURCES
+		//cargar Media Cloud
 		loadTipoMedios();
 		buscarPorNombre();
 		
+		if (Context.getInstance().getRecursoContext() != null) {
+			recurso = Context.getInstance().getRecursoContext();
+			cargarDatosRecurso(recurso);
+			isModificar = true;
+			loadMedios();	
+		}
 		
-	}     
+	}    
 
-    @FXML
+	@FXML
     void atras(ActionEvent event) {
-
+		try {
+    		Context.getInstance().setRecursoContext(null);
+    		General.setContentParent("/viewPrincipal/RecursoPrincipal.fxml", Context.getInstance().getAnch_Contenido());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML
     void guardarRecurso(ActionEvent event) {
-
+    	try {
+    		// validaciones respectivas
+    		if (txt_nombreRecurso.getText().isEmpty() || txt_nombreRecurso.getText().isBlank()) {
+    			Message.showWarningNotification("Debe ingresar un nombre al recurso.!!");
+    			return;
+    		}
+    		if (txt_coordenadasRecurso.getText().isEmpty() || txt_coordenadasRecurso.getText().isBlank()) {
+    			Message.showWarningNotification("Debe agregar las coordenadas del recurso.!!");
+    			return;
+    		}
+    		//guardando recurso simple
+    		recurso.setNombre(txt_nombreRecurso.getText());
+    		recurso.setPropietario(txt_propietarioRecurso.getText());
+    		recurso.setCoordenadas(txt_coordenadasRecurso.getText());
+    		recurso.setDescripcion(txt_descripcionRecurso.getText());
+    		recurso.setInformacionGeneral(txt_infGeneralRecurso.getText());
+    		recurso.setDireccion(txt_direccionRecurso.getText());
+    		recurso.setEstado(true);    		
+    		if (cmb_parroquiaRecurso.getSelectionModel().getSelectedItem() != null) {
+				recurso.setIdLocalizacion(cmb_parroquiaRecurso.getSelectionModel().getSelectedItem().getId());
+			} else if(cmb_cantonRecurso.getSelectionModel().getSelectedItem() != null){
+				recurso.setIdLocalizacion(cmb_cantonRecurso.getSelectionModel().getSelectedItem().getId());
+			}else if(cmb_provinciaRecurso.getSelectionModel().getSelectedItem() != null){				
+				recurso.setIdLocalizacion(cmb_provinciaRecurso.getSelectionModel().getSelectedItem().getId());
+			}
+    		//guardando recurso con Contenido Media
+    		ArrayList<String> auxIdsMedia = new ArrayList<>();
+    		if (listaMediaTemporal.size() > 0) {
+    			if(recurso.getIdsMediaCloudResources() != null)recurso.getIdsMediaCloudResources().clear();
+				String url = "";
+				System.out.println("Lista Media Temporal: " + listaMediaTemporal);				
+				for (MediaCloudResources mcr : listaMediaTemporal) {
+					if (mcr.getFileTemporal() != null) {
+						if(mcr.getId() != null) {
+							gcsw.updateMediaCR(mcr.getId(), gcsw.fileToByteArray(mcr.getFileTemporal()));
+						}else {
+							media = rest.postForObject(uriMediaCloud + "/saveOrUpdate", mcr, MediaCloudResources.class);
+							System.out.println("Guardando contenido multimedia en GOOGLE CLOUD.");
+							if (mcr.getExtensionFile().equals(".mp4") || mcr.getExtensionFile().equals(".wt3")) {
+								url = gcsw.saveMediaCR(media.getId(), gcsw.fileToByteArray(mcr.getFileTemporal()));
+							}else {
+								BufferedImage bufferedImage = ImageIO.read(mcr.getFileTemporal());
+								bufferedImage = gcsw.redimensionarImagen(bufferedImage);
+								url = gcsw.saveMediaCR(media.getId(), General.converterImageToByteArray(bufferedImage));						
+							}			
+							media.setUrlAlmacenamiento(url);
+							mcr = media;
+						}
+					}
+					System.out.println("MEDIO A GUARDAR: " + mcr);
+					media = rest.postForObject(uriMediaCloud + "/saveOrUpdate", mcr, MediaCloudResources.class);
+					auxIdsMedia.add(media.getId());
+				}    		
+    		}
+			recurso.setIdsMediaCloudResources(auxIdsMedia);
+    		//guardando recurso con Contenido Media+++FIN    		
+    		
+			
+			
+    		//Guardamos el recurso
+    		rest.postForObject(uriRecurso + "/saveOrUpdate", recurso, Recurso.class);
+    		Context.getInstance().setRecursoContext(recurso);
+			Message.showSuccessNotification("Se guardaron exitosamente los datos.!! ");
+			General.setContentParent("/viewPrincipal/RecursoPrincipal.fxml", Context.getInstance().getAnch_Contenido());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al guardar datos.!!");			
+		}
     }
 
     @FXML
@@ -390,8 +464,9 @@ public class RecursoController {
 					new ParameterizedTypeReference<List<MediaCloudResources>>() {
 					});
 			listaMedia = listRespMedia.getBody();
-			if (!listaMedia.isEmpty()) {
+			if (!listaMedia.isEmpty()) {//todos los medios de todos los recursos
 				if (!recurso.getIdsMediaCloudResources().isEmpty()) {
+					//filtramos los medios que pertenecen a este recurso
 					for (int i = 0; i < listaMedia.size(); i++) {
 						if (recurso.getIdsMediaCloudResources().contains(listaMedia.get(i).getId())) {
 							if (!listaMediaTemporal.contains(listaMedia.get(i))) {
@@ -399,14 +474,14 @@ public class RecursoController {
 							}		
 						}					
 					}
-					obsListMedia.addAll(listaMediaTemporal);
-					lst_listaMedios.setItems(obsListMedia);	
+//					obsListMedia.addAll(listaMediaTemporal);
+//					lst_listaMedios.setItems(obsListMedia);	
 				}					    	
 			}
-		}else {//es nuevo recurso la lista de medios esta vacia.
+		}//else {//es nuevo recurso la lista de medios esta vacia.
 			//al crear un media se agrega a la lista temporal.
-			cargarListaMedios(listaMediaTemporal);			
-		}		
+			cargarListaMedios(listaMediaTemporal);
+//		}		
 	}
 
     private void loadTipoMedios() {
@@ -519,6 +594,24 @@ public class RecursoController {
 					}
 				});
     }
-
+    
+    private void cargarDatosRecurso(Recurso recurso) {
+    	//carga todos los datos del recurso.
+    	//recurso
+    	txt_nombreRecurso.setText(recurso.getNombre());
+    	txt_propietarioRecurso.setText(recurso.getPropietario());
+    	txt_coordenadasRecurso.setText(recurso.getCoordenadas());
+    	txt_descripcionRecurso.setText(recurso.getDescripcion());
+    	txt_infGeneralRecurso.setText(recurso.getInformacionGeneral());
+    	txt_direccionRecurso.setText(recurso.getDireccion());
+    	if (!recurso.getIdLocalizacion().isBlank() || !recurso.getIdLocalizacion().isEmpty()) {
+			//seleccionar los combos de localizacion segun recurso
+		}
+    	//llenar ranking
+    	//llenar seguridad
+    	
+    	
+    	
+	}
     
 }

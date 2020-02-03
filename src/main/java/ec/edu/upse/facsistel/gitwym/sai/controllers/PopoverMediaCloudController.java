@@ -272,7 +272,7 @@ public class PopoverMediaCloudController {
 				if (media.getExtensionFile().equals(".mp4") || media.getExtensionFile().equals(".wt3")) {
 					url = gcsw.updateMediaCR(media.getId(), gcsw.fileToByteArray(medioFile));
 				}else {
-					url = gcsw.saveMediaCR(media.getId(), General.converterImageToByteArray(bufferedImageToExchage));						
+					url = gcsw.updateMediaCR(media.getId(), General.converterImageToByteArray(bufferedImageToExchage));						
 				}			
 				media.setUrlAlmacenamiento(url);
     			rest.postForObject(uriMediaCloud + "/saveOrUpdate", media, MediaCloudResources.class);

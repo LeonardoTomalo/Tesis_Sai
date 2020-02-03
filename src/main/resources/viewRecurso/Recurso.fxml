@@ -171,7 +171,7 @@
                         <Insets bottom="7.0" />
                      </GridPane.margin>
                   </JFXTextArea>
-                  <JFXTextField fx:id="txt_coordenadasRecurso" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Buscar coordenadas..." GridPane.columnIndex="10">
+                  <JFXTextField fx:id="txt_coordenadasRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Buscar coordenadas..." GridPane.columnIndex="10">
                      <padding>
                         <Insets left="5.0" right="10.0" />
                      </padding>
