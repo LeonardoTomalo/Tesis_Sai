@@ -128,6 +128,7 @@ public class RecursoController {
 	String uriMediaCloud = urlBase + "/mediaCloudResources";
  	String uriTipoMedia = urlBase + "/tipoMedia";
  	String uriCosto = urlBase + "/costo";
+ 	String uriContacto = urlBase + "/contacto";
 
 	// DE LA CLASE RECURSO
 	Recurso recurso = new Recurso();
@@ -147,21 +148,26 @@ public class RecursoController {
  	List<TipoMedia> listaTipoMedia = new ArrayList<TipoMedia>();
  	private static ResponseEntity<List<TipoMedia>> listRespTipoMedia;
  	ObservableList<TipoMedia> obsListTipoMedia = FXCollections.observableArrayList();
- 	
+
  	//DE LA CLASE COSTO
  	Costo costo = new Costo();
  	List<Costo> listaCosto = new ArrayList<Costo>();
+ 	
+ 	//DE LA CLASE CONTACTO
+ 	Contacto contacto = new Contacto();
+ 	List<Contacto> listaContacto = new ArrayList<Contacto>();
 	
  	
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
+		listasCellFactory();
 		//cargar provincia, canton y parroquia
 		acco_Der.setExpandedPane(accd_accesibilidadesRecurso);
 		acco_Izq.setExpandedPane(accd_costosRecurso);
-		recurso = Context.getInstance().getRecursoContext();
 		System.out.println("RECURSO POR PARAMETROS: " + recurso);
-		if (recurso != null) {
+		if (Context.getInstance().getRecursoContext() != null) {
+			recurso = Context.getInstance().getRecursoContext();
 			System.out.println("HOLA PASO");
 			cargarDatosRecurso(recurso);
 			System.out.println("HOLA PASO2");
@@ -170,9 +176,7 @@ public class RecursoController {
 		}
 		//cargar Media Cloud
 		loadTipoMedios();
-		buscarPorNombre();
-		
-		
+		buscarPorNombre();		
 		
 	}    
 
@@ -255,7 +259,16 @@ public class RecursoController {
     		}
 			recurso.setCostoServicio(auxCosto);
 			//guardando recurso con costo FIN
-			
+			//guardando recurso con contacto
+			ArrayList<Contacto> auxContacto = new ArrayList<>();
+    		if (lst_listaContactosRecurso.getItems().size() > 0) {
+    			if(recurso.getContactos() != null)recurso.getContactos().clear();	
+				for (Contacto mcr : lst_listaContactosRecurso.getItems()) {
+					auxContacto.add(mcr);
+				}    		
+    		}
+			recurso.setContactos(auxContacto);
+			//guardando recurso con costo FIN
 			
 			
     		//Guardamos el recurso
@@ -277,7 +290,18 @@ public class RecursoController {
 
     @FXML
     void addContactoRecurso(ActionEvent event) {
-
+    	try {
+    		//abro interfaz para crear un costo
+    		Context.getInstance().setContactoContext(null);
+    		General.showModalWithParent("/viewRecurso/ModalContacto.fxml");
+    		if (Context.getInstance().getContactoContext() != null) {
+    			lst_listaContactosRecurso.getItems().add(Context.getInstance().getContactoContext());
+			}
+    		Context.getInstance().setContactoContext(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Surgió un error al agregar costos.!!");
+		}
     }
 
     @FXML
@@ -347,7 +371,21 @@ public class RecursoController {
 
     @FXML
     void eliminarContactoRecurso(ActionEvent event) {
-
+    	try {
+    		if (lst_listaContactosRecurso.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el contacto a eliminar.!!");
+				return;
+			}
+			Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos del contacto: "
+							+ lst_listaContactosRecurso.getSelectionModel().getSelectedItem().getNombre() + " ?.",
+					Context.getInstance().getStage());
+			if (result.get() == ButtonType.OK) {
+				lst_listaContactosRecurso.getItems().remove(lst_listaContactosRecurso.getSelectionModel().getSelectedItem());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al eliminar datos.!!");
+		}
     }
 
     @FXML
@@ -413,14 +451,30 @@ public class RecursoController {
 
     @FXML
     void modificarContactoRecurso(ActionEvent event) {
-
+    	try {
+    		if (lst_listaContactosRecurso.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el contacto a modificar.!!");
+				return;
+			}
+    		Context.getInstance().setContactoContext(lst_listaContactosRecurso.getSelectionModel().getSelectedItem());
+    		General.showModalWithParent("/viewRecurso/ModalContacto.fxml");
+    		if (Context.getInstance().getContactoContext() != null) {
+    			contacto = Context.getInstance().getContactoContext();
+    			cargarListaContactos(lst_listaContactosRecurso.getItems());
+			}
+    		Context.getInstance().setContactoContext(null);    		
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
+		}
     }
 
     @FXML
     void modificarCostoRecurso(ActionEvent event) {
     	try {
     		if (lst_listaCostosRecurso.getSelectionModel().getSelectedItems().isEmpty()) {
-				Message.showWarningNotification("Seleccione el costo a eliminar.!!");
+				Message.showWarningNotification("Seleccione el costo a modificar.!!");
 				return;
 			}
     		Context.getInstance().setCostoContext(lst_listaCostosRecurso.getSelectionModel().getSelectedItem());
@@ -566,12 +620,7 @@ public class RecursoController {
 			}			
 			cmb_tipoMediaBusqueda.setItems(obsListTipoMedia);	
 			cmb_tipoMediaBusqueda.getSelectionModel().select(auxTipo);
-	    	cmb_tipoMediaBusqueda.setCellFactory(param -> new ListCell<TipoMedia>() {
-	    		protected void updateItem(TipoMedia item, boolean empty) {
-	    			super.updateItem(item, empty);
-	    			setText(empty ? "" : item.getDescripcion());
-	    		};
-	    	}); 
+	    	
 	    	
 	    	cmb_tipoMediaBusqueda.getSelectionModel().selectedItemProperty()
 			.addListener((ObservableValue<? extends TipoMedia> ov, TipoMedia old_val, TipoMedia new_val) -> {
@@ -616,12 +665,7 @@ public class RecursoController {
 			}			
 			lst_listaMedios.setItems(obsListMedia);	
     		//
-	    	lst_listaMedios.setCellFactory(param -> new ListCell<MediaCloudResources>() {
-	    		protected void updateItem(MediaCloudResources item, boolean empty) {
-	    			super.updateItem(item, empty);
-	    			setText(empty ? "" : item.getNombre() );
-	    		};
-	    	});  			    	
+	    			    	
 		}
 		//
 		lst_listaMedios.getSelectionModel().selectedItemProperty()
@@ -679,15 +723,29 @@ public class RecursoController {
     	//llenar ranking
     	//llenar seguridad
     	//llenar costos.
-
     	if (recurso.getCostoServicio() != null) {
     		cargarListaCostos(recurso.getCostoServicio());
+		}
+    	//llenar contactos.
+    	if (recurso.getContactos() != null) {
+    		cargarListaContactos(recurso.getContactos());
 		}
     	
     	
 	}
     
-    private void cargarListaCostos(List<Costo> lista) {
+    private void cargarListaContactos(List<Contacto> lista) {
+    	ObservableList<Contacto> obsCostos = FXCollections.observableArrayList();
+    	lst_listaContactosRecurso.setPlaceholder(new Label("---  La lista de contacto se encuentra vacia. ---"));
+		if (!lista.isEmpty()) {
+    		for (int i = 0; i < lista.size(); i++) {
+    			obsCostos.add(lista.get(i));
+			}
+    		lst_listaContactosRecurso.setItems(obsCostos);	
+		}	
+	}
+
+	private void cargarListaCostos(List<Costo> lista) {
     	ObservableList<Costo> obsCostos = FXCollections.observableArrayList();
     	lst_listaCostosRecurso.setPlaceholder(new Label("---  La lista de costo se encuentra vacia. ---"));
 		if (!lista.isEmpty()) {
@@ -698,12 +756,36 @@ public class RecursoController {
 			lst_listaCostosRecurso.setItems(obsCostos);	
     		//	    			    	
 		}
+		
+    }
+    
+	private void listasCellFactory() {
 		lst_listaCostosRecurso.setCellFactory(param -> new ListCell<Costo>() {
     		protected void updateItem(Costo item, boolean empty) {
     			super.updateItem(item, empty);
     			setText(empty ? "" : item.getValor().toString().concat(" - ").concat(item.getDescripcion()) );
     		};
     	});  	
-    }
-    
+
+		lst_listaContactosRecurso.setCellFactory(param -> new ListCell<Contacto>() {
+    		protected void updateItem(Contacto item, boolean empty) {
+    			super.updateItem(item, empty);
+    			setText(empty ? "" : item.getNombre().concat(" - ").concat(item.getCelular()) );
+    		};
+    	});  	
+		
+		lst_listaMedios.setCellFactory(param -> new ListCell<MediaCloudResources>() {
+    		protected void updateItem(MediaCloudResources item, boolean empty) {
+    			super.updateItem(item, empty);
+    			setText(empty ? "" : item.getNombre() );
+    		};
+    	});  	
+		
+		cmb_tipoMediaBusqueda.setCellFactory(param -> new ListCell<TipoMedia>() {
+    		protected void updateItem(TipoMedia item, boolean empty) {
+    			super.updateItem(item, empty);
+    			setText(empty ? "" : item.getDescripcion());
+    		};
+    	}); 
+	}
 }

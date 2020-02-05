@@ -28,6 +28,7 @@ public class Context {
 	private Recurso recursoContext;
 	private MediaCloudResources mediaContext;
 	private Costo costoContext;
+	private Contacto contactoContext;
 	
 	
 	public static Context getInstance() {
