@@ -131,6 +131,8 @@ public class RecursoController {
  	String uriCosto = urlBase + "/costo";
  	String uriContacto = urlBase + "/contacto";
  	String uriAccesibilidad = urlBase + "/accesibilidad";
+ 	String uriCategoria = urlBase + "/categoria";
+ 	String uriIdiomas = urlBase + "/idiomas";
 
 	// DE LA CLASE RECURSO
 	Recurso recurso = new Recurso();
@@ -165,13 +167,26 @@ public class RecursoController {
  	private static ResponseEntity<List<Accesibilidad>> listRespAccesibilidad;
 	ObservableList<Accesibilidad> obsListAccesibilidad = FXCollections.observableArrayList();
 	
- 	
+	// DE LA CLASE CATEGORIA
+	Categoria categoria = new Categoria();
+	List<Categoria> listaCategoria = new ArrayList<Categoria>();
+	private static ResponseEntity<List<Categoria>> listRespCategoria;
+	ObservableList<Categoria> obsListCategoria = FXCollections.observableArrayList();
+
+	// DE LA CLASE IDIOMAS
+	Idiomas idioma = new Idiomas();
+	List<Idiomas> listaIdiomas = new ArrayList<Idiomas>();
+	private static ResponseEntity<List<Idiomas>> listRespIdiomas;
+	ObservableList<Idiomas> obsListIdiomas = FXCollections.observableArrayList();
+
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		listasCellFactory();
 		loadTipoMedios();
 		loadAccesibilidades();
+		loadCategorias();
+		loadIdiomas();
 		buscarPorNombre();		
 		//cargar provincia, canton y parroquia
 		acco_Der.setExpandedPane(accd_accesibilidadesRecurso);
@@ -288,8 +303,26 @@ public class RecursoController {
 			}
 			recurso.setIdsAccesibilidades(auxAcce);
 			//guardando recurson con accesibilidades FIN
-			
-			
+			//guardando recurson con categoria
+			ArrayList<String> auxCat = new ArrayList<>();
+			if(chklst_categoriasRecurso.getCheckModel().getCheckedItems().size() > 0) {
+				if(recurso.getIdsCategoria() != null) recurso.getIdsCategoria().clear();
+				for (Categoria ac : chklst_categoriasRecurso.getCheckModel().getCheckedItems()) {
+					auxCat.add(ac.getId());
+				}			
+			}
+			recurso.setIdsCategoria(auxCat);
+			//guardando recurson con categorias FIN
+			//guardando recurson con idiomas
+			ArrayList<String> auxidio = new ArrayList<>();
+			if(chklst_idiomasRecurso.getCheckModel().getCheckedItems().size() > 0) {
+				if(recurso.getIdiomas() != null) recurso.getIdiomas().clear();
+				for (Idiomas ac : chklst_idiomasRecurso.getCheckModel().getCheckedItems()) {
+					auxidio.add(ac.getId());
+				}			
+			}
+			recurso.setIdiomas(auxidio);
+			//guardando recurson con idiomas FIN
 			
     		//Guardamos el recurso
     		rest.postForObject(uriRecurso + "/saveOrUpdate", recurso, Recurso.class);
@@ -691,6 +724,35 @@ public class RecursoController {
 		}
 	}
 
+	private void loadCategorias() {
+		obsListCategoria.clear();
+		listRespCategoria = rest.exchange(uriCategoria + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Categoria>>() {
+				});
+		listaCategoria = listRespCategoria.getBody();
+		chklst_categoriasRecurso.setPlaceholder(new Label("---  No se encontraron datos en la Base. ---"));
+		if (!listaCategoria.isEmpty()) {
+			for (int i = 0; i < listaCategoria.size(); i++) {
+				obsListCategoria.add(listaCategoria.get(i));
+			}			
+			chklst_categoriasRecurso.setItems(obsListCategoria);		    		    	
+		}		
+	}
+	
+	private void loadIdiomas() {
+		obsListIdiomas.clear();
+		listRespIdiomas = rest.exchange(uriIdiomas + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Idiomas>>() {
+				});
+		listaIdiomas = listRespIdiomas.getBody();
+		chklst_idiomasRecurso.setPlaceholder(new Label("---  No se encontraron datos en la Base. ---"));
+		if (!listaIdiomas.isEmpty()) {
+			for (int i = 0; i < listaIdiomas.size(); i++) {
+				obsListIdiomas.add(listaIdiomas.get(i));
+			}			
+			chklst_idiomasRecurso.setItems(obsListIdiomas);
+		}
+	}
     
     private void cargarListaMedios(List<MediaCloudResources> lista) {
     	obsListMedia = FXCollections.observableArrayList();
@@ -774,6 +836,23 @@ public class RecursoController {
 				}
 			}
 		}
+    	//checkear categorias
+    	if (recurso.getIdsCategoria() != null) {
+			for (Categoria ac : listaCategoria) {
+				if (recurso.getIdsCategoria().contains(ac.getId())) {
+					chklst_categoriasRecurso.getCheckModel().check(ac);
+				}
+			}
+		}
+    	//checkear idiomas
+    	if (recurso.getIdiomas() != null) {
+			for (Idiomas ac : listaIdiomas) {
+				if (recurso.getIdiomas().contains(ac.getId())) {
+					chklst_idiomasRecurso.getCheckModel().check(ac);
+				}
+			}
+		}
+    	
     	
     	
 	}
@@ -796,9 +875,7 @@ public class RecursoController {
     		for (int i = 0; i < lista.size(); i++) {
     			obsCostos.add(lista.get(i));
 			}
-//    		obsCostos.addAll(listaCosto);
 			lst_listaCostosRecurso.setItems(obsCostos);	
-    		//	    			    	
 		}
 		
     }
@@ -834,6 +911,20 @@ public class RecursoController {
 		chklst_accesibilidadesRecurso.setCellFactory(lv -> new CheckBoxListCell<Accesibilidad>(chklst_accesibilidadesRecurso::getItemBooleanProperty) {
 			@Override
 			public void updateItem(Accesibilidad item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getDescripcion());
+			}
+		});	  
+		chklst_categoriasRecurso.setCellFactory(lv -> new CheckBoxListCell<Categoria>(chklst_categoriasRecurso::getItemBooleanProperty) {
+			@Override
+			public void updateItem(Categoria item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getDescripcion());
+			}
+		});	  
+		chklst_idiomasRecurso.setCellFactory(lv -> new CheckBoxListCell<Idiomas>(chklst_idiomasRecurso::getItemBooleanProperty) {
+			@Override
+			public void updateItem(Idiomas item, boolean empty) {
 				super.updateItem(item, empty);
 				setText(empty ? "" : item.getDescripcion());
 			}
