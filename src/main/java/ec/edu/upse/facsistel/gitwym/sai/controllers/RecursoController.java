@@ -52,6 +52,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
@@ -129,6 +130,7 @@ public class RecursoController {
  	String uriTipoMedia = urlBase + "/tipoMedia";
  	String uriCosto = urlBase + "/costo";
  	String uriContacto = urlBase + "/contacto";
+ 	String uriAccesibilidad = urlBase + "/accesibilidad";
 
 	// DE LA CLASE RECURSO
 	Recurso recurso = new Recurso();
@@ -157,11 +159,20 @@ public class RecursoController {
  	Contacto contacto = new Contacto();
  	List<Contacto> listaContacto = new ArrayList<Contacto>();
 	
+ 	//DE LA CLASE ACCESIBILIDADES
+ 	Accesibilidad accesibilidad = new Accesibilidad();
+ 	List<Accesibilidad> listaAccesibilidad = new ArrayList<Accesibilidad>();
+ 	private static ResponseEntity<List<Accesibilidad>> listRespAccesibilidad;
+	ObservableList<Accesibilidad> obsListAccesibilidad = FXCollections.observableArrayList();
+	
  	
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		listasCellFactory();
+		loadTipoMedios();
+		loadAccesibilidades();
+		buscarPorNombre();		
 		//cargar provincia, canton y parroquia
 		acco_Der.setExpandedPane(accd_accesibilidadesRecurso);
 		acco_Izq.setExpandedPane(accd_costosRecurso);
@@ -175,8 +186,6 @@ public class RecursoController {
 			loadMedios();
 		}
 		//cargar Media Cloud
-		loadTipoMedios();
-		buscarPorNombre();		
 		
 	}    
 
@@ -269,6 +278,17 @@ public class RecursoController {
     		}
 			recurso.setContactos(auxContacto);
 			//guardando recurso con costo FIN
+			//guardando recurson con accesibilidades
+			ArrayList<String> auxAcce = new ArrayList<>();
+			if(chklst_accesibilidadesRecurso.getCheckModel().getCheckedItems().size() > 0) {
+				if(recurso.getIdsAccesibilidades() != null) recurso.getIdsAccesibilidades().clear();
+				for (Accesibilidad ac : chklst_accesibilidadesRecurso.getCheckModel().getCheckedItems()) {
+					auxAcce.add(ac.getId());
+				}			
+			}
+			recurso.setIdsAccesibilidades(auxAcce);
+			//guardando recurson con accesibilidades FIN
+			
 			
 			
     		//Guardamos el recurso
@@ -655,6 +675,22 @@ public class RecursoController {
 			});
 		}				
 	}
+
+	private void loadAccesibilidades() {
+		obsListAccesibilidad.clear();
+		listRespAccesibilidad = rest.exchange(uriAccesibilidad + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Accesibilidad>>() {
+				});
+		listaAccesibilidad = listRespAccesibilidad.getBody();
+		chklst_accesibilidadesRecurso.setPlaceholder(new Label("---  No se encontraron datos en la Base. ---"));
+		if (!listaAccesibilidad.isEmpty()) {
+			for (int i = 0; i < listaAccesibilidad.size(); i++) {
+				obsListAccesibilidad.add(listaAccesibilidad.get(i));
+			}			
+			chklst_accesibilidadesRecurso.setItems(obsListAccesibilidad);		    	  	
+		}
+	}
+
     
     private void cargarListaMedios(List<MediaCloudResources> lista) {
     	obsListMedia = FXCollections.observableArrayList();
@@ -730,6 +766,14 @@ public class RecursoController {
     	if (recurso.getContactos() != null) {
     		cargarListaContactos(recurso.getContactos());
 		}
+    	//checkear accesibilidad
+    	if (recurso.getIdsAccesibilidades() != null) {
+			for (Accesibilidad ac : listaAccesibilidad) {
+				if (recurso.getIdsAccesibilidades().contains(ac.getId())) {
+					chklst_accesibilidadesRecurso.getCheckModel().check(ac);
+				}
+			}
+		}
     	
     	
 	}
@@ -787,5 +831,12 @@ public class RecursoController {
     			setText(empty ? "" : item.getDescripcion());
     		};
     	}); 
+		chklst_accesibilidadesRecurso.setCellFactory(lv -> new CheckBoxListCell<Accesibilidad>(chklst_accesibilidadesRecurso::getItemBooleanProperty) {
+			@Override
+			public void updateItem(Accesibilidad item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getDescripcion());
+			}
+		});	  
 	}
 }
