@@ -47,6 +47,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -116,6 +117,8 @@ public class RecursoController {
     @FXML private AnchorPane contenedorDeAtractivos;
     @FXML private AnchorPane anch_senderos;
     @FXML private AnchorPane anch_comentarios;
+    @FXML private Accordion acco_Izq;
+    @FXML private Accordion acco_Der;
 	
     
 	// CONSUMIR WEB SERVICES
@@ -124,6 +127,7 @@ public class RecursoController {
 	String uriRecurso = urlBase + "/recurso";
 	String uriMediaCloud = urlBase + "/mediaCloudResources";
  	String uriTipoMedia = urlBase + "/tipoMedia";
+ 	String uriCosto = urlBase + "/costo";
 
 	// DE LA CLASE RECURSO
 	Recurso recurso = new Recurso();
@@ -144,21 +148,31 @@ public class RecursoController {
  	private static ResponseEntity<List<TipoMedia>> listRespTipoMedia;
  	ObservableList<TipoMedia> obsListTipoMedia = FXCollections.observableArrayList();
  	
+ 	//DE LA CLASE COSTO
+ 	Costo costo = new Costo();
+ 	List<Costo> listaCosto = new ArrayList<Costo>();
+	
+ 	
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		//cargar provincia, canton y parroquia
-		
+		acco_Der.setExpandedPane(accd_accesibilidadesRecurso);
+		acco_Izq.setExpandedPane(accd_costosRecurso);
+		recurso = Context.getInstance().getRecursoContext();
+		System.out.println("RECURSO POR PARAMETROS: " + recurso);
+		if (recurso != null) {
+			System.out.println("HOLA PASO");
+			cargarDatosRecurso(recurso);
+			System.out.println("HOLA PASO2");
+			isModificar = true;
+			loadMedios();
+		}
 		//cargar Media Cloud
 		loadTipoMedios();
 		buscarPorNombre();
 		
-		if (Context.getInstance().getRecursoContext() != null) {
-			recurso = Context.getInstance().getRecursoContext();
-			cargarDatosRecurso(recurso);
-			isModificar = true;
-			loadMedios();	
-		}
+		
 		
 	}    
 
@@ -230,7 +244,18 @@ public class RecursoController {
     		}
 			recurso.setIdsMediaCloudResources(auxIdsMedia);
     		//guardando recurso con Contenido Media+++FIN    		
-    		
+    		//guardando recurso con costo
+			ArrayList<Costo> auxCosto = new ArrayList<>();
+    		if (lst_listaCostosRecurso.getItems().size() > 0) {
+    			if(recurso.getCostoServicio() != null)recurso.getCostoServicio().clear();	
+				for (Costo mcr : lst_listaCostosRecurso.getItems()) {
+//					costo = rest.postForObject(uriCosto + "/saveOrUpdate", mcr, Costo.class);
+					auxCosto.add(mcr);
+				}    		
+    		}
+			recurso.setCostoServicio(auxCosto);
+			//guardando recurso con costo FIN
+			
 			
 			
     		//Guardamos el recurso
@@ -257,7 +282,20 @@ public class RecursoController {
 
     @FXML
     void addCostoRecurso(ActionEvent event) {
-
+    	try {
+    		//abro interfaz para crear un costo
+    		Context.getInstance().setCostoContext(null);
+    		General.showModalWithParent("/viewRecurso/ModalCostos.fxml");
+    		if (Context.getInstance().getCostoContext() != null) {
+//    			listaCosto.add(Context.getInstance().getCostoContext());
+    			lst_listaCostosRecurso.getItems().add(Context.getInstance().getCostoContext());
+//    			cargarListaCostos(listaCosto);
+			}
+    		Context.getInstance().setCostoContext(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Surgió un error al agregar costos.!!");
+		}
     }
 
     @FXML
@@ -314,7 +352,21 @@ public class RecursoController {
 
     @FXML
     void eliminarCostoRecurso(ActionEvent event) {
-
+    	try {
+    		if (lst_listaCostosRecurso.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el costo a eliminar.!!");
+				return;
+			}
+			Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos del costo: "
+							+ lst_listaCostosRecurso.getSelectionModel().getSelectedItem().getDescripcion() + " ?.",
+					Context.getInstance().getStage());
+			if (result.get() == ButtonType.OK) {
+				lst_listaCostosRecurso.getItems().remove(lst_listaCostosRecurso.getSelectionModel().getSelectedItem());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al eliminar datos.!!");
+		}
     }
 
     @FXML
@@ -366,7 +418,23 @@ public class RecursoController {
 
     @FXML
     void modificarCostoRecurso(ActionEvent event) {
-
+    	try {
+    		if (lst_listaCostosRecurso.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el costo a eliminar.!!");
+				return;
+			}
+    		Context.getInstance().setCostoContext(lst_listaCostosRecurso.getSelectionModel().getSelectedItem());
+    		General.showModalWithParent("/viewRecurso/ModalCostos.fxml");
+    		if (Context.getInstance().getCostoContext() != null) {
+    			costo = Context.getInstance().getCostoContext();
+    			cargarListaCostos(lst_listaCostosRecurso.getItems());
+			}
+    		Context.getInstance().setCostoContext(null);    		
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
+		}
     }
 
     @FXML
@@ -384,14 +452,15 @@ public class RecursoController {
     			media = Context.getInstance().getMediaContext();
     			exitPopup = true;
     			//cargar datos de lista al listview
-    			cargarListaMedios(listaMediaTemporal);    			
+    			cargarListaMedios(listaMediaTemporal);    	
+    			lst_listaMedios.getSelectionModel().clearSelection();
 			}
     		Context.getInstance().setMediaContext(null);
     		exitPopup = false;
     		System.out.println("¨********************* SALIO DEL POPUP *****************");
 	
     		
-    		Message.showSuccessNotification("Se modificaron exitosamente los datos.!!");	
+//    		Message.showSuccessNotification("Se modificaron exitosamente los datos.!!");	
     	} catch (Exception e) {
     		e.printStackTrace();
 			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
@@ -604,14 +673,37 @@ public class RecursoController {
     	txt_descripcionRecurso.setText(recurso.getDescripcion());
     	txt_infGeneralRecurso.setText(recurso.getInformacionGeneral());
     	txt_direccionRecurso.setText(recurso.getDireccion());
-    	if (!recurso.getIdLocalizacion().isBlank() || !recurso.getIdLocalizacion().isEmpty()) {
-			//seleccionar los combos de localizacion segun recurso
+    	if (recurso.getIdLocalizacion() != null) {
+			//seleccionar los combos de localizacion  parroquia etc segun recurso
 		}
     	//llenar ranking
     	//llenar seguridad
-    	
+    	//llenar costos.
+
+    	if (recurso.getCostoServicio() != null) {
+    		cargarListaCostos(recurso.getCostoServicio());
+		}
     	
     	
 	}
+    
+    private void cargarListaCostos(List<Costo> lista) {
+    	ObservableList<Costo> obsCostos = FXCollections.observableArrayList();
+    	lst_listaCostosRecurso.setPlaceholder(new Label("---  La lista de costo se encuentra vacia. ---"));
+		if (!lista.isEmpty()) {
+    		for (int i = 0; i < lista.size(); i++) {
+    			obsCostos.add(lista.get(i));
+			}
+//    		obsCostos.addAll(listaCosto);
+			lst_listaCostosRecurso.setItems(obsCostos);	
+    		//	    			    	
+		}
+		lst_listaCostosRecurso.setCellFactory(param -> new ListCell<Costo>() {
+    		protected void updateItem(Costo item, boolean empty) {
+    			super.updateItem(item, empty);
+    			setText(empty ? "" : item.getValor().toString().concat(" - ").concat(item.getDescripcion()) );
+    		};
+    	});  	
+    }
     
 }

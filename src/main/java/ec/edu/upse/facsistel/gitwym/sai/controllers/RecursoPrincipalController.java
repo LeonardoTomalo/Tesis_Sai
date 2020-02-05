@@ -109,7 +109,7 @@ public class RecursoPrincipalController {
         General.setMapatoAnchorPane(map, anch_mapa);
         gcsw.showMediaInContenedor(new Image("albums.png",140,300,true,false), anch_contImgPrinBusqueda, (double) 150);
 		restoreToController();
-		loadTipoMedios();
+		loadIdiomas();
 		loadCategorias();
 		loadRecursos();
 		buscarPorNombre();
@@ -129,19 +129,14 @@ public class RecursoPrincipalController {
 
     @FXML
     void modificarRecurso(ActionEvent event) {
-    	try {
     		if (lst_listaRecursos.getSelectionModel().getSelectedItems().isEmpty()) {
     			Message.showWarningNotification("Seleccione el recurso a modificar.!!");
     			return;
     		}
-        	Context.getInstance().setRecursoContext(recurso);
-        	Context.getInstance().setMapViewContext(map);	
+    		Context.getInstance().setRecursoContext(lst_listaRecursos.getSelectionModel().getSelectedItem());
+//        	Context.getInstance().setMapViewContext(map);	
         	General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());
-        			
-		} catch (Exception e) {
-			e.printStackTrace();
-			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
-		}
+        	
     }
 
     @FXML
@@ -168,9 +163,14 @@ public class RecursoPrincipalController {
 
     @FXML
     void showMasInformacion(ActionEvent event) {
+    	if (lst_listaRecursos.getSelectionModel().getSelectedItems().isEmpty()) {
+			Message.showWarningNotification("Seleccione el recurso a modificar.!!");
+			return;
+		}
+    	Context.getInstance().setRecursoContext(lst_listaRecursos.getSelectionModel().getSelectedItem());
+//    	Context.getInstance().setMapViewContext(map);	
     	General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());
-    }
-    
+    }    
     
     @FXML
     void buscarRecursoNombre(ActionEvent event) {
@@ -192,35 +192,37 @@ public class RecursoPrincipalController {
     }
     
     void buscarPorNombre() {
-//		txt_buscarNombre.textProperty().addListener((observable, oldValue, newValue) -> {
-//    	    System.out.println("textfield changed from " + oldValue + " to " + newValue);
-//    	    
-//    	    ObservableList<MediaCloudResources> obsAux = FXCollections.observableArrayList();			
-//    	    for (MediaCloudResources mcr : lst_listaMedios.getItems()) {    	    	
-//    	    	String nombre = mcr.getNombre();
-//    	    	if (newValue.length() >0) {
-//    	    		for (int i = 0; i < newValue.length(); i++) {
-//    	    			if (nombre.trim().toLowerCase().charAt(i) == newValue.trim().toLowerCase().charAt(i)) {
-//    	    				if (!obsAux.isEmpty()) {
-//    	    					if (!obsAux.contains(mcr)) {
-//    	    						obsAux.add(mcr);
-//    	    					}
-//    	    				}else {
-//    	    					obsAux.add(mcr);
-//    	    				}
-//    	    			} 
-//    				}
-//				}
-//			}
-//    	    //enviamos la lista.
-//    	    lst_listaMedios.setItems(obsAux);
-//    	    if (newValue.isBlank() || newValue.isEmpty()) {
-//				loadMedios();
-//				obsListTipoMedia.clear();
-//				loadTipoMedios();
-//				
-//			}
-//    	});
+		txt_buscarRecurso.textProperty().addListener((observable, oldValue, newValue) -> {
+    	    System.out.println("textfield changed from " + oldValue + " to " + newValue);
+    	    
+    	    ObservableList<Recurso> obsAux = FXCollections.observableArrayList();			
+    	    for (Recurso mcr : lst_listaRecursos.getItems()) {    	    	
+    	    	String nombre = mcr.getNombre();
+    	    	if (newValue.length() >0) {
+    	    		for (int i = 0; i < newValue.length(); i++) {
+    	    			if (nombre.trim().toLowerCase().charAt(i) == newValue.trim().toLowerCase().charAt(i)) {
+    	    				if (!obsAux.isEmpty()) {
+    	    					if (!obsAux.contains(mcr)) {
+    	    						obsAux.add(mcr);
+    	    					}
+    	    				}else {
+    	    					obsAux.add(mcr);
+    	    				}
+    	    			} 
+    				}
+				}
+			}
+    	    //enviamos la lista.
+    	    lst_listaRecursos.setItems(obsAux);
+    	    if (newValue.isBlank() || newValue.isEmpty()) {
+				loadRecursos();
+				obsListCategoria.clear();
+				obsListIdiomas.clear();
+				loadIdiomas();
+				loadCategorias();
+				
+			}
+    	});
     }    
 
 	private void loadRecursos() {
@@ -233,7 +235,7 @@ public class RecursoPrincipalController {
 		//
 	}
 
-	private void loadTipoMedios() {
+	private void loadIdiomas() {
 		listRespIdiomas = rest.exchange(uriIdioma + "/getAll", HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Idiomas>>() {
 		});

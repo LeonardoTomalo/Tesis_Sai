@@ -295,7 +295,7 @@
                                  <children>
                                     <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <Accordion minWidth="100.0" prefWidth="300.0">
+                                          <Accordion fx:id="acco_Izq" minWidth="100.0" prefWidth="300.0">
                                              <panes>
                                                 <TitledPane fx:id="accd_costosRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Servicios con costo">
                                                    <content>
@@ -399,7 +399,7 @@
                                              </HBox.margin>
                                           </VBox>
                                           <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                          <Accordion minWidth="100.0" prefWidth="300.0">
+                                          <Accordion fx:id="acco_Der" minWidth="100.0" prefWidth="300.0">
                                              <panes>
                                                 <TitledPane fx:id="accd_accesibilidadesRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Accesibilidades">
                                                    <content>

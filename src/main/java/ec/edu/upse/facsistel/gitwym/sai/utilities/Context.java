@@ -3,6 +3,7 @@ package ec.edu.upse.facsistel.gitwym.sai.utilities;
 import com.gluonhq.maps.MapView;
 
 import ec.edu.upse.facsistel.gitwym.sai.models.Contacto;
+import ec.edu.upse.facsistel.gitwym.sai.models.Costo;
 import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
 import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.models.Usuario;
@@ -26,6 +27,7 @@ public class Context {
 	private Usuario userLogged;
 	private Recurso recursoContext;
 	private MediaCloudResources mediaContext;
+	private Costo costoContext;
 	
 	
 	public static Context getInstance() {

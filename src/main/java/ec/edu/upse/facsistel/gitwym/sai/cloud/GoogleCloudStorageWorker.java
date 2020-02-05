@@ -92,7 +92,7 @@ public class GoogleCloudStorageWorker {
 		try {
 			Storage storage = StorageOptions.getDefaultInstance().getService();
 			Bucket bucket = storage.get(bucketName);
-			Blob blob = bucket.get(blobId, BlobGetOption.generationMatch());
+			Blob blob = bucket.get(blobId);
 			WritableByteChannel channel = blob.writer();
 			channel.write(ByteBuffer.wrap(content));
 			channel.close();
