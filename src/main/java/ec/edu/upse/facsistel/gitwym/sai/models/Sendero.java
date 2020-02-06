@@ -2,6 +2,7 @@ package ec.edu.upse.facsistel.gitwym.sai.models;
 
 import java.util.ArrayList;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.couchbase.core.mapping.Document;
 
 import com.couchbase.client.java.repository.annotation.Field;
@@ -36,4 +37,6 @@ public class Sendero {
 	@Field private ArrayList<String> idsTransporte;
 	@Field private ArrayList<String> idsMediaCloudResources;
 	@Field private ArrayList<Comentario> comentarios;
+	
+	@Transient private ArrayList<MediaCloudResources> listaMCR;
 }

@@ -36,6 +36,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
 import ec.edu.upse.facsistel.gitwym.sai.models.Parroquia;
 import ec.edu.upse.facsistel.gitwym.sai.models.Provincia;
 import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
+import ec.edu.upse.facsistel.gitwym.sai.models.Sendero;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoAtractivo;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoMedia;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
@@ -116,6 +117,15 @@ public class RecursoController {
     @FXML private JFXButton btn_modificarAtractivo;
     @FXML private AnchorPane contenedorDeAtractivos;
     @FXML private AnchorPane anch_senderos;
+    @FXML private JFXListView<Sendero> lst_listaSenderos;
+    @FXML private JFXButton btn_nuevoSendero;
+    @FXML private JFXButton btn_EliminarSendero;
+    @FXML private JFXButton btn_modificarSendero;
+    @FXML private AnchorPane contenedorDeSenderos;
+    @FXML private JFXTextArea txt_descripcionSendero;
+    @FXML private JFXTextArea txt_instruccionesSendero;
+    @FXML private JFXTextField txt_distanciaAproxSendero;
+    @FXML private JFXTextField txt_tiempoRecorridoSendero;
     @FXML private AnchorPane anch_comentarios;
     @FXML private Accordion acco_Izq;
     @FXML private Accordion acco_Der;
@@ -135,6 +145,7 @@ public class RecursoController {
  	String uriComodidades = urlBase + "/comodidades";
 	String uriTipoAtractivo = urlBase + "/tipoAtractivo";
 	String uriAtractivo = urlBase + "/atractivo";
+	String uriSendero = urlBase + "/sendero";
 
 	// DE LA CLASE RECURSO
 	Recurso recurso = new Recurso();
@@ -149,6 +160,13 @@ public class RecursoController {
 	ObservableList<MediaCloudResources> obsListMedia = FXCollections.observableArrayList();
 	GoogleCloudStorageWorker gcsw = new GoogleCloudStorageWorker();
     
+	// DE LA CLASE MEDIA CLOUD senderos
+	MediaCloudResources mediaSenderos = new MediaCloudResources();
+	List<MediaCloudResources> listaMediaSenderos = new ArrayList<MediaCloudResources>();
+	List<MediaCloudResources> listaMediaTemporalSenderos = new ArrayList<MediaCloudResources>();
+	private static ResponseEntity<List<MediaCloudResources>> listRespMediaSenderos;
+	ObservableList<MediaCloudResources> obsListMediaSenderos = FXCollections.observableArrayList();
+	
 	// DE LA CLASE TIPOMEDIA
  	TipoMedia tipoMedia = new TipoMedia();
  	List<TipoMedia> listaTipoMedia = new ArrayList<TipoMedia>();
@@ -200,19 +218,35 @@ public class RecursoController {
 	List<TipoAtractivo> listaTipoAtractivo = new ArrayList<TipoAtractivo>();
 	private static ResponseEntity<List<TipoAtractivo>> listRespTipoAtractivo;
 	ObservableList<TipoAtractivo> obsListTipoAtractivo = FXCollections.observableArrayList();
+	
+	// DE LA CLASE SENDERO
+	Sendero sendero = new Sendero();
+	List<Sendero> listaSendero = new ArrayList<Sendero>();
+	List<Sendero> listaSenderoTemporal = new ArrayList<Sendero>();
+	private static ResponseEntity<List<Sendero>> listRespSendero;
+	ObservableList<Sendero> obsListSendero = FXCollections.observableArrayList();	
 
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
+		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeSenderos, (double) 288);
 		listasCellFactory();
+		System.out.println("1");
 		loadTipoMedios();
+		System.out.println("2");
 		loadTipoAtractivo();
+		System.out.println("3");
 		loadAccesibilidades();
+		System.out.println("5");
 		loadCategorias();
+		System.out.println("6");
 		loadIdiomas();
+		System.out.println("7");
 		buscarPorNombre();		
+		System.out.println("8");
 		buscarComodidadesTextChange();
+		System.out.println("9");
 		//cargar provincia, canton y parroquia
 		acco_Der.setExpandedPane(accd_accesibilidadesRecurso);
 		acco_Izq.setExpandedPane(accd_costosRecurso);
@@ -224,7 +258,11 @@ public class RecursoController {
 			isModificar = true;
 			loadMedios();
 			loadComodidades();
+			System.out.println("12");			
 			loadAtractivos();
+			System.out.println("13");
+			System.out.println("4");
+			loadSenderos();
 		}
 		
 	}    
@@ -348,6 +386,16 @@ public class RecursoController {
 			}
 			recurso.setIdiomas(auxidio);
 			//guardando recurson con idiomas FIN
+			//guardando recurson con sendero
+			ArrayList<String> auxse = new ArrayList<>();
+			if(lst_listaSenderos.getItems().size() > 0) {
+				if(recurso.getIdsSenderos() != null) recurso.getIdsSenderos().clear();
+				for (Sendero ac : lst_listaSenderos.getItems()) {
+					auxse.add(ac.getId());
+				}			
+			}
+			recurso.setIdsSenderos(auxse);
+			//guardando recurson con sendero FIN
 			
     		//Guardamos el recurso ****************************************
     		recurso = rest.postForObject(uriRecurso + "/saveOrUpdate", recurso, Recurso.class);
@@ -390,6 +438,22 @@ public class RecursoController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Message.showErrorNotification("Ha surgido un error al guardar datos.!!");			
+		}
+    }
+
+    @FXML
+    void addNuevoSendero(ActionEvent event) {
+    	try {
+    		Context.getInstance().setSenderoContext(null);
+    		General.showModalWithParentSendero("/viewRecurso/ModalSendero.fxml");
+    		if (Context.getInstance().getSenderoContext() != null) {
+    			listaSenderoTemporal.add(Context.getInstance().getSenderoContext());
+    			cargarListaSendero(listaSenderoTemporal);
+    		}
+    		Context.getInstance().setSenderoContext(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Surgió un error al agregar sendero.!!");
 		}
     }
 
@@ -524,6 +588,36 @@ public class RecursoController {
     }
 
     @FXML
+    void eliminarSendero(ActionEvent event) {
+    	try {
+    		if (lst_listaSenderos.getSelectionModel().getSelectedItems().isEmpty()) {
+    			Message.showWarningNotification("Seleccione el sendero a eliminar.!!");
+    			return;
+    		}
+    		Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos del sendero: "
+    				+ lst_listaSenderos.getSelectionModel().getSelectedItem().getNombre() + " ?.",
+    				Context.getInstance().getStage());
+    		if (result.get() == ButtonType.OK) {
+    			sendero = lst_listaSenderos.getSelectionModel().getSelectedItem();
+    			if (lst_listaSenderos.getSelectionModel().getSelectedItem().getId() != null) {
+    				Map<String, String> params = new HashMap<String, String>();
+    				params.put("c", lst_listaSenderos.getSelectionModel().getSelectedItem().getId());
+    				rest.delete(uriSendero + "/delete/{c}", params);
+    				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
+    			}
+    			if (listaSenderoTemporal.size() > 0) 	
+    				listaSenderoTemporal.remove(sendero);
+    			if (lst_listaSenderos.getItems().size() > 0){
+    				lst_listaSenderos.getItems().remove(sendero);
+    			}
+    		}
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		Message.showErrorNotification("Ha surgido un error al eliminar datos.!!");
+    	}
+    }
+    
+    @FXML
     void eliminarAtractivo(ActionEvent event) {
     	try {
     		if (lst_listaAtractivos.getSelectionModel().getSelectedItems().isEmpty()) {
@@ -655,6 +749,27 @@ public class RecursoController {
 		}
     }
 
+    @FXML
+    void modificarSendero(ActionEvent event) {
+    	try {
+    		if (lst_listaSenderos.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el sendero a modificar.!!");
+				return;
+			}
+    		Context.getInstance().setSenderoContext(lst_listaSenderos.getSelectionModel().getSelectedItem());
+    		General.showModalWithParentSendero("/viewRecurso/ModalSendero.fxml");
+    		if (Context.getInstance().getSenderoContext() != null) {
+    			sendero = Context.getInstance().getSenderoContext();
+
+    			cargarListaSendero(listaSenderoTemporal);
+			}
+    		Context.getInstance().setSenderoContext(null);     		
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
+		}
+    }
+    
     @FXML
     void modificarAtractivo(ActionEvent event) {
     	try {
@@ -1022,7 +1137,25 @@ public class RecursoController {
 			chklst_idiomasRecurso.setItems(obsListIdiomas);
 		}
 	}
-	
+
+    private void loadSenderos() {
+		obsListSendero.clear();
+		listRespSendero = rest.exchange(uriSendero + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Sendero>>() {
+				});
+		listaSendero = listRespSendero.getBody();
+		if (!listaSendero.isEmpty()) {
+			if (recurso.getIdsSenderos() != null) {
+				for (Sendero act : listaSendero) {
+					if (recurso.getIdsSenderos().contains(act.getId())) {
+						listaSenderoTemporal.add(act);
+					}
+				}
+			}
+		}
+		cargarListaSendero(listaSenderoTemporal);
+	}
+    
 	private void loadComodidades() {
 		obsListComodidades.clear();
 		listRespComodidades = rest.exchange(uriComodidades + "/getAll", HttpMethod.GET, null,
@@ -1049,15 +1182,19 @@ public class RecursoController {
 				});
 		listaAtractivo = listRespAtractivo.getBody();
 		//filtrar por recurso id
+
 		if (!listaAtractivo.isEmpty()) {
 			if (recurso.getId() != null) {
 				for (Atractivo act : listaAtractivo) {
-					if(act.getIdRecurso().equals(recurso.getId())) {
-						listaAtractivoTemporal.add(act);
-					}
+					if (act.getIdRecurso() != null) {
+						if(act.getIdRecurso().equals(recurso.getId())) {
+							listaAtractivoTemporal.add(act);
+						}
+					}					
 				}
 			}
 		}
+		System.out.println("6" + listaAtractivoTemporal);
 		cargarListaAtractivos(listaAtractivoTemporal);
 	}
     
@@ -1198,6 +1335,18 @@ public class RecursoController {
 			}			
 			lst_listaComodidadesRecurso.setItems(obsComo);
 		}
+	}	
+
+	private void cargarListaSendero(List<Sendero> lista) {
+    	ObservableList<Sendero> obsComo = FXCollections.observableArrayList();
+		lst_listaSenderos.setPlaceholder(new Label("---  No se encontraron datos en la Base. ---"));
+		if (!lista.isEmpty()) {
+			for (int i = 0; i < lista.size(); i++) {		
+				
+				obsComo.add(lista.get(i));
+			}			
+			lst_listaSenderos.setItems(obsComo);
+		}
 	}
 	
 	private void cargarListaAtractivos(List<Atractivo> lista) {
@@ -1263,11 +1412,18 @@ public class RecursoController {
 				setText(empty ? "" : item.getDescripcion());
 			}
 		});	  
-		
+
 		lst_listaComodidadesRecurso.setCellFactory(param -> new ListCell<Comodidades>() {
     		protected void updateItem(Comodidades item, boolean empty) {
     			super.updateItem(item, empty);
     			setText(empty ? "" : item.getDescripcion() );
+    		};
+    	});  
+
+		lst_listaSenderos.setCellFactory(param -> new ListCell<Sendero>() {
+    		protected void updateItem(Sendero item, boolean empty) {
+    			super.updateItem(item, empty);
+    			setText(empty ? "" : item.getNombre());
     		};
     	});  
 		
@@ -1304,6 +1460,51 @@ public class RecursoController {
 						
 					}
 				}
+			}
+		});
+		lst_listaSenderos.getSelectionModel().selectedItemProperty()
+		.addListener((ObservableValue<? extends Sendero> ov, Sendero old_val, Sendero new_val) -> {
+			if (lst_listaSenderos.getSelectionModel().getSelectedItem() != null) {
+				sendero = lst_listaSenderos.getSelectionModel().getSelectedItem();
+				
+				txt_descripcionSendero.setText(sendero.getDescripcion());
+				txt_instruccionesSendero.setText(sendero.getInstrucciones());
+				if (sendero.getTiempoRecorrido() != null) {
+		        	txt_tiempoRecorridoSendero.setText(sendero.getTiempoRecorrido().toString());
+				}
+				if (sendero.getDistanciaAproximada() != null) {
+					txt_distanciaAproxSendero.setText(sendero.getDistanciaAproximada().toString());
+				}
+				
+				//cargar las imagenes
+				if (sendero.getListaMCR()!= null) {
+					for (MediaCloudResources mcr : sendero.getListaMCR()) {
+						if (mcr.getFileTemporal() != null) {
+							if (mcr.getIsPrincipal()) {
+								if (mcr.getTipoMedia().getDescripcion().equals("Imagen")) {
+									Image image = new Image("file:" + mcr.getFileTemporal().getAbsolutePath());
+									gcsw.showMediaInContenedor(image, contenedorDeSenderos, (double) 288);
+								}else if(mcr.getTipoMedia().getDescripcion().equals("Video")) {
+									File d = new File(mcr.getFileTemporal().getAbsolutePath().replace("\\","/"));
+									Media video = new Media(d.toURI().toString());
+									gcsw.showMediaInContenedor(video, contenedorDeSenderos);						        
+								}	
+							}						    
+						}else {
+							if (mcr.getIsPrincipal()) {	
+								if (mcr.getTipoMedia().getDescripcion().equals("Imagen")) {
+									Image img = gcsw.getImageMediaCR(mcr.getNombre().concat(mcr.getCoordenadas()));
+									gcsw.showMediaInContenedor(img, contenedorDeSenderos, (double) 288);	
+								}else if(mcr.getTipoMedia().getDescripcion().equals("Video")) {
+									Media video = gcsw.getMediaFromMediaCR(mcr.getNombre().concat(mcr.getCoordenadas()));
+							        gcsw.showMediaInContenedor(video, contenedorDeSenderos);	
+								}
+							}
+						}
+
+					}
+				}
+				
 			}
 		});
 	}

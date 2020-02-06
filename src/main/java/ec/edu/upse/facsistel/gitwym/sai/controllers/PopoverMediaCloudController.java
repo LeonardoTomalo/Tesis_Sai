@@ -97,8 +97,11 @@ public class PopoverMediaCloudController {
  	public void initialize() {
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);		
 //		restoreToController();
+		System.out.println("1");
 		loadTipoMedios();
+		System.out.println("2");
 		loadEtiquetas();
+		System.out.println("3");
 		if (Context.getInstance().getMediaContext() != null) {
 			media = Context.getInstance().getMediaContext();
 			cargarDatosMedia(media);
@@ -313,7 +316,7 @@ public class PopoverMediaCloudController {
 				});
 		listaTipoMedia = listRespTipoMedia.getBody();
 		if (!listaTipoMedia.isEmpty()) {
-			if (Context.getInstance().getAtractivoTipo()) {
+			if (Context.getInstance().getAtractivoTipo() != null) {
 				for (TipoMedia tm : listaTipoMedia) {
 					if (tm.getDescripcion().equals("Imagen")) {
 						obsListTipoMedia.add(tm);

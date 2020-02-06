@@ -8,6 +8,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Contacto;
 import ec.edu.upse.facsistel.gitwym.sai.models.Costo;
 import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
 import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
+import ec.edu.upse.facsistel.gitwym.sai.models.Sendero;
 import ec.edu.upse.facsistel.gitwym.sai.models.Usuario;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -24,6 +25,7 @@ public class Context {
 	private MapView mapViewContext;
 	private Stage stageModalBase;
 	private Stage stageModalBaseAtractivo;
+	private Stage stageModalBaseSendero;
 	private Boolean atractivoTipo;
 	
 	//POJOS
@@ -35,6 +37,7 @@ public class Context {
 	private Contacto contactoContext;
 	private Comodidades comodidadContext;
 	private Atractivo atractivoContext;
+	private Sendero senderoContext;
 	
 	
 	public static Context getInstance() {

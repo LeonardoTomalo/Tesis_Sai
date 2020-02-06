@@ -533,7 +533,107 @@
                         </Tab>
                         <Tab text="Senderos">
                            <content>
-                              <AnchorPane fx:id="anch_senderos" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              <AnchorPane fx:id="anch_senderos" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox prefHeight="264.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <VBox prefWidth="350.0">
+                                             <children>
+                                                <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label maxWidth="1.7976931348623157E308" text="Lista de Senderos" HBox.hgrow="ALWAYS" />
+                                                   </children>
+                                                </HBox>
+                                                <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
+                                                <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                   <content>
+                                                      <JFXListView fx:id="lst_listaSenderos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                                                   </content>
+                                                </ScrollPane>
+                                             </children>
+                                          </VBox>
+                                          <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
+                                             <padding>
+                                                <Insets left="7.0" right="5.0" />
+                                             </padding>
+                                          </Separator>
+                                          <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <HBox alignment="CENTER_RIGHT">
+                                                   <children>
+                                                      <JFXButton fx:id="btn_nuevoSendero" buttonType="RAISED" onAction="#addNuevoSendero" prefHeight="35.0" text="Nuevo" HBox.hgrow="NEVER" />
+                                                      <JFXButton fx:id="btn_EliminarSendero" buttonType="RAISED" maxHeight="-Infinity" minHeight="-Infinity" onAction="#eliminarSendero" prefHeight="35.0" text="Eliminar" HBox.hgrow="NEVER" />
+                                                      <JFXButton fx:id="btn_modificarSendero" buttonType="RAISED" onAction="#modificarSendero" prefHeight="35.0" text="Modificar">
+                                                         <HBox.margin>
+                                                            <Insets left="50.0" right="10.0" />
+                                                         </HBox.margin>
+                                                      </JFXButton>
+                                                   </children>
+                                                </HBox>
+                                                <Separator opacity="0.5" prefWidth="200.0" />
+                                                <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="NEVER" minWidth="70.0" prefWidth="70.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <AnchorPane fx:id="contenedorDeSenderos" GridPane.columnSpan="4" GridPane.rowSpan="4" GridPane.vgrow="NEVER" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </VBox>
+                                          <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
+                                             <padding>
+                                                <Insets left="7.0" right="5.0" />
+                                             </padding>
+                                          </Separator>
+                                          <VBox alignment="TOP_CENTER" prefWidth="350.0">
+                                             <children>
+                                                <Label text="Detalles del sendero">
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Separator opacity="0.5" prefWidth="200.0" />
+                                                <JFXTextArea fx:id="txt_descripcionSendero" editable="false" labelFloat="true" promptText="Descripcion del sendero">
+                                                   <VBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </VBox.margin>
+                                                </JFXTextArea>
+                                                <JFXTextArea fx:id="txt_instruccionesSendero" editable="false" labelFloat="true" promptText="Instrucciones del sendero">
+                                                   <VBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </VBox.margin>
+                                                </JFXTextArea>
+                                                <JFXTextField fx:id="txt_distanciaAproxSendero" editable="false" labelFloat="true" promptText="Distancia aproximada">
+                                                   <VBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </VBox.margin>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="txt_tiempoRecorridoSendero" editable="false" labelFloat="true" promptText="Tiempo de recorrido">
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" top="20.0" />
+                                                   </VBox.margin>
+                                                </JFXTextField>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <padding>
+                                          <Insets top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children></AnchorPane>
                            </content>
                         </Tab>
                         <Tab text="Comentarios">
