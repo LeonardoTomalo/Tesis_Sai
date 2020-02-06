@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="272.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.ModalComodidadController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="236.0" prefWidth="273.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="COMODIDADES DEL RECURSO">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox>
+               <children>
+                  <JFXTextField fx:id="txt_coordenadas" labelFloat="true" promptText="Coordenadas..." HBox.hgrow="ALWAYS" />
+                  <JFXButton fx:id="btn_verMapa" buttonType="RAISED" onAction="#mostrarMapa" text="ver mapa" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+            <JFXComboBox fx:id="cmb_tipoComodidad" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Tipo de comodidad">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXComboBox>
+            <JFXTextArea fx:id="txt_descripcion" labelFloat="true" prefHeight="79.0" prefWidth="253.0" promptText="Descripción del servicio">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXTextArea>
+            <HBox alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btn_Guardar" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="45.0" onAction="#guardar" text="Guardar" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_Cancelar" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="45.0" onAction="#cancelar" text="Cancelar" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

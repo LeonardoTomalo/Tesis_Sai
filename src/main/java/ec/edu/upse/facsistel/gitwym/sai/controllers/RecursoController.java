@@ -54,7 +54,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.image.Image;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 
@@ -132,7 +131,8 @@ public class RecursoController {
  	String uriContacto = urlBase + "/contacto";
  	String uriAccesibilidad = urlBase + "/accesibilidad";
  	String uriCategoria = urlBase + "/categoria";
- 	String uriIdiomas = urlBase + "/idiomas";
+ 	String uriIdiomas = urlBase + "/idiomas";	
+ 	String uriComodidades = urlBase + "/comodidades";
 
 	// DE LA CLASE RECURSO
 	Recurso recurso = new Recurso();
@@ -179,6 +179,13 @@ public class RecursoController {
 	private static ResponseEntity<List<Idiomas>> listRespIdiomas;
 	ObservableList<Idiomas> obsListIdiomas = FXCollections.observableArrayList();
 
+	// DE LA CLASE COMODIDADES
+	Comodidades comodidad = new Comodidades();
+	List<Comodidades> listaComodidades = new ArrayList<Comodidades>();
+	List<Comodidades> listaComodidadesTemporal = new ArrayList<Comodidades>();
+	private static ResponseEntity<List<Comodidades>> listRespComodidades;
+	ObservableList<Comodidades> obsListComodidades = FXCollections.observableArrayList();
+
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
@@ -188,6 +195,7 @@ public class RecursoController {
 		loadCategorias();
 		loadIdiomas();
 		buscarPorNombre();		
+		buscarComodidadesTextChange();
 		//cargar provincia, canton y parroquia
 		acco_Der.setExpandedPane(accd_accesibilidadesRecurso);
 		acco_Izq.setExpandedPane(accd_costosRecurso);
@@ -199,6 +207,7 @@ public class RecursoController {
 			System.out.println("HOLA PASO2");
 			isModificar = true;
 			loadMedios();
+			loadComodidades();
 		}
 		//cargar Media Cloud
 		
@@ -324,8 +333,22 @@ public class RecursoController {
 			recurso.setIdiomas(auxidio);
 			//guardando recurson con idiomas FIN
 			
-    		//Guardamos el recurso
-    		rest.postForObject(uriRecurso + "/saveOrUpdate", recurso, Recurso.class);
+    		//Guardamos el recurso ****************************************
+    		recurso = rest.postForObject(uriRecurso + "/saveOrUpdate", recurso, Recurso.class);
+    		//Guardamos el recurso ****************************************
+    		
+    		//guardando recurso con comodidades
+//    		ArrayList<Costo> auxCosto = new ArrayList<>();
+    		if (lst_listaComodidadesRecurso.getItems().size() > 0) {
+//    			if(recurso.getCostoServicio() != null)recurso.getCostoServicio().clear();
+				for (Comodidades mcr : lst_listaComodidadesRecurso.getItems()) {
+					mcr.setIdRecurso(recurso.getId());
+					rest.postForObject(uriComodidades + "/saveOrUpdate", mcr, Comodidades.class);
+				}    		
+    		}
+    		
+    		//guardando recurso con comodidades
+    		
     		Context.getInstance().setRecursoContext(recurso);
 			Message.showSuccessNotification("Se guardaron exitosamente los datos.!! ");
 			General.setContentParent("/viewPrincipal/RecursoPrincipal.fxml", Context.getInstance().getAnch_Contenido());
@@ -338,7 +361,20 @@ public class RecursoController {
 
     @FXML
     void addComodidadesRecurso(ActionEvent event) {
-
+    	try {
+    		//abro interfaz para crear un costo
+    		Context.getInstance().setComodidadContext(null);
+    		General.showModalWithParent("/viewRecurso/ModalComodidad.fxml");
+    		if (Context.getInstance().getComodidadContext() != null) {
+//    			lst_listaComodidadesRecurso.getItems().add(Context.getInstance().getComodidadContext());
+    			listaComodidadesTemporal.add(Context.getInstance().getComodidadContext());
+    			cargarListaComodidades(listaComodidadesTemporal);
+    		}
+    		Context.getInstance().setComodidadContext(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Surgió un error al agregar comodidad.!!");
+		}
     }
 
     @FXML
@@ -353,7 +389,7 @@ public class RecursoController {
     		Context.getInstance().setContactoContext(null);
 		} catch (Exception e) {
 			e.printStackTrace();
-			Message.showErrorNotification("Surgió un error al agregar costos.!!");
+			Message.showErrorNotification("Surgió un error al agregar contacto.!!");
 		}
     }
 
@@ -403,13 +439,46 @@ public class RecursoController {
     }
 
     @FXML
-    void buscarComodidadesTextChange(InputMethodEvent event) {
-
+    void buscarComodidadesTextChange() {
+    	txt_buscarComodidadesRecurso.textProperty().addListener((observable, oldValue, newValue) -> {
+    	    System.out.println("textfield changed from " + oldValue + " to " + newValue);
+    	    
+    	    ObservableList<Comodidades> obsAux = FXCollections.observableArrayList();			
+    	    for (Comodidades mcr : lst_listaComodidadesRecurso.getItems()) {    	    	
+    	    	String nombre = mcr.getDescripcion();
+    	    	if (newValue.length() >0) {
+    	    		for (int i = 0; i < newValue.length(); i++) {
+    	    			if (nombre.trim().toLowerCase().charAt(i) == newValue.trim().toLowerCase().charAt(i)) {
+    	    				if (!obsAux.isEmpty()) {
+    	    					if (!obsAux.contains(mcr)) {
+    	    						obsAux.add(mcr);
+    	    					}
+    	    				}else {
+    	    					obsAux.add(mcr);
+    	    				}
+    	    			} 
+    				}
+				}
+			}
+    	    
+    	    //enviamos la lista.
+    	    if (newValue.isBlank() || newValue.isEmpty()) {
+//    	    	loadComodidades();
+    	    	cargarListaComodidades(listaComodidadesTemporal);
+//				obsListTipoMedia.clear();
+//				loadTipoMedios();
+			}else {
+	    	    List<Comodidades> auxList = new ArrayList<>();
+				auxList.addAll(obsAux);
+				lst_listaComodidadesRecurso.getItems().clear();
+				cargarListaComodidades(auxList);
+			}
+    	});
     }
 
     @FXML
     void buscarRecursoEnMapa(ActionEvent event) {
-
+    	
     }
 
     @FXML
@@ -419,7 +488,33 @@ public class RecursoController {
 
     @FXML
     void eliminarComodidadesRecurso(ActionEvent event) {
-
+    	try {
+    		if (lst_listaComodidadesRecurso.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione la comodidad a eliminar.!!");
+				return;
+			}
+			Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos de la comodidad: "
+							+ lst_listaComodidadesRecurso.getSelectionModel().getSelectedItem().getDescripcion() + " ?.",
+					Context.getInstance().getStage());
+			if (result.get() == ButtonType.OK) {
+				comodidad = lst_listaComodidadesRecurso.getSelectionModel().getSelectedItem();
+				if (lst_listaComodidadesRecurso.getSelectionModel().getSelectedItem().getId() != null) {
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("c", lst_listaComodidadesRecurso.getSelectionModel().getSelectedItem().getId());
+					rest.delete(uriComodidades + "/deletePhysical/{c}", params);
+					Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
+				}
+//				lst_listaComodidadesRecurso.getItems().remove(lst_listaComodidadesRecurso.getSelectionModel().getSelectedItem());
+				if (listaComodidadesTemporal.size() > 0) 	
+					listaComodidadesTemporal.remove(comodidad);
+				if (lst_listaComodidadesRecurso.getItems().size() > 0)	{
+					lst_listaComodidadesRecurso.getItems().remove(comodidad);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al eliminar datos.!!");
+		}
     }
 
     @FXML
@@ -499,7 +594,27 @@ public class RecursoController {
 
     @FXML
     void modificarComodidadesRecurso(ActionEvent event) {
+    	try {
+    		if (lst_listaComodidadesRecurso.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione la comodidad a modificar.!!");
+				return;
+			}
+    		Context.getInstance().setComodidadContext(lst_listaComodidadesRecurso.getSelectionModel().getSelectedItem());
+    		General.showModalWithParent("/viewRecurso/ModalComodidad.fxml");
+    		if (Context.getInstance().getComodidadContext() != null) {
+    			comodidad = Context.getInstance().getComodidadContext();
+//    			cargarListaComodidades(lst_listaComodidadesRecurso.getItems());
+    			
 
+    			cargarListaComodidades(listaComodidadesTemporal);
+//    			lst_listaMedios.getSelectionModel().clearSelection();
+			}
+    		Context.getInstance().setComodidadContext(null);    		
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
+		}
     }
 
     @FXML
@@ -753,6 +868,30 @@ public class RecursoController {
 			chklst_idiomasRecurso.setItems(obsListIdiomas);
 		}
 	}
+	
+	private void loadComodidades() {
+		obsListComodidades.clear();
+		listRespComodidades = rest.exchange(uriComodidades + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Comodidades>>() {
+				});
+		listaComodidades = listRespComodidades.getBody();
+		//filtrar por recurso id
+		System.out.println("LISTA WS:" + listaComodidades);
+		if (!listaComodidades.isEmpty()) {
+			System.out.println("vaio ");
+			if (recurso.getId() != null) {
+				System.out.println("recu id");
+				for (Comodidades comodidad : listaComodidades) {
+					System.out.println("EQUALS: " + recurso.getId() + " === " + comodidad.getIdRecurso());
+					if(comodidad.getIdRecurso().equals(recurso.getId())) {
+						listaComodidadesTemporal.add(comodidad);
+					}
+				}
+			}
+		}
+		System.out.println("Lista como tempo: " + listaComodidadesTemporal);
+		cargarListaComodidades(listaComodidadesTemporal);
+	}
     
     private void cargarListaMedios(List<MediaCloudResources> lista) {
     	obsListMedia = FXCollections.observableArrayList();
@@ -879,6 +1018,19 @@ public class RecursoController {
 		}
 		
     }
+	
+	private void cargarListaComodidades(List<Comodidades> lista) {
+    	ObservableList<Comodidades> obsComo = FXCollections.observableArrayList();
+		lst_listaComodidadesRecurso.setPlaceholder(new Label("---  No se encontraron datos en la Base. ---"));
+		System.out.println("LISTA COMODIDADES: " + lista);
+		if (!lista.isEmpty()) {
+			for (int i = 0; i < lista.size(); i++) {
+				
+				obsComo.add(lista.get(i));
+			}			
+			lst_listaComodidadesRecurso.setItems(obsComo);
+		}
+	}
     
 	private void listasCellFactory() {
 		lst_listaCostosRecurso.setCellFactory(param -> new ListCell<Costo>() {
@@ -908,6 +1060,7 @@ public class RecursoController {
     			setText(empty ? "" : item.getDescripcion());
     		};
     	}); 
+		
 		chklst_accesibilidadesRecurso.setCellFactory(lv -> new CheckBoxListCell<Accesibilidad>(chklst_accesibilidadesRecurso::getItemBooleanProperty) {
 			@Override
 			public void updateItem(Accesibilidad item, boolean empty) {
@@ -915,6 +1068,7 @@ public class RecursoController {
 				setText(empty ? "" : item.getDescripcion());
 			}
 		});	  
+		
 		chklst_categoriasRecurso.setCellFactory(lv -> new CheckBoxListCell<Categoria>(chklst_categoriasRecurso::getItemBooleanProperty) {
 			@Override
 			public void updateItem(Categoria item, boolean empty) {
@@ -922,6 +1076,7 @@ public class RecursoController {
 				setText(empty ? "" : item.getDescripcion());
 			}
 		});	  
+		
 		chklst_idiomasRecurso.setCellFactory(lv -> new CheckBoxListCell<Idiomas>(chklst_idiomasRecurso::getItemBooleanProperty) {
 			@Override
 			public void updateItem(Idiomas item, boolean empty) {
@@ -929,5 +1084,12 @@ public class RecursoController {
 				setText(empty ? "" : item.getDescripcion());
 			}
 		});	  
+		
+		lst_listaComodidadesRecurso.setCellFactory(param -> new ListCell<Comodidades>() {
+    		protected void updateItem(Comodidades item, boolean empty) {
+    			super.updateItem(item, empty);
+    			setText(empty ? "" : item.getDescripcion() );
+    		};
+    	});  
 	}
 }

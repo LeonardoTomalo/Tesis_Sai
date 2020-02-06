@@ -2,6 +2,7 @@ package ec.edu.upse.facsistel.gitwym.sai.utilities;
 
 import com.gluonhq.maps.MapView;
 
+import ec.edu.upse.facsistel.gitwym.sai.models.Comodidades;
 import ec.edu.upse.facsistel.gitwym.sai.models.Contacto;
 import ec.edu.upse.facsistel.gitwym.sai.models.Costo;
 import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
@@ -29,6 +30,7 @@ public class Context {
 	private MediaCloudResources mediaContext;
 	private Costo costoContext;
 	private Contacto contactoContext;
+	private Comodidades comodidadContext;
 	
 	
 	public static Context getInstance() {
