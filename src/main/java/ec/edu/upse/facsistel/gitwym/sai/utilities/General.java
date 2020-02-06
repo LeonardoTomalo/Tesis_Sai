@@ -131,6 +131,28 @@ public class General {
 		}
 	}
 	
+	public static void showModalWithParentAtractivo(String uriParent) {
+		try {
+			FXMLLoader loader = new FXMLLoader(App.class.getResource(uriParent));
+			AnchorPane page = (AnchorPane) loader.load();		
+			AnchorPane.setBottomAnchor(page, 00.0);
+			AnchorPane.setLeftAnchor(page, 00.0);
+			AnchorPane.setTopAnchor(page, 00.0);
+			AnchorPane.setRightAnchor(page, 00.0);
+			Stage stage = new Stage();
+			Scene scene = new Scene(page, Color.WHITE);
+//			stage.b
+			stage.setResizable(false);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(Context.getInstance().getStage());
+			stage.setScene(scene);
+			Context.getInstance().setStageModalBaseAtractivo(stage);
+			stage.showAndWait();						
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Establece el mapa como contenido del anchorPane enviado.
 	 * @param mapa

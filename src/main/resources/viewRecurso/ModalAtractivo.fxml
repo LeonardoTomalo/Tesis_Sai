@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="577.0" prefWidth="546.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.ModalAtractivoController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="237.0" prefWidth="273.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="ATRACTIVOS DEL RECURSO">
+               <VBox.margin>
+                  <Insets bottom="20.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox>
+               <children>
+                  <JFXTextField fx:id="txt_coordenadas" labelFloat="true" promptText="Coordenadas..." HBox.hgrow="ALWAYS" />
+                  <JFXButton fx:id="btn_verMapa" buttonType="RAISED" onAction="#mostrarMapa" text="ver mapa" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox>
+               <children>
+                  <JFXTextField fx:id="txt_nombre" labelFloat="true" promptText="Nombre de atractivo" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </JFXTextField>
+                  <JFXComboBox fx:id="cmb_tipoAtractivo" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Tipo de atractivo" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </JFXComboBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+            <JFXTextArea fx:id="txt_descripcion" labelFloat="true" prefHeight="79.0" prefWidth="253.0" promptText="Descripción del atractivo">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXTextArea>
+            <HBox>
+               <children>
+                  <VBox prefHeight="297.0" prefWidth="355.0">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label maxWidth="1.7976931348623157E308" text="Lista de Imagenes" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                              <JFXButton fx:id="btn_agregarImagen" buttonType="RAISED" onAction="#findToDirectory" text="Agregar" />
+                              <JFXButton fx:id="btn_eliminarImagen" buttonType="RAISED" onAction="#eliminarImagen" text="Eliminar" />
+                           </children>
+                        </HBox>
+                        <JFXListView fx:id="lst_listaImagenes" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+                  <GridPane alignment="CENTER" gridLinesVisible="true">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <AnchorPane fx:id="anch_contenedorImagenes" prefHeight="233.0" prefWidth="526.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </GridPane>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btn_Guardar" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="45.0" onAction="#guardar" text="Guardar" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_Cancelar" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="45.0" onAction="#cancelar" text="Cancelar" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

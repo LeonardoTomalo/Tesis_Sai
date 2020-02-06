@@ -25,7 +25,7 @@ public class Atractivo {
 	@Field private String descripcion;
 	@Field private String coordenadas;
 	@Field private String idRecurso;	
-	@Field private String idSendero;	
+	@Field private String idSendero;
 	@Field private String idTipoAtractivo;
 	@Field private Boolean estado;
 	@Field private List<MediaCloudResources> imagenes;

@@ -313,11 +313,20 @@ public class PopoverMediaCloudController {
 				});
 		listaTipoMedia = listRespTipoMedia.getBody();
 		if (!listaTipoMedia.isEmpty()) {
-			TipoMedia auxTipo = new TipoMedia("", "Todos los medios");
-			cmb_tipoMedia.getItems().add(auxTipo);
-			for (int i = 0; i < listaTipoMedia.size(); i++) {
-				obsListTipoMedia.add(listaTipoMedia.get(i));
-			}			
+			if (Context.getInstance().getAtractivoTipo()) {
+				for (TipoMedia tm : listaTipoMedia) {
+					if (tm.getDescripcion().equals("Imagen")) {
+						obsListTipoMedia.add(tm);
+					}
+				}
+			}else {
+				TipoMedia auxTipo = new TipoMedia("", "Todos los medios");
+				cmb_tipoMedia.getItems().add(auxTipo);
+				for (int i = 0; i < listaTipoMedia.size(); i++) {
+					obsListTipoMedia.add(listaTipoMedia.get(i));
+				}			
+			}
+			
 			cmb_tipoMedia.setItems(obsListTipoMedia);	
 	    	cmb_tipoMedia.setCellFactory(param -> new ListCell<TipoMedia>() {
 	    		protected void updateItem(TipoMedia item, boolean empty) {

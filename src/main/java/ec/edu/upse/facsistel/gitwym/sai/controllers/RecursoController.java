@@ -133,6 +133,8 @@ public class RecursoController {
  	String uriCategoria = urlBase + "/categoria";
  	String uriIdiomas = urlBase + "/idiomas";	
  	String uriComodidades = urlBase + "/comodidades";
+	String uriTipoAtractivo = urlBase + "/tipoAtractivo";
+	String uriAtractivo = urlBase + "/atractivo";
 
 	// DE LA CLASE RECURSO
 	Recurso recurso = new Recurso();
@@ -186,11 +188,26 @@ public class RecursoController {
 	private static ResponseEntity<List<Comodidades>> listRespComodidades;
 	ObservableList<Comodidades> obsListComodidades = FXCollections.observableArrayList();
 
+	// DE LA CLASE ATRACTIVOS
+	Atractivo atractivo = new Atractivo();
+	List<Atractivo> listaAtractivo = new ArrayList<Atractivo>();
+	List<Atractivo> listaAtractivoTemporal = new ArrayList<Atractivo>();
+	private static ResponseEntity<List<Atractivo>> listRespAtractivo;
+	ObservableList<Atractivo> obsListAtractivo = FXCollections.observableArrayList();
+
+	// DE LA CLASE TIPOATRACTIVO
+	TipoAtractivo tipoAtractivo = new TipoAtractivo();
+	List<TipoAtractivo> listaTipoAtractivo = new ArrayList<TipoAtractivo>();
+	private static ResponseEntity<List<TipoAtractivo>> listRespTipoAtractivo;
+	ObservableList<TipoAtractivo> obsListTipoAtractivo = FXCollections.observableArrayList();
+
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
+		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
 		listasCellFactory();
 		loadTipoMedios();
+		loadTipoAtractivo();
 		loadAccesibilidades();
 		loadCategorias();
 		loadIdiomas();
@@ -199,7 +216,6 @@ public class RecursoController {
 		//cargar provincia, canton y parroquia
 		acco_Der.setExpandedPane(accd_accesibilidadesRecurso);
 		acco_Izq.setExpandedPane(accd_costosRecurso);
-		System.out.println("RECURSO POR PARAMETROS: " + recurso);
 		if (Context.getInstance().getRecursoContext() != null) {
 			recurso = Context.getInstance().getRecursoContext();
 			System.out.println("HOLA PASO");
@@ -208,8 +224,8 @@ public class RecursoController {
 			isModificar = true;
 			loadMedios();
 			loadComodidades();
+			loadAtractivos();
 		}
-		//cargar Media Cloud
 		
 	}    
 
@@ -338,16 +354,34 @@ public class RecursoController {
     		//Guardamos el recurso ****************************************
     		
     		//guardando recurso con comodidades
-//    		ArrayList<Costo> auxCosto = new ArrayList<>();
     		if (lst_listaComodidadesRecurso.getItems().size() > 0) {
-//    			if(recurso.getCostoServicio() != null)recurso.getCostoServicio().clear();
 				for (Comodidades mcr : lst_listaComodidadesRecurso.getItems()) {
 					mcr.setIdRecurso(recurso.getId());
 					rest.postForObject(uriComodidades + "/saveOrUpdate", mcr, Comodidades.class);
 				}    		
-    		}
-    		
-    		//guardando recurso con comodidades
+    		}    		
+    		//guardando recurso con comodidades FIN
+    		//guardando recurso con atractivos
+    		if (lst_listaAtractivos.getItems().size() > 0) {
+				for (Atractivo mcr : lst_listaAtractivos.getItems()) {
+					if (mcr.getImagenes().size() > 0) {
+						for (MediaCloudResources s : mcr.getImagenes()) {
+//							String url = "";
+							if (s.getFileTemporal() != null) {
+								BufferedImage bufferedImage = ImageIO.read(s.getFileTemporal());
+								bufferedImage = gcsw.redimensionarImagen(bufferedImage);
+								gcsw.saveMediaCR(s.getNombre().concat(s.getCoordenadas()), General.converterImageToByteArray(bufferedImage));						
+							}
+							
+						}
+					}
+					
+					mcr.setEstado(true);
+					mcr.setIdRecurso(recurso.getId());
+					rest.postForObject(uriAtractivo + "/saveOrUpdate", mcr, Atractivo.class);
+				}    		
+    		}    		
+    		//guardando recurso con atractivos FIN
     		
     		Context.getInstance().setRecursoContext(recurso);
 			Message.showSuccessNotification("Se guardaron exitosamente los datos.!! ");
@@ -435,7 +469,19 @@ public class RecursoController {
 
     @FXML
     void addNuevoAtractivo(ActionEvent event) {
-
+    	try {
+    		//abro interfaz para crear un costo
+    		Context.getInstance().setAtractivoContext(null);
+    		General.showModalWithParentAtractivo("/viewRecurso/ModalAtractivo.fxml");
+    		if (Context.getInstance().getAtractivoContext() != null) {
+    			listaAtractivoTemporal.add(Context.getInstance().getAtractivoContext());
+    			cargarListaAtractivos(listaAtractivoTemporal);
+    		}
+    		Context.getInstance().setAtractivoContext(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Surgió un error al agregar atractivos.!!");
+		}
     }
 
     @FXML
@@ -459,14 +505,10 @@ public class RecursoController {
     	    			} 
     				}
 				}
-			}
-    	    
+			}    	    
     	    //enviamos la lista.
     	    if (newValue.isBlank() || newValue.isEmpty()) {
-//    	    	loadComodidades();
     	    	cargarListaComodidades(listaComodidadesTemporal);
-//				obsListTipoMedia.clear();
-//				loadTipoMedios();
 			}else {
 	    	    List<Comodidades> auxList = new ArrayList<>();
 				auxList.addAll(obsAux);
@@ -483,7 +525,33 @@ public class RecursoController {
 
     @FXML
     void eliminarAtractivo(ActionEvent event) {
-
+    	try {
+    		if (lst_listaAtractivos.getSelectionModel().getSelectedItems().isEmpty()) {
+    			Message.showWarningNotification("Seleccione el atractivo a eliminar.!!");
+    			return;
+    		}
+    		Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos del atractivo: "
+    				+ lst_listaAtractivos.getSelectionModel().getSelectedItem().getDescripcion() + " ?.",
+    				Context.getInstance().getStage());
+    		if (result.get() == ButtonType.OK) {
+    			atractivo = lst_listaAtractivos.getSelectionModel().getSelectedItem();
+    			if (lst_listaAtractivos.getSelectionModel().getSelectedItem().getId() != null) {
+    				Map<String, String> params = new HashMap<String, String>();
+    				params.put("c", lst_listaAtractivos.getSelectionModel().getSelectedItem().getId());
+    				rest.delete(uriAtractivo + "/delete/{c}", params);
+    				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
+    			}
+    			//				lst_listaComodidadesRecurso.getItems().remove(lst_listaComodidadesRecurso.getSelectionModel().getSelectedItem());
+    			if (listaAtractivoTemporal.size() > 0) 	
+    				listaAtractivoTemporal.remove(atractivo);
+    			if (lst_listaAtractivos.getItems().size() > 0)	{
+    				lst_listaAtractivos.getItems().remove(atractivo);
+    			}
+    		}
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		Message.showErrorNotification("Ha surgido un error al eliminar datos.!!");
+    	}
     }
 
     @FXML
@@ -589,7 +657,23 @@ public class RecursoController {
 
     @FXML
     void modificarAtractivo(ActionEvent event) {
+    	try {
+    		if (lst_listaAtractivos.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el atractivo a modificar.!!");
+				return;
+			}
+    		Context.getInstance().setAtractivoContext(lst_listaAtractivos.getSelectionModel().getSelectedItem());
+    		General.showModalWithParentAtractivo("/viewRecurso/ModalAtractivo.fxml");
+    		if (Context.getInstance().getAtractivoContext() != null) {
+    			atractivo = Context.getInstance().getAtractivoContext();
 
+    			cargarListaAtractivos(listaAtractivoTemporal);
+			}
+    		Context.getInstance().setAtractivoContext(null);     		
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
+		}
     }
 
     @FXML
@@ -729,9 +813,6 @@ public class RecursoController {
     				}
 				}
 			}
-    	    
-    	    //enviamos la lista.
-//    	    lst_listaMedios.setItems(obsAux);
     	    if (newValue.isBlank() || newValue.isEmpty()) {
 				cargarListaMedios(listaMediaTemporal);
 				obsListTipoMedia.clear();
@@ -744,6 +825,34 @@ public class RecursoController {
 				lst_listaMedios.getItems().clear();
 				cargarListaMedios(auxList);
 				exitPopup = false;
+			}
+    	});
+		txt_buscarNombreAtractivos.textProperty().addListener((observable, oldValue, newValue) -> {
+    	    System.out.println("textfield changed from " + oldValue + " to " + newValue);    	    
+    	    ObservableList<Atractivo> obsAuxAtrac = FXCollections.observableArrayList();			
+    	    for (Atractivo mcr : lst_listaAtractivos.getItems()) {    	    	
+    	    	String nombre = mcr.getNombre();
+    	    	if (newValue.length() >0) {
+    	    		for (int i = 0; i < newValue.length(); i++) {
+    	    			if (nombre.trim().toLowerCase().charAt(i) == newValue.trim().toLowerCase().charAt(i)) {
+    	    				if (!obsAuxAtrac.isEmpty()) {
+    	    					if (!obsAuxAtrac.contains(mcr)) {
+    	    						obsAuxAtrac.add(mcr);
+    	    					}
+    	    				}else {
+    	    					obsAuxAtrac.add(mcr);
+    	    				}
+    	    			} 
+    				}
+				}
+			}
+    	    if (newValue.isBlank() || newValue.isEmpty()) {
+				cargarListaAtractivos(listaAtractivoTemporal);				
+			}else {
+				List<Atractivo> auxList = new ArrayList<>();
+				auxList.addAll(obsAuxAtrac);
+				lst_listaAtractivos.getItems().clear();
+				cargarListaAtractivos(auxList);
 			}
     	});
     }    
@@ -775,6 +884,51 @@ public class RecursoController {
 //		}		
 	}
 
+	private void loadTipoAtractivo() {
+		listRespTipoAtractivo = rest.exchange(uriTipoAtractivo + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<TipoAtractivo>>() {
+		});
+		listaTipoAtractivo = listRespTipoAtractivo.getBody();
+		if (!listaTipoAtractivo.isEmpty()) {
+			TipoAtractivo auxtipo = new TipoAtractivo("", "Todos los tipos");
+			obsListTipoAtractivo.add(auxtipo);
+			for (int i = 0; i < listaTipoAtractivo.size(); i++) {
+				obsListTipoAtractivo.add(listaTipoAtractivo.get(i));
+			}			
+			cmb_tipoAtractivoBusqueda.setItems(obsListTipoAtractivo);	
+			cmb_tipoAtractivoBusqueda.getSelectionModel().select(auxtipo);
+			
+			cmb_tipoAtractivoBusqueda.getSelectionModel().selectedItemProperty()
+			.addListener((ObservableValue<? extends TipoAtractivo> ov, TipoAtractivo old_val, TipoAtractivo new_val) -> {
+				if (cmb_tipoAtractivoBusqueda.getSelectionModel().getSelectedItem() != null) {
+					tipoAtractivo = cmb_tipoAtractivoBusqueda.getSelectionModel().getSelectedItem();
+					
+					ObservableList<Atractivo> obsAux = FXCollections.observableArrayList();
+					//utilizar solo valores del obstemporal					
+					if (!listaAtractivoTemporal.isEmpty()) {
+						if (tipoAtractivo.getDescripcion().equals(auxtipo.getDescripcion())) {
+							//muestra todos los valores de la lista temporal que existen para el recurso
+							for (int i = 0; i < listaAtractivoTemporal.size(); i++) {
+								obsAux.add(listaAtractivoTemporal.get(i));
+							}	
+						}else {
+							//mostrar lista de MEDIOS por el tipo.
+							for (Atractivo mcr : listaAtractivoTemporal) {						
+								if (mcr.getIdTipoAtractivo().equals(tipoAtractivo.getId())) {
+									obsAux.add(mcr);
+								}
+							}
+						}
+						List<Atractivo> auxList = new ArrayList<>();
+						auxList.addAll(obsAux);
+						lst_listaAtractivos.getItems().clear();
+						cargarListaAtractivos(auxList);
+					}
+				}
+			});
+		}				
+	}
+	
     private void loadTipoMedios() {
     	listRespTipoMedia = rest.exchange(uriTipoMedia + "/getAll", HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<TipoMedia>>() {
@@ -876,21 +1030,35 @@ public class RecursoController {
 				});
 		listaComodidades = listRespComodidades.getBody();
 		//filtrar por recurso id
-		System.out.println("LISTA WS:" + listaComodidades);
 		if (!listaComodidades.isEmpty()) {
-			System.out.println("vaio ");
 			if (recurso.getId() != null) {
-				System.out.println("recu id");
 				for (Comodidades comodidad : listaComodidades) {
-					System.out.println("EQUALS: " + recurso.getId() + " === " + comodidad.getIdRecurso());
 					if(comodidad.getIdRecurso().equals(recurso.getId())) {
 						listaComodidadesTemporal.add(comodidad);
 					}
 				}
 			}
 		}
-		System.out.println("Lista como tempo: " + listaComodidadesTemporal);
 		cargarListaComodidades(listaComodidadesTemporal);
+	}
+	
+	private void loadAtractivos() {
+		obsListAtractivo.clear();
+		listRespAtractivo = rest.exchange(uriAtractivo + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Atractivo>>() {
+				});
+		listaAtractivo = listRespAtractivo.getBody();
+		//filtrar por recurso id
+		if (!listaAtractivo.isEmpty()) {
+			if (recurso.getId() != null) {
+				for (Atractivo act : listaAtractivo) {
+					if(act.getIdRecurso().equals(recurso.getId())) {
+						listaAtractivoTemporal.add(act);
+					}
+				}
+			}
+		}
+		cargarListaAtractivos(listaAtractivoTemporal);
 	}
     
     private void cargarListaMedios(List<MediaCloudResources> lista) {
@@ -1031,6 +1199,17 @@ public class RecursoController {
 			lst_listaComodidadesRecurso.setItems(obsComo);
 		}
 	}
+	
+	private void cargarListaAtractivos(List<Atractivo> lista) {
+    	ObservableList<Atractivo> obsComo = FXCollections.observableArrayList();
+		lst_listaAtractivos.setPlaceholder(new Label("---  No se encontraron datos en la Base. ---"));
+		if (!lista.isEmpty()) {
+			for (int i = 0; i < lista.size(); i++) {				
+				obsComo.add(lista.get(i));
+			}			
+			lst_listaAtractivos.setItems(obsComo);
+		}
+	}
     
 	private void listasCellFactory() {
 		lst_listaCostosRecurso.setCellFactory(param -> new ListCell<Costo>() {
@@ -1091,5 +1270,41 @@ public class RecursoController {
     			setText(empty ? "" : item.getDescripcion() );
     		};
     	});  
+		
+		cmb_tipoAtractivoBusqueda.setCellFactory(param -> new ListCell<TipoAtractivo>() {
+			protected void updateItem(TipoAtractivo item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getDescripcion());
+			};
+		});   
+		lst_listaAtractivos.setCellFactory(param -> new ListCell<Atractivo>() {
+    		protected void updateItem(Atractivo item, boolean empty) {
+    			super.updateItem(item, empty);
+    			setText(empty ? "" : item.getNombre() );
+    		};
+    	});  
+		lst_listaAtractivos.getSelectionModel().selectedItemProperty()
+		.addListener((ObservableValue<? extends Atractivo> ov, Atractivo old_val, Atractivo new_val) -> {
+			if (lst_listaAtractivos.getSelectionModel().getSelectedItem() != null) {
+				atractivo = lst_listaAtractivos.getSelectionModel().getSelectedItem();
+				if (atractivo.getImagenes() != null) {
+					for (MediaCloudResources mcr : atractivo.getImagenes()) {
+						if (mcr.getFileTemporal() != null) {
+							if (mcr.getIsPrincipal()) {
+								 Image image = new Image("file:" + mcr.getFileTemporal().getAbsolutePath());
+							     gcsw.showMediaInContenedor(image, contenedorDeAtractivos, (double) 288);
+							}						    
+						}else {
+							if (mcr.getIsPrincipal()) {								
+								Image img = gcsw.getImageMediaCR(mcr.getNombre().concat(mcr.getCoordenadas()));
+								gcsw.showMediaInContenedor(img, contenedorDeAtractivos, (double) 288);	
+								return;
+							}
+						}
+						
+					}
+				}
+			}
+		});
 	}
 }

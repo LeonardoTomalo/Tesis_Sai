@@ -2,6 +2,7 @@ package ec.edu.upse.facsistel.gitwym.sai.utilities;
 
 import com.gluonhq.maps.MapView;
 
+import ec.edu.upse.facsistel.gitwym.sai.models.Atractivo;
 import ec.edu.upse.facsistel.gitwym.sai.models.Comodidades;
 import ec.edu.upse.facsistel.gitwym.sai.models.Contacto;
 import ec.edu.upse.facsistel.gitwym.sai.models.Costo;
@@ -22,6 +23,8 @@ public class Context {
 	private Stage stage;
 	private MapView mapViewContext;
 	private Stage stageModalBase;
+	private Stage stageModalBaseAtractivo;
+	private Boolean atractivoTipo;
 	
 	//POJOS
 	private Contacto contactoP;
@@ -31,6 +34,7 @@ public class Context {
 	private Costo costoContext;
 	private Contacto contactoContext;
 	private Comodidades comodidadContext;
+	private Atractivo atractivoContext;
 	
 	
 	public static Context getInstance() {
