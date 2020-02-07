@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.gluonhq.maps.MapLayer;
 import com.gluonhq.maps.MapPoint;
 import com.gluonhq.maps.MapView;
 import com.jfoenix.controls.JFXButton;
@@ -23,17 +24,22 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PoiLayer;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class RecursoPrincipalController {
 
@@ -95,6 +101,11 @@ public class RecursoPrincipalController {
 	List<MediaCloudResources> listaMedia = new ArrayList<MediaCloudResources>();
 	private static ResponseEntity<List<MediaCloudResources>> listRespMedia;
 	GoogleCloudStorageWorker gcsw = new GoogleCloudStorageWorker();
+	
+	//mapa
+	Double latitud;
+	Double longitud;
+	
     
 	
 	public void initialize() {	
@@ -103,6 +114,19 @@ public class RecursoPrincipalController {
 			map = Context.getInstance().getMapViewContext();
 		}else {
 	        map.setCenter(mapPoint);
+	        
+	        PoiLayer poiLayer = new PoiLayer();
+	        poiLayer.addPoint(mapPoint, new Circle(8, Color.RED));
+	        	        
+	        map.addLayer(poiLayer);
+
+//	        poiLayer.addPoint(mapPoint, new Circle(8, Color.RED));
+//	        map.addLayer();
+
+//	        Node icon = new Circle(5, Color.RED);
+////	        MapPoint mapPoint2 = map.getMapPosition(mapPoint.getLatitude(), mapPoint.getLongitude());
+//	        icon.setTranslateX(mapPoint.getLatitude());
+//	        icon.setTranslateY(mapPoint.getLongitude());
 	        map.setZoom(9.5);
 	        map.flyTo(1., mapPoint, 2.);
 		}
@@ -345,6 +369,7 @@ public class RecursoPrincipalController {
 		if (!lista.isEmpty()) {
     		for (int i = 0; i < lista.size(); i++) {
 				obsListRecurso.add(lista.get(i));
+				lista.get(i).getCoordenadas();
 			}			
 			lst_listaRecursos.setItems(obsListRecurso);	
     		//
@@ -392,4 +417,10 @@ public class RecursoPrincipalController {
     	
 	}
 	
+    public void getLatLong(String coordenadas) {
+    	String [] tempArray = coordenadas.substring(coordenadas.indexOf("(")+1, coordenadas.lastIndexOf(")")).split(",");
+    	double longitude = Double.parseDouble(tempArray[0]);
+    	double latitude = Double.parseDouble(tempArray[1]);
+    }
+    
 }

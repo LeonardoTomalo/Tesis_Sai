@@ -89,6 +89,7 @@ public class ModalSenderoController {
  	String uriCosto = urlBase + "/costo";
 	String uriTipoAtractivo = urlBase + "/tipoAtractivo";
 	String uriAtractivo = urlBase + "/atractivo";
+	String uriSenalCelular = urlBase + "/disponibilidadCelular";
     
 	//DE LA CLASE SENDERO
 	Sendero sendero = new Sendero();
@@ -126,12 +127,20 @@ public class ModalSenderoController {
 	private static ResponseEntity<List<TipoAtractivo>> listRespTipoAtractivo;
 	ObservableList<TipoAtractivo> obsListTipoAtractivo = FXCollections.observableArrayList();
 	
+	//DE LA CLASE SEÑAL CELULAR
+	DisponibilidadCelular señalCelular = new DisponibilidadCelular();
+	List<DisponibilidadCelular> listaSenalCelular = new ArrayList<DisponibilidadCelular>();
+	private static ResponseEntity<List<DisponibilidadCelular>> listRespSenalCelular;
+	ObservableList<DisponibilidadCelular> obsListSenalCelular = FXCollections.observableArrayList();
+	
+	
 	public void initialize() {
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
 		
 		listasCellFactory();
 		loadTipoMedios();
+		loadSenalCelular();
 		loadTipoAtractivo();
 		buscarPorNombre();
 				
@@ -209,7 +218,7 @@ public class ModalSenderoController {
 				}    		
     		}
 			sendero.setIdsMediaCloudResources(auxIdsMedia);
-    		//guardando recurso con Contenido Media+++FIN        		
+    		//guardando recurso con Contenido Media+++FIN   
 
 			//guardando el sendero
 			sendero.setEstado(true);
@@ -495,6 +504,13 @@ public class ModalSenderoController {
     		};
     	});  	
 		
+		cmb_disponibilidadSendero.setCellFactory(param -> new ListCell<DisponibilidadCelular>() {
+    		protected void updateItem(DisponibilidadCelular item, boolean empty) {
+    			super.updateItem(item, empty);
+    			setText(empty ? "" : item.getDescripcion());
+    		};
+    	}); 
+		
 		cmb_tipoMediaBusqueda.setCellFactory(param -> new ListCell<TipoMedia>() {
     		protected void updateItem(TipoMedia item, boolean empty) {
     			super.updateItem(item, empty);
@@ -523,12 +539,12 @@ public class ModalSenderoController {
 						if (mcr.getFileTemporal() != null) {
 							if (mcr.getIsPrincipal()) {
 								 Image image = new Image("file:" + mcr.getFileTemporal().getAbsolutePath());
-							     gcsw.showMediaInContenedor(image, contenedorDeAtractivos, (double) 288);
+							     gcsw.showMediaInContenedor(image, contenedorDeAtractivos, (double) 360);
 							}						    
 						}else {
 							if (mcr.getIsPrincipal()) {								
 								Image img = gcsw.getImageMediaCR(mcr.getNombre().concat(mcr.getCoordenadas()));
-								gcsw.showMediaInContenedor(img, contenedorDeAtractivos, (double) 288);	
+								gcsw.showMediaInContenedor(img, contenedorDeAtractivos, (double) 360);	
 								return;
 							}
 						}
@@ -537,6 +553,19 @@ public class ModalSenderoController {
 				}
 			}
 		});  		
+  	}
+  	
+  	private void loadSenalCelular() {
+     	listRespSenalCelular = rest.exchange(uriSenalCelular + "/getAll", HttpMethod.GET, null,
+ 				new ParameterizedTypeReference<List<DisponibilidadCelular>>() {
+ 				});
+ 		listaSenalCelular = listRespSenalCelular.getBody();
+ 		if (!listaSenalCelular.isEmpty()) {
+ 			for (int i = 0; i < listaSenalCelular.size(); i++) {
+ 				obsListSenalCelular.add(listaSenalCelular.get(i));
+ 			}			
+ 			cmb_disponibilidadSendero.setItems(obsListSenalCelular);
+ 		}
   	}
   	
   	 private void loadTipoMedios() {
@@ -669,10 +698,10 @@ public class ModalSenderoController {
 						if (media.getTipoMedia() != null) {
 							if (media.getTipoMedia().getDescripcion().equals("Imagen")) {
 								Image img = gcsw.getImageMediaCR(media.getId());
-								gcsw.showMediaInContenedor(img, contenedorDeMedios, (double) 288);	
+								gcsw.showMediaInContenedor(img, contenedorDeMedios, (double) 360);	
 							}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
 								Media video = gcsw.getMediaFromMediaCR(media.getId());
-						        gcsw.showMediaInContenedor(video, contenedorDeMedios);	
+						        gcsw.showMediaInContenedor(video, contenedorDeMedios, (double) 500);	
 							}else {
 								//CONTENIDO 3D
 							}	
@@ -681,13 +710,13 @@ public class ModalSenderoController {
 						if (media.getTipoMedia().getDescripcion().equals("Imagen")) {
 						    if (media.getFileTemporal() != null) {
 						        Image image = new Image("file:" + media.getFileTemporal().getAbsolutePath());
-						        gcsw.showMediaInContenedor(image, contenedorDeMedios, (double) 288);
+						        gcsw.showMediaInContenedor(image, contenedorDeMedios, (double) 360);
 						    }
 						}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
 							if (media.getFileTemporal() != null) {
 								File d = new File(media.getFileTemporal().getAbsolutePath().replace("\\","/"));
 						        Media video = new Media(d.toURI().toString());
-						        gcsw.showMediaInContenedor(video, contenedorDeMedios);						        
+						        gcsw.showMediaInContenedor(video, contenedorDeMedios, (double) 500);						        
 							}
 						}else {
 							//CONTENIDO 3D
@@ -707,7 +736,19 @@ public class ModalSenderoController {
         	txt_tiempoSendero.setText(sendero.getTiempoRecorrido().toString());
 		}
     	
-//    	cmb_dificultadSendero.getSelectionModel().sele
+    	if (listaSenalCelular != null) {
+			for (DisponibilidadCelular d : listaSenalCelular) {
+				if (d.getId().equals(sendero.getIdSenalCelular())) {
+					cmb_disponibilidadSendero.getSelectionModel().select(d);
+				}
+			}
+		}
+    	
+    	
+    	
+    	
+    	
+//    	cmb_dificultadSendero.getSelectionModel().select();
     	
     	
     	

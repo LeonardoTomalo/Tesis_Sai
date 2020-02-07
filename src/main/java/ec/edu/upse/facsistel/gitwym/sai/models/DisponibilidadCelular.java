@@ -20,4 +20,9 @@ import lombok.NoArgsConstructor;
 public class DisponibilidadCelular {
 	@Id private String id;
 	@Field private String descripcion;
+	
+	@Override
+	public String toString() {
+		return descripcion;
+	}
 }

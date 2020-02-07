@@ -20,8 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="519.0" prefWidth="751.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.ModalSenderoController">
+<AnchorPane prefHeight="519.0" prefWidth="751.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.ModalSenderoController">
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="305.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -145,7 +144,7 @@
                         <Insets bottom="7.0" />
                      </GridPane.margin>
                   </JFXTextArea>
-                  <JFXTextField fx:id="txt_distanciaSendero" editable="false" maxWidth="1.7976931348623157E308" promptText="Distancia recorrido..." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                  <JFXTextField fx:id="txt_distanciaSendero" maxWidth="1.7976931348623157E308" promptText="Distancia recorrido..." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
                      <padding>
                         <Insets left="5.0" right="10.0" />
                      </padding>

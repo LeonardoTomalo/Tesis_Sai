@@ -360,6 +360,156 @@ public class GoogleCloudStorageWorker {
 	    contenedor.getChildren().add(bp);
 	}
 	
+
+	public void showMediaInContenedor(Media media, AnchorPane contenedor, Double width) {
+		if (!contenedor.getChildren().isEmpty()) {
+			contenedor.getChildren().clear();
+		}
+
+		BorderPane bp = new BorderPane();
+	    MediaPlayer mp = new MediaPlayer(media);	    
+	    MediaView view = new MediaView(mp);
+//	    view.fitWidthProperty().bind(contenedor .widthProperty()); 
+//	    view.fitHeightProperty().bind(contenedor.heightProperty());
+	    view.setFitWidth(width);
+	    view.setPreserveRatio(true);
+	    bp.setCenter(view);
+	    
+	    mediaBar = new HBox();
+        mediaBar.setAlignment(Pos.CENTER);
+        mediaBar.setPadding(new Insets(5, 10, 5, 10));
+        BorderPane.setAlignment(mediaBar, Pos.CENTER);	
+ 
+        final Button playButton  = new Button(">");
+        
+        playButton.setOnAction(new EventHandler<ActionEvent>() {
+        	public void handle(ActionEvent e) {	
+        		Status status = mp.getStatus();
+
+        		if (status == Status.UNKNOWN  || status == Status.HALTED){
+        			// don't do anything in these states
+        			return;
+        		}
+
+        		if ( status == Status.PAUSED || status == Status.READY || status == Status.STOPPED)	{
+        			// rewind the movie if we're sitting at the end
+        			if (atEndOfMedia) {
+        				mp.seek(mp.getStartTime());
+        				atEndOfMedia = false;
+        			}
+        			mp.play();
+        		} else {
+        			mp.pause();
+        		}
+        	}
+        });
+        
+        mp.currentTimeProperty (). addListener (new InvalidationListener () { 
+        	public void invalidated (Observable ov) { 
+        		updateValues(mp); 
+        	} 
+        }); 
+
+        mp.setOnPlaying (new Runnable () { 
+        	public void run () { 
+        		if (stopRequested) { 
+        			mp.pause (); 
+        			stopRequested = false; 
+        		} else { 
+        			playButton.setText ("||"); 
+        		} 
+        	} 
+        }); 
+
+        mp.setOnPaused (new Runnable () { 
+        	public void run () { 
+        		System.out.println ("onPaused");
+        		playButton.setText (">"); 
+        	} 
+        }); 
+
+        mp.setOnReady (new Runnable () { 
+        	public void run () { 
+        		duration = mp.getMedia().getDuration(); 
+        		updateValues(mp); 
+        	} 
+        }); 
+
+        mp.setCycleCount (repeat ? MediaPlayer.INDEFINITE: 1); 
+        mp.setOnEndOfMedia (new Runnable () { 
+        	public void run () { 
+        		if (! repeat) { 
+        			playButton.setText (">"); 
+        			stopRequested = true; 
+        			atEndOfMedia = true; 
+        		} 
+        	} 
+        });
+
+        mediaBar.getChildren().add(playButton);
+        
+        // Add spacer
+        Label spacer = new Label("   ");
+        mediaBar.getChildren().add(spacer);
+         
+        // Add Time label
+        Label timeLabel = new Label("Time: ");
+        mediaBar.getChildren().add(timeLabel);
+         
+        // Add time slider
+        timeSlider = new Slider();
+        HBox.setHgrow(timeSlider,Priority.ALWAYS);
+        timeSlider.setMinWidth(50);
+        timeSlider.setMaxWidth(Double.MAX_VALUE);
+        
+        timeSlider.valueProperty().addListener(new InvalidationListener() {
+            public void invalidated(Observable ov) {
+               if (timeSlider.isValueChanging()) {
+               // multiply duration by percentage calculated by slider position
+                  mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
+               }
+            }
+        });
+        
+        mediaBar.getChildren().add(timeSlider);
+
+        // Add Play label
+        playTime = new Label();
+        playTime.setPrefWidth(130);
+        playTime.setMinWidth(50);
+        mediaBar.getChildren().add(playTime);
+         
+        // Add the volume label
+        Label volumeLabel = new Label("Vol: ");
+        mediaBar.getChildren().add(volumeLabel);
+         
+        // Add Volume slider
+        volumeSlider = new Slider();        
+        volumeSlider.setPrefWidth(70);
+        volumeSlider.setMaxWidth(Region.USE_PREF_SIZE);
+        volumeSlider.setMinWidth(30);       
+        
+        volumeSlider.valueProperty().addListener(new InvalidationListener() {
+            public void invalidated(Observable ov) {
+               if (volumeSlider.isValueChanging()) {
+                   mp.setVolume(volumeSlider.getValue() / 100.0);
+               }
+            }
+        });
+        
+        mediaBar.getChildren().add(volumeSlider);
+        
+        bp.setBottom(mediaBar);     
+        
+        AnchorPane.setBottomAnchor(bp, 00.0);
+		AnchorPane.setLeftAnchor(bp, 00.0);
+		AnchorPane.setTopAnchor(bp, 00.0);
+		AnchorPane.setRightAnchor(bp, 00.0);	
+		
+	    contenedor.getChildren().add(bp);
+	}
+	
+	
 	protected void updateValues(MediaPlayer mp) {
 		if (playTime != null && timeSlider != null && volumeSlider != null) {
 			Platform.runLater(new Runnable() {

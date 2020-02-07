@@ -157,6 +157,7 @@ public class RecursoController {
 	List<MediaCloudResources> listaMedia = new ArrayList<MediaCloudResources>();
 	List<MediaCloudResources> listaMediaTemporal = new ArrayList<MediaCloudResources>();
 	private static ResponseEntity<List<MediaCloudResources>> listRespMedia;
+	private static ResponseEntity<List<MediaCloudResources>> listRespMediaSendero;	
 	ObservableList<MediaCloudResources> obsListMedia = FXCollections.observableArrayList();
 	GoogleCloudStorageWorker gcsw = new GoogleCloudStorageWorker();
     
@@ -164,7 +165,6 @@ public class RecursoController {
 	MediaCloudResources mediaSenderos = new MediaCloudResources();
 	List<MediaCloudResources> listaMediaSenderos = new ArrayList<MediaCloudResources>();
 	List<MediaCloudResources> listaMediaTemporalSenderos = new ArrayList<MediaCloudResources>();
-	private static ResponseEntity<List<MediaCloudResources>> listRespMediaSenderos;
 	ObservableList<MediaCloudResources> obsListMediaSenderos = FXCollections.observableArrayList();
 	
 	// DE LA CLASE TIPOMEDIA
@@ -1471,40 +1471,37 @@ public class RecursoController {
 				txt_instruccionesSendero.setText(sendero.getInstrucciones());
 				if (sendero.getTiempoRecorrido() != null) {
 		        	txt_tiempoRecorridoSendero.setText(sendero.getTiempoRecorrido().toString());
+				}else {
+					txt_tiempoRecorridoSendero.setText("");
 				}
 				if (sendero.getDistanciaAproximada() != null) {
 					txt_distanciaAproxSendero.setText(sendero.getDistanciaAproximada().toString());
+				}else {
+					txt_distanciaAproxSendero.setText("");
 				}
 				
 				//cargar las imagenes
-				if (sendero.getListaMCR()!= null) {
-					for (MediaCloudResources mcr : sendero.getListaMCR()) {
-						if (mcr.getFileTemporal() != null) {
-							if (mcr.getIsPrincipal()) {
-								if (mcr.getTipoMedia().getDescripcion().equals("Imagen")) {
-									Image image = new Image("file:" + mcr.getFileTemporal().getAbsolutePath());
-									gcsw.showMediaInContenedor(image, contenedorDeSenderos, (double) 288);
-								}else if(mcr.getTipoMedia().getDescripcion().equals("Video")) {
-									File d = new File(mcr.getFileTemporal().getAbsolutePath().replace("\\","/"));
-									Media video = new Media(d.toURI().toString());
-									gcsw.showMediaInContenedor(video, contenedorDeSenderos);						        
-								}	
-							}						    
-						}else {
-							if (mcr.getIsPrincipal()) {	
-								if (mcr.getTipoMedia().getDescripcion().equals("Imagen")) {
-									Image img = gcsw.getImageMediaCR(mcr.getNombre().concat(mcr.getCoordenadas()));
+				if (sendero.getIdsMediaCloudResources() != null) {
+					listRespMediaSendero = rest.exchange(uriMediaCloud + "/getAll", HttpMethod.GET, null,
+							new ParameterizedTypeReference<List<MediaCloudResources>>() {
+							});
+					List<MediaCloudResources> listaaux = listRespMediaSendero.getBody();
+					for (MediaCloudResources mc : listaaux) {
+						if (sendero.getIdsMediaCloudResources().contains(mc.getId())) {
+							if (mc.getIsPrincipal()) {	
+								if (mc.getTipoMedia().getDescripcion().equals("Imagen")) {
+									Image img = gcsw.getImageMediaCR(mc.getId());
 									gcsw.showMediaInContenedor(img, contenedorDeSenderos, (double) 288);	
-								}else if(mcr.getTipoMedia().getDescripcion().equals("Video")) {
-									Media video = gcsw.getMediaFromMediaCR(mcr.getNombre().concat(mcr.getCoordenadas()));
+									return;
+								}else if(mc.getTipoMedia().getDescripcion().equals("Video")) {
+									Media video = gcsw.getMediaFromMediaCR(mc.getId());
 							        gcsw.showMediaInContenedor(video, contenedorDeSenderos);	
+							        return;
 								}
 							}
 						}
-
 					}
-				}
-				
+				}				
 			}
 		});
 	}
