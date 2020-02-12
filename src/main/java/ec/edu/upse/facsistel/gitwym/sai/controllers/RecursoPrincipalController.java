@@ -68,6 +68,7 @@ public class RecursoPrincipalController {
     @FXML private JFXButton btn_abrirInfBasica;
 
 	MapView map = new MapView();
+	PoiLayer poiLayer = new PoiLayer();
 	MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
 	
 	// CONSUMIR WEB SERVICES
@@ -114,19 +115,6 @@ public class RecursoPrincipalController {
 			map = Context.getInstance().getMapViewContext();
 		}else {
 	        map.setCenter(mapPoint);
-	        
-	        PoiLayer poiLayer = new PoiLayer();
-	        poiLayer.addPoint(mapPoint, new Circle(8, Color.RED));
-	        	        
-	        map.addLayer(poiLayer);
-
-//	        poiLayer.addPoint(mapPoint, new Circle(8, Color.RED));
-//	        map.addLayer();
-
-//	        Node icon = new Circle(5, Color.RED);
-////	        MapPoint mapPoint2 = map.getMapPosition(mapPoint.getLatitude(), mapPoint.getLongitude());
-//	        icon.setTranslateX(mapPoint.getLatitude());
-//	        icon.setTranslateY(mapPoint.getLongitude());
 	        map.setZoom(9.5);
 	        map.flyTo(1., mapPoint, 2.);
 		}
@@ -367,33 +355,43 @@ public class RecursoPrincipalController {
     	obsListRecurso = FXCollections.observableArrayList();
     	lst_listaRecursos.setPlaceholder(new Label("---  La lista de recursos se encuentra vacia. ---"));
 		if (!lista.isEmpty()) {
-    		for (int i = 0; i < lista.size(); i++) {
-				obsListRecurso.add(lista.get(i));
-				lista.get(i).getCoordenadas();
+			for (int i = 0; i < lista.size(); i++) {
+				obsListRecurso.add(lista.get(i));				
+
+				//resaltar el punto en el mapa.
+				if (lista.get(i).getCoordenadas() != null) {
+					//convertir coordenadas
+					String coordenadas = lista.get(i).getCoordenadas();
+					String [] tempArray = coordenadas.substring(coordenadas.indexOf(""), coordenadas.lastIndexOf("")).split(",");
+					double latitude = Double.parseDouble(tempArray[0]);
+					double longitude = Double.parseDouble(tempArray[1]);
+					System.out.println("lat: " + latitude);
+					System.out.println("lon: " + longitude);
+					poiLayer.addPoint(new MapPoint(latitude, longitude), new Circle(8, Color.RED));
+
+
+				}
 			}			
+			map.addLayer(poiLayer);
 			lst_listaRecursos.setItems(obsListRecurso);	
-    		//
-	    	lst_listaRecursos.setCellFactory(param -> new ListCell<Recurso>() {
-	    		protected void updateItem(Recurso item, boolean empty) {
-	    			super.updateItem(item, empty);
-	    			setText(empty ? "" : item.getNombre() );
-	    		};
-	    	});  			    	
+			//
+			lst_listaRecursos.setCellFactory(param -> new ListCell<Recurso>() {
+				protected void updateItem(Recurso item, boolean empty) {
+					super.updateItem(item, empty);
+					setText(empty ? "" : item.getNombre() );
+				};
+			});  			    	
 		}
 		//
 		lst_listaRecursos.getSelectionModel().selectedItemProperty()
 			.addListener((ObservableValue<? extends Recurso> ov, Recurso old_val, Recurso new_val) -> {
 				recurso = lst_listaRecursos.getSelectionModel().getSelectedItem();
-				
-//					if (exitPopup) {
-//						return;
-//					}
-				
-				//resaltar el punto en el mapa.
-				
+							
 				lbl_nombreRecurso.setText(recurso.getNombre());
 				lbl_infGeneral.setText(recurso.getInformacionGeneral());
 				lbl_ubicacionZonal.setText(recurso.getDireccion());
+				
+				
 				
 				if(recurso.getIdsMediaCloudResources() != null) {
 					listRespMedia = rest.exchange(uriMediaCloud + "/getAll", HttpMethod.GET, null,
@@ -414,7 +412,11 @@ public class RecursoPrincipalController {
 	}
 
     private void restoreToController() {
-    	
+//
+//        PoiLayer poiLayer = new PoiLayer();
+//        poiLayer.addPoint(mapPoint, new Circle(8, Color.RED));
+//        	        
+//        map.addLayer(poiLayer);
 	}
 	
     public void getLatLong(String coordenadas) {
