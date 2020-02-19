@@ -9,6 +9,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Costo;
 import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
 import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.models.Sendero;
+import ec.edu.upse.facsistel.gitwym.sai.models.Transporte;
 import ec.edu.upse.facsistel.gitwym.sai.models.Usuario;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -38,6 +39,7 @@ public class Context {
 	private Comodidades comodidadContext;
 	private Atractivo atractivoContext;
 	private Sendero senderoContext;
+	private Transporte transporteContext;
 	
 	
 	public static Context getInstance() {

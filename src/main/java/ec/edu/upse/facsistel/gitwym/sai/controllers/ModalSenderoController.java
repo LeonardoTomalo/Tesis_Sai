@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import org.controlsfx.control.CheckListView;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +27,12 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Atractivo;
 import ec.edu.upse.facsistel.gitwym.sai.models.Costo;
 import ec.edu.upse.facsistel.gitwym.sai.models.DificultadRecorrido;
 import ec.edu.upse.facsistel.gitwym.sai.models.DisponibilidadCelular;
+import ec.edu.upse.facsistel.gitwym.sai.models.Equipamiento;
 import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
 import ec.edu.upse.facsistel.gitwym.sai.models.Sendero;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoAtractivo;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoMedia;
+import ec.edu.upse.facsistel.gitwym.sai.models.Transporte;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
@@ -39,10 +42,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.image.Image;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 
@@ -69,6 +76,20 @@ public class ModalSenderoController {
     @FXML private JFXButton btn_modificarMedio;
     @FXML private AnchorPane contenedorDeMedios;
     @FXML private AnchorPane anch_facilidades;
+    @FXML private Accordion acco_Izq;
+    @FXML private TitledPane accd_costosRecurso;
+    @FXML private JFXButton btn_addCosto;
+    @FXML private JFXButton btn_eliminarCosto;
+    @FXML private JFXButton btn_modificarCosto;
+    @FXML private JFXListView<Costo> lst_listaCostosRecurso;
+    @FXML private JFXTextField txt_buscarTransporte;
+    @FXML private JFXButton btn_addTransporte;
+    @FXML private JFXButton btn_eliminarTransporte;
+    @FXML private JFXButton btn_modificarTransporte;
+    @FXML private JFXListView<Transporte> lst_listaTransporte;
+    @FXML private Accordion acco_Der;
+    @FXML private TitledPane accd_accesibilidadesRecurso;
+    @FXML private CheckListView<Equipamiento> chklst_equipamiento;
     @FXML private AnchorPane anch_video;
     @FXML private JFXComboBox<TipoAtractivo> cmb_tipoAtractivoBusqueda;
     @FXML private JFXButton btn_verAtractivoMapa;
@@ -90,6 +111,8 @@ public class ModalSenderoController {
 	String uriTipoAtractivo = urlBase + "/tipoAtractivo";
 	String uriAtractivo = urlBase + "/atractivo";
 	String uriSenalCelular = urlBase + "/disponibilidadCelular";
+	String uriEquipamiento = urlBase + "/equipamiento";
+	String uriTransporte = urlBase + "/transporte";
     
 	//DE LA CLASE SENDERO
 	Sendero sendero = new Sendero();
@@ -133,6 +156,19 @@ public class ModalSenderoController {
 	private static ResponseEntity<List<DisponibilidadCelular>> listRespSenalCelular;
 	ObservableList<DisponibilidadCelular> obsListSenalCelular = FXCollections.observableArrayList();
 	
+	// DE LA CLASE COMODIDADES
+	Transporte transporte = new Transporte();
+	List<Transporte> listaTransporte = new ArrayList<Transporte>();
+	List<Transporte> listaTransporteTemporal = new ArrayList<Transporte>();
+	private static ResponseEntity<List<Transporte>> listRespTransporte;
+	ObservableList<Transporte> obsListTransporte = FXCollections.observableArrayList();
+
+	//DE LA CLASE ACCESIBILIDADES
+ 	Equipamiento equipamiento = new Equipamiento();
+ 	List<Equipamiento> listaEquipamiento = new ArrayList<Equipamiento>();
+ 	private static ResponseEntity<List<Equipamiento>> listRespEquipamiento;
+	ObservableList<Equipamiento> obsListEquipamiento = FXCollections.observableArrayList();
+	
 	
 	public void initialize() {
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
@@ -142,14 +178,18 @@ public class ModalSenderoController {
 		loadTipoMedios();
 		loadSenalCelular();
 		loadTipoAtractivo();
+		loadEquipamiento();
 		buscarPorNombre();
-				
+
+		acco_Der.setExpandedPane(accd_accesibilidadesRecurso);
+		acco_Izq.setExpandedPane(accd_costosRecurso);
 		if (Context.getInstance().getSenderoContext() != null) {
 			sendero = Context.getInstance().getSenderoContext();
 			cargarDatosSendero(sendero);
 			isModificar = true;
 			loadMedios();
 			loadAtractivos();
+			loadTransportes();
 		}
 		
 	}
@@ -219,7 +259,27 @@ public class ModalSenderoController {
     		}
 			sendero.setIdsMediaCloudResources(auxIdsMedia);
     		//guardando recurso con Contenido Media+++FIN   
-
+			//guardando sendero con costo
+			ArrayList<Costo> auxCosto = new ArrayList<>();
+    		if (lst_listaCostosRecurso.getItems().size() > 0) {
+    			if(sendero.getCostoServicio() != null)sendero.getCostoServicio().clear();	
+				for (Costo mcr : lst_listaCostosRecurso.getItems()) {
+//					costo = rest.postForObject(uriCosto + "/saveOrUpdate", mcr, Costo.class);
+					auxCosto.add(mcr);
+				}    		
+    		}
+			sendero.setCostoServicio(auxCosto);
+			//guardando recurso con costo FIN		
+			//guardando recurson con Equipamiento
+			ArrayList<String> auxAcce = new ArrayList<>();
+			if(chklst_equipamiento.getCheckModel().getCheckedItems().size() > 0) {
+				if(sendero.getIdsEquipamiento()	!= null) sendero.getIdsEquipamiento().clear();
+				for (Equipamiento ac : chklst_equipamiento.getCheckModel().getCheckedItems()) {
+					auxAcce.add(ac.getId());
+				}			
+			}
+			sendero.setIdsEquipamiento(auxAcce);
+			//guardando recurson con Equipamiento FIN
 			//guardando el sendero
 			sendero.setEstado(true);
 			sendero = rest.postForObject(uriSendero + "/saveOrUpdate", sendero, Sendero.class);
@@ -238,8 +298,7 @@ public class ModalSenderoController {
 							}
 							
 						}
-					}
-					
+					}					
 					mcr.setEstado(true);
 					mcr.setIdSendero(sendero.getId());
 					rest.postForObject(uriAtractivo + "/saveOrUpdate", mcr, Atractivo.class);
@@ -258,6 +317,166 @@ public class ModalSenderoController {
 			e.printStackTrace();
 			Message.showErrorNotification("Ha surgido un error al guardar datos.!!");			
 		}
+    }
+
+    @FXML
+    void addCostoRecurso(ActionEvent event) {
+    	try {
+    		//abro interfaz para crear un costo
+    		Context.getInstance().setCostoContext(null);
+    		General.showModalWithParent("/viewRecurso/ModalCostos.fxml");
+    		if (Context.getInstance().getCostoContext() != null) {
+//    			listaCosto.add(Context.getInstance().getCostoContext());
+    			lst_listaCostosRecurso.getItems().add(Context.getInstance().getCostoContext());
+//    			cargarListaCostos(listaCosto);
+			}
+    		Context.getInstance().setCostoContext(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Surgió un error al agregar costos.!!");
+		}
+    }
+    
+    @FXML
+    void addTransporte(ActionEvent event) {
+    	try {
+    		//abro interfaz para crear un costo
+    		Context.getInstance().setTransporteContext(null);
+    		General.showModalWithParent("/viewRecurso/ModalTransporte.fxml");
+    		if (Context.getInstance().getTransporteContext() != null) {
+    			listaTransporteTemporal.add(Context.getInstance().getTransporteContext());
+    			cargarListaTransportes(listaTransporteTemporal);
+    		}
+    		Context.getInstance().setTransporteContext(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Surgió un error al agregar transporte.!!");
+		}
+    }
+
+    @FXML
+    void eliminarCostoRecurso(ActionEvent event) {
+    	try {
+    		if (lst_listaCostosRecurso.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el costo a eliminar.!!");
+				return;
+			}
+			Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos del costo: "
+							+ lst_listaCostosRecurso.getSelectionModel().getSelectedItem().getDescripcion() + " ?.",
+					Context.getInstance().getStage());
+			if (result.get() == ButtonType.OK) {
+				lst_listaCostosRecurso.getItems().remove(lst_listaCostosRecurso.getSelectionModel().getSelectedItem());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al eliminar datos.!!");
+		}
+    }
+
+    @FXML
+    void eliminarTransporte(ActionEvent event) {
+    	try {
+    		if (lst_listaTransporte.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione transporte a eliminar.!!");
+				return;
+			}
+			Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos de transporte: "
+							+ lst_listaTransporte.getSelectionModel().getSelectedItem().getDescripcion() + " ?.",
+					Context.getInstance().getStage());
+			if (result.get() == ButtonType.OK) {
+				transporte = lst_listaTransporte.getSelectionModel().getSelectedItem();
+				if (lst_listaTransporte.getSelectionModel().getSelectedItem().getId() != null) {
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("c", lst_listaTransporte.getSelectionModel().getSelectedItem().getId());
+					rest.delete(uriTransporte + "/delete/{c}", params);
+					Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
+				}
+//				lst_listaComodidadesRecurso.getItems().remove(lst_listaComodidadesRecurso.getSelectionModel().getSelectedItem());
+				if (listaTransporteTemporal.size() > 0) 	
+					listaTransporteTemporal.remove(transporte);
+				if (lst_listaTransporte.getItems().size() > 0)	{
+					lst_listaTransporte.getItems().remove(transporte);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al eliminar datos.!!");
+		}
+    }
+    
+    @FXML
+    void modificarCostoRecurso(ActionEvent event) {
+    	try {
+    		if (lst_listaCostosRecurso.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el costo a modificar.!!");
+				return;
+			}
+    		Context.getInstance().setCostoContext(lst_listaCostosRecurso.getSelectionModel().getSelectedItem());
+    		General.showModalWithParent("/viewRecurso/ModalCostos.fxml");
+    		if (Context.getInstance().getCostoContext() != null) {
+    			costo = Context.getInstance().getCostoContext();
+    			cargarListaCostos(lst_listaCostosRecurso.getItems());
+			}
+    		Context.getInstance().setCostoContext(null);    		
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
+		}
+    }
+
+    @FXML
+    void modificarTransporte(ActionEvent event) {
+    	try {
+    		if (lst_listaTransporte.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el transporte a modificar.!!");
+				return;
+			}
+    		Context.getInstance().setTransporteContext(lst_listaTransporte.getSelectionModel().getSelectedItem());
+    		General.showModalWithParentAtractivo("/viewRecurso/ModalTransporte.fxml");
+    		if (Context.getInstance().getAtractivoContext() != null) {
+    			transporte = Context.getInstance().getTransporteContext();
+    			cargarListaTransportes(listaTransporteTemporal);
+			}
+    		Context.getInstance().setTransporteContext(null);     		
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar datos.!!");
+		}
+    }
+
+    @FXML
+    void buscarComodidadesTextChange(InputMethodEvent event) {
+    	txt_buscarTransporte.textProperty().addListener((observable, oldValue, newValue) -> {
+    	    System.out.println("textfield changed from " + oldValue + " to " + newValue);
+    	    
+    	    ObservableList<Transporte> obsAux = FXCollections.observableArrayList();			
+    	    for (Transporte mcr : lst_listaTransporte.getItems()) {    	    	
+    	    	String nombre = mcr.getDescripcion();
+    	    	if (newValue.length() >0) {
+    	    		for (int i = 0; i < newValue.length(); i++) {
+    	    			if (nombre.trim().toLowerCase().charAt(i) == newValue.trim().toLowerCase().charAt(i)) {
+    	    				if (!obsAux.isEmpty()) {
+    	    					if (!obsAux.contains(mcr)) {
+    	    						obsAux.add(mcr);
+    	    					}
+    	    				}else {
+    	    					obsAux.add(mcr);
+    	    				}
+    	    			} 
+    				}
+				}
+			}    	    
+    	    //enviamos la lista.
+    	    if (newValue.isBlank() || newValue.isEmpty()) {
+    	    	cargarListaTransportes(listaTransporteTemporal);
+			}else {
+	    	    List<Transporte> auxList = new ArrayList<>();
+				auxList.addAll(obsAux);
+				lst_listaTransporte.getItems().clear();
+				cargarListaTransportes(auxList);
+			}
+    	});
     }
     
     @FXML
@@ -490,12 +709,12 @@ public class ModalSenderoController {
     }    
         
   	private void listasCellFactory() {
-//  		lst_listaCostosRecurso.setCellFactory(param -> new ListCell<Costo>() {
-//      		protected void updateItem(Costo item, boolean empty) {
-//      			super.updateItem(item, empty);
-//      			setText(empty ? "" : item.getValor().toString().concat(" - ").concat(item.getDescripcion()) );
-//      		};
-//      	});  
+  		lst_listaCostosRecurso.setCellFactory(param -> new ListCell<Costo>() {
+      		protected void updateItem(Costo item, boolean empty) {
+      			super.updateItem(item, empty);
+      			setText(empty ? "" : item.getValor().toString().concat(" - ").concat(item.getDescripcion()) );
+      		};
+      	});  
 
 		lst_listaMedios.setCellFactory(param -> new ListCell<MediaCloudResources>() {
     		protected void updateItem(MediaCloudResources item, boolean empty) {
@@ -517,13 +736,29 @@ public class ModalSenderoController {
     			setText(empty ? "" : item.getDescripcion());
     		};
     	}); 
-
+		
+		chklst_equipamiento.setCellFactory(lv -> new CheckBoxListCell<Equipamiento>(chklst_equipamiento::getItemBooleanProperty) {
+			@Override
+			public void updateItem(Equipamiento item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getDescripcion());
+			}
+		});	  
+		
 		cmb_tipoAtractivoBusqueda.setCellFactory(param -> new ListCell<TipoAtractivo>() {
 			protected void updateItem(TipoAtractivo item, boolean empty) {
 				super.updateItem(item, empty);
 				setText(empty ? "" : item.getDescripcion());
 			};
 		});   
+
+		lst_listaTransporte.setCellFactory(param -> new ListCell<Transporte>() {
+    		protected void updateItem(Transporte item, boolean empty) {
+    			super.updateItem(item, empty);
+    			setText(empty ? "" : item.getDescripcion());
+    		};
+    	});  		
+		
 		lst_listaAtractivos.setCellFactory(param -> new ListCell<Atractivo>() {
     		protected void updateItem(Atractivo item, boolean empty) {
     			super.updateItem(item, empty);
@@ -554,6 +789,21 @@ public class ModalSenderoController {
 			}
 		});  		
   	}
+  	
+	private void loadEquipamiento() {
+		obsListEquipamiento.clear();
+		listRespEquipamiento = rest.exchange(uriEquipamiento + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Equipamiento>>() {
+				});
+		listaEquipamiento = listRespEquipamiento.getBody();
+		chklst_equipamiento.setPlaceholder(new Label("---  No se encontraron datos en la Base. ---"));
+		if (!listaEquipamiento.isEmpty()) {
+			for (int i = 0; i < listaEquipamiento.size(); i++) {
+				obsListEquipamiento.add(listaEquipamiento.get(i));
+			}			
+			chklst_equipamiento.setItems(obsListEquipamiento);		    	  	
+		}
+	}
   	
   	private void loadSenalCelular() {
      	listRespSenalCelular = rest.exchange(uriSenalCelular + "/getAll", HttpMethod.GET, null,
@@ -724,7 +974,20 @@ public class ModalSenderoController {
 					}
 				});
     }
-  	
+    
+
+	private void cargarListaCostos(List<Costo> lista) {
+    	ObservableList<Costo> obsCostos = FXCollections.observableArrayList();
+    	lst_listaCostosRecurso.setPlaceholder(new Label("---  La lista de costo se encuentra vacia. ---"));
+		if (!lista.isEmpty()) {
+    		for (int i = 0; i < lista.size(); i++) {
+    			obsCostos.add(lista.get(i));
+			}
+			lst_listaCostosRecurso.setItems(obsCostos);	
+		}
+		
+    }
+     	
     private void cargarDatosSendero(Sendero sendero) {
     	txt_descripcionSendero.setText(sendero.getDescripcion());
     	if (sendero.getDistanciaAproximada() != null) {
@@ -743,8 +1006,18 @@ public class ModalSenderoController {
 				}
 			}
 		}
-    	
-    	
+    	//llenar costos.
+    	if (sendero.getCostoServicio() != null) {
+    		cargarListaCostos(sendero.getCostoServicio());
+		}
+    	//checkear accesibilidad
+    	if (sendero.getIdsEquipamiento() != null) {
+			for (Equipamiento ac : listaEquipamiento) {
+				if (sendero.getIdsEquipamiento().contains(ac.getId())) {
+					chklst_equipamiento.getCheckModel().check(ac);
+				}
+			}
+		}
     	
     	
     	
@@ -797,6 +1070,38 @@ public class ModalSenderoController {
 		}
 		cargarListaAtractivos(listaAtractivoTemporal);
 	}
-    
+
+	private void loadTransportes() {
+		obsListTransporte.clear();
+		listRespTransporte = rest.exchange(uriTransporte + "/getAll", HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Transporte>>() {
+				});
+		listaTransporte = listRespTransporte.getBody();
+		//filtrar por recurso id
+		if (!listaTransporte.isEmpty()) {
+			if (sendero.getId() != null) {
+				for (Transporte t : listaTransporte) {
+					if (sendero.getIdsTransporte().contains(t.getId())) {
+						listaTransporteTemporal.add(t);
+					}
+				}
+			}
+		}
+		cargarListaTransportes(listaTransporteTemporal);
+	}
+	
+	private void cargarListaTransportes(List<Transporte> lista) {
+    	ObservableList<Transporte> obsComo = FXCollections.observableArrayList();
+		lst_listaTransporte.setPlaceholder(new Label("---  No se encontraron datos en la Base. ---"));
+		System.out.println("LISTA TRANSPORTE: " + lista);
+		if (!lista.isEmpty()) {
+			for (int i = 0; i < lista.size(); i++) {				
+				obsComo.add(lista.get(i));
+			}			
+			lst_listaTransporte.setItems(obsComo);
+		}
+	}	
+
+	
 
 }

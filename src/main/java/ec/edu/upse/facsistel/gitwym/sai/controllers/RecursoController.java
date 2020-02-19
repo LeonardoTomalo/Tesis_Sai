@@ -232,36 +232,23 @@ public class RecursoController {
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeSenderos, (double) 288);
 		listasCellFactory();
-		System.out.println("1");
 		loadTipoMedios();
-		System.out.println("2");
 		loadTipoAtractivo();
-		System.out.println("3");
 		loadAccesibilidades();
-		System.out.println("5");
 		loadCategorias();
-		System.out.println("6");
 		loadIdiomas();
-		System.out.println("7");
 		buscarPorNombre();		
-		System.out.println("8");
 		buscarComodidadesTextChange();
-		System.out.println("9");
 		//cargar provincia, canton y parroquia
 		acco_Der.setExpandedPane(accd_accesibilidadesRecurso);
 		acco_Izq.setExpandedPane(accd_costosRecurso);
 		if (Context.getInstance().getRecursoContext() != null) {
 			recurso = Context.getInstance().getRecursoContext();
-			System.out.println("HOLA PASO");
 			cargarDatosRecurso(recurso);
-			System.out.println("HOLA PASO2");
 			isModificar = true;
 			loadMedios();
 			loadComodidades();
-			System.out.println("12");			
 			loadAtractivos();
-			System.out.println("13");
-			System.out.println("4");
 			loadSenderos();
 		}
 		
@@ -781,7 +768,6 @@ public class RecursoController {
     		General.showModalWithParentAtractivo("/viewRecurso/ModalAtractivo.fxml");
     		if (Context.getInstance().getAtractivoContext() != null) {
     			atractivo = Context.getInstance().getAtractivoContext();
-
     			cargarListaAtractivos(listaAtractivoTemporal);
 			}
     		Context.getInstance().setAtractivoContext(null);     		

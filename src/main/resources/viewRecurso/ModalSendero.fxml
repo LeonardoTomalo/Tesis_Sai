@@ -7,10 +7,12 @@
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -19,6 +21,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckListView?>
 
 <AnchorPane prefHeight="519.0" prefWidth="751.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.ModalSenderoController">
    <children>
@@ -168,6 +171,13 @@
                <children>
                   <JFXTabPane fx:id="tbp_recurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="40.0" tabMinWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
+                     	<Tab text="Recorrido">
+                     		<content>
+                     			<AnchorPane>
+                     			
+                     			</AnchorPane>
+                     		</content>
+                     	</Tab>
                         <Tab text="Multimedia">
                            <content>
                               <AnchorPane fx:id="anch_galeria" maxHeight="1.7976931348623157E308">
@@ -257,7 +267,107 @@
                         </Tab>
                         <Tab text="Facilidades">
                            <content>
-                              <AnchorPane fx:id="anch_facilidades" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              <AnchorPane fx:id="anch_facilidades" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="271.0" prefWidth="751.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Accordion fx:id="acco_Izq" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="300.0">
+                                             <panes>
+                                                <TitledPane fx:id="accd_costosRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Servicios con costo">
+                                                   <content>
+                                                      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                         <children>
+                                                            <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
+                                                                     <children>
+                                                                        <JFXButton fx:id="btn_addCosto" buttonType="RAISED" onAction="#addCostoRecurso" text="Agregar" />
+                                                                        <JFXButton fx:id="btn_eliminarCosto" buttonType="RAISED" onAction="#eliminarCostoRecurso" text="Eliminar" />
+                                                                        <JFXButton fx:id="btn_modificarCosto" buttonType="RAISED" onAction="#modificarCostoRecurso" text="Editar" />
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                                                                     <content>
+                                                                        <JFXListView fx:id="lst_listaCostosRecurso" />
+                                                                     </content>
+                                                                  </ScrollPane>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </content>
+                                                </TitledPane>
+                                             </panes>
+                                             <HBox.margin>
+                                                <Insets right="5.0" />
+                                             </HBox.margin>
+                                          </Accordion>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <AnchorPane VBox.vgrow="ALWAYS">
+                                                   <children>
+                                                      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                               <children>
+                                                                  <JFXTextField fx:id="txt_buscarTransporte" onInputMethodTextChanged="#buscarComodidadesTextChange" promptText="Buscar transportes..." HBox.hgrow="ALWAYS">
+                                                                     <HBox.margin>
+                                                                        <Insets left="5.0" right="5.0" />
+                                                                     </HBox.margin>
+                                                                  </JFXTextField>
+                                                                  <JFXButton fx:id="btn_addTransporte" buttonType="RAISED" onAction="#addTransporte" text="Nuevo" />
+                                                                  <JFXButton fx:id="btn_eliminarTransporte" buttonType="RAISED" onAction="#eliminarTransporte" text="Eliminar" />
+                                                                  <JFXButton fx:id="btn_modificarTransporte" buttonType="RAISED" onAction="#modificarTransporte" text="Modificar">
+                                                                     <HBox.margin>
+                                                                        <Insets right="5.0" />
+                                                                     </HBox.margin>
+                                                                  </JFXButton>
+                                                               </children>
+                                                               <VBox.margin>
+                                                                  <Insets bottom="7.0" />
+                                                               </VBox.margin>
+                                                            </HBox>
+                                                            <JFXListView fx:id="lst_listaTransporte" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                               <VBox.margin>
+                                                                  <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+                                                               </VBox.margin>
+                                                            </JFXListView>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets top="5.0" />
+                                                         </padding>
+                                                      </VBox>
+                                                   </children>
+                                                </AnchorPane>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets right="5.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Accordion fx:id="acco_Der" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="300.0">
+                                             <panes>
+                                                <TitledPane fx:id="accd_accesibilidadesRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Equipamiento">
+                                                   <content>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <CheckListView fx:id="chklst_equipamiento" prefHeight="420.0" prefWidth="268.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </content>
+                                                </TitledPane>
+                                             </panes>
+                                             <HBox.margin>
+                                                <Insets left="1.0" />
+                                             </HBox.margin>
+                                          </Accordion>
+                                       </children>
+                                       <padding>
+                                          <Insets top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children></AnchorPane>
                            </content>
                         </Tab>
                         <Tab text="Atractivos">
