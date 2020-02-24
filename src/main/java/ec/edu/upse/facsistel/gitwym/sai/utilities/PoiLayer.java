@@ -17,7 +17,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -32,6 +31,9 @@ public class PoiLayer extends MapLayer {
 	private final ObservableList<HelpClass<MapPoint, Node, Recurso>> point = FXCollections.observableArrayList();
 //	private final Line line;
 	
+	public void initialize() {
+		
+	}
 	public PoiLayer() {
 	}
 
@@ -50,7 +52,7 @@ public class PoiLayer extends MapLayer {
 	    final HelpClass<MapPoint, Node, Recurso>  pair = new HelpClass<>(p, icon, recurso);
 		icon.setOnMouseClicked(e -> {
 	        e.consume();
-	        showPopover(pair, e);
+	        showPopover(pair);
 	    });
 		point.add(pair);
 		this.getChildren().add(icon);
@@ -110,7 +112,7 @@ public class PoiLayer extends MapLayer {
 		popupStage.show();
 	}
 	
-	private void showPopover(HelpClass<MapPoint, Node, Recurso> hc, MouseEvent e) {
+	public void showPopover(HelpClass<MapPoint, Node, Recurso> hc) {
 		Node icon = hc.getValue();
 		Recurso r = hc.getConstant();		
 		//
@@ -129,11 +131,31 @@ public class PoiLayer extends MapLayer {
 		vb.setAlignment(Pos.TOP_CENTER);
 		vb.setFillWidth(true);		
 		po.setContentNode(vb);
-		btn.setOnMouseClicked(a-> General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido()));
+		btn.setOnMouseClicked(a-> {
+			Context.getInstance().setRecursoContext(r);
+			General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());});
 		//		
 		final Stage primaryStage = (Stage) icon.getScene().getWindow();
 		Bounds iconBounds = icon.localToScene(icon.getBoundsInLocal());
 		po.show(primaryStage, iconBounds.getMaxX(), iconBounds.getMaxY());
+	}
+
+	public ObservableList<HelpClass<MapPoint, Node, Recurso>> getPoint() {
+		return point;
+	}
+	
+	private MapPoint getMapPosition(double sceneX, double sceneY) {
+	    double x = sceneX - this.getTranslateX();
+	    double y = sceneY - this.getTranslateY();
+	    double z = 9.5;
+	    double latrad = Math.PI - (2 * Math.PI * y) / (Math.pow(2, z) * 256);
+	    double mlat = Math.toDegrees(Math.atan(Math.sinh(latrad)));
+	    double mlon = x / (256 * Math.pow(2, z)) * 360 - 180;
+	    return new MapPoint(mlat, mlon);
+	}
+	
+	public MapPoint getMapPositionm(double sceneX, double sceneY) {
+	    return getMapPosition(sceneX, sceneY);
 	}
 
 }

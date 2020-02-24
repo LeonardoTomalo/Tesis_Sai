@@ -1,7 +1,10 @@
 package ec.edu.upse.facsistel.gitwym.sai.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -22,6 +25,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
 import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.HelpClass;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.PoiLayer;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
@@ -31,6 +35,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -56,16 +61,10 @@ public class RecursoPrincipalController {
 	@FXML private JFXListView<Recurso> lst_listaRecursos;
 	@FXML private AnchorPane anch_contImgPrinBusqueda;
 	@FXML private AnchorPane anch_mapa;
-	@FXML private HBox hbx_contenedorInfBasica;
-	@FXML private AnchorPane anch_contenedor;
-	@FXML private Label lbl_nombreRecurso;
-	@FXML private Label lbl_infGeneral;
-	@FXML private Label lbl_ubicacionZonal;
-	@FXML private JFXButton btn_masInformacion;
-	@FXML private JFXButton btn_abrirInfBasica;
 
 	//Definimos el mapa de Gluon Maps
 	MapView map = new MapView();
+	PoiLayer poi = new PoiLayer();
 
 	// CONSUMIR WEB SERVICES
 	RestTemplate rest = new RestTemplate();
@@ -101,7 +100,6 @@ public class RecursoPrincipalController {
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",140,300,true,false), anch_contImgPrinBusqueda, (double) 150);
-		showInformacionBasica();
 		listasCellFactory();
 		General.setMapatoAnchorPane(map, anch_mapa);
 		//
@@ -111,10 +109,10 @@ public class RecursoPrincipalController {
 		map.flyTo(1., mapPoint, 2.);
 		//
 		restoreToController();
+		buscarPorNombre();
 		loadIdiomas();
 		loadCategorias();
 		loadRecursos();
-		buscarPorNombre();
 	}        
 
 	@FXML
@@ -126,17 +124,45 @@ public class RecursoPrincipalController {
 
 	@FXML
 	void eliminarRecurso(ActionEvent event) {
-
+		try {
+			if (lst_listaRecursos.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el recurso a eliminar.!!");
+				return;
+			}
+			Optional<ButtonType> result = Message.showQuestion("Desea continuar y eliminar los datos del recurso: "
+					+ lst_listaRecursos.getSelectionModel().getSelectedItem().getNombre() + " ?.",
+					Context.getInstance().getStage());
+			if (result.get() == ButtonType.OK) {
+				recurso = lst_listaRecursos.getSelectionModel().getSelectedItem();
+				if (lst_listaRecursos.getSelectionModel().getSelectedItem().getId() != null) {
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("c", lst_listaRecursos.getSelectionModel().getSelectedItem().getId());
+					rest.delete(uriRecurso + "/delete/{c}", params);
+				}
+				if (listaRecurso.size() > 0) 	
+					listaRecurso.remove(recurso);
+				if (lst_listaRecursos.getItems().size() > 0)	{
+					lst_listaRecursos.getItems().remove(recurso);
+				}				
+				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
 	void modificarRecurso(ActionEvent event) {
-		if (lst_listaRecursos.getSelectionModel().getSelectedItems().isEmpty()) {
-			Message.showWarningNotification("Seleccione el recurso a modificar.!!");
-			return;
-		}
-		Context.getInstance().setRecursoContext(lst_listaRecursos.getSelectionModel().getSelectedItem());
-		General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());        	
+		try {
+			if (lst_listaRecursos.getSelectionModel().getSelectedItems().isEmpty()) {
+				Message.showWarningNotification("Seleccione el recurso a modificar.!!");
+				return;
+			}
+			Context.getInstance().setRecursoContext(lst_listaRecursos.getSelectionModel().getSelectedItem());
+			General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido()); 
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}		       	
 	}
 
 	@FXML
@@ -149,27 +175,6 @@ public class RecursoPrincipalController {
 			hbx_busqueda.setManaged(true);
 		}	    	
 	}
-
-	@FXML
-	void showInformacionBasica() {
-		if (hbx_contenedorInfBasica.isVisible()) {
-			hbx_contenedorInfBasica.setVisible(false);
-			hbx_contenedorInfBasica.setManaged(false);
-		}else {
-			hbx_contenedorInfBasica.setVisible(true);
-			hbx_contenedorInfBasica.setManaged(true);
-		}	    	
-	}
-
-	@FXML
-	void showMasInformacion(ActionEvent event) {
-		if (lst_listaRecursos.getSelectionModel().getSelectedItems().isEmpty()) {
-			Message.showWarningNotification("Seleccione el recurso a modificar.!!");
-			return;
-		}
-		Context.getInstance().setRecursoContext(lst_listaRecursos.getSelectionModel().getSelectedItem());
-		General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());
-	}    
 
 	@FXML
 	void buscarRecursoNombre(ActionEvent event) {
@@ -212,7 +217,8 @@ public class RecursoPrincipalController {
 				}
 			}
 			//enviamos la lista.
-			lst_listaRecursos.setItems(obsAux);
+			cargarListaRecursos(obsAux);
+			gcsw.showMediaInContenedor(new Image("albums.png",140,300,true,false), anch_contImgPrinBusqueda, (double) 150);
 			if (newValue.isBlank() || newValue.isEmpty()) {
 				initialize();
 			}
@@ -275,15 +281,13 @@ public class RecursoPrincipalController {
 
 	private void restoreToController() {
 		if (cmb_categoria.getItems() != null) cmb_categoria.getItems().clear();
-		if (cmb_idioma.getItems() != null) cmb_idioma.getItems().clear();
-		lbl_infGeneral.setText("");
-		lbl_nombreRecurso.setText("");
-		lbl_ubicacionZonal.setText("");		
-		
+		if (cmb_idioma.getItems() != null) cmb_idioma.getItems().clear();	
+		gcsw.showMediaInContenedor(new Image("albums.png",140,300,true,false), anch_contImgPrinBusqueda, (double) 150);
 	}
 
 	private void setPointGraphMap(List<Recurso> lista) {
-		PoiLayer poi = new PoiLayer();
+		poi = new PoiLayer();
+		System.out.println("1 " + lista);
 		for (Recurso r : lista) {
 			if (r.getCoordenadas() != null) {
 				//convert coord
@@ -299,6 +303,7 @@ public class RecursoPrincipalController {
 				//
 			}
 		}
+		System.out.println("1");
 		map.addLayer(poi);
 	}
 
@@ -314,12 +319,13 @@ public class RecursoPrincipalController {
 		lst_listaRecursos.getSelectionModel().selectedItemProperty()
 		.addListener((ObservableValue<? extends Recurso> ov, Recurso old_val, Recurso new_val) -> {
 			recurso = lst_listaRecursos.getSelectionModel().getSelectedItem();
-			Context.getInstance().setRecursoContext(recurso);
-			lbl_nombreRecurso.setText(recurso.getNombre());
-			lbl_infGeneral.setText(recurso.getInformacionGeneral());
-			lbl_ubicacionZonal.setText(recurso.getDireccion());
 			//crear popover mostrando contenido de recurso sobre coordenadas
-//			PoiLayer.
+			for (HelpClass<MapPoint, Node, Recurso> hc : poi.getPoint()) {
+				if (hc.getConstant().equals(recurso)) {
+					poi.showPopover(hc);
+					break;
+				}
+			}
 			//
 			if(recurso.getIdsMediaCloudResources() != null) {
 				listRespMedia = rest.exchange(uriMediaCloud + "/getAll", HttpMethod.GET, null,
@@ -360,7 +366,7 @@ public class RecursoPrincipalController {
 					}else {
 						//mostrar lista de MEDIOS por el tipo.
 						for (Recurso rec : listaRecurso) {	
-							if(rec.getIdiomas().contains(idiomas.getDescripcion()))
+							if(rec.getIdiomas().contains(idiomas.getId()))
 								obsAux.add(rec);
 						}
 					}
@@ -386,7 +392,7 @@ public class RecursoPrincipalController {
 				ObservableList<Recurso> obsAux = FXCollections.observableArrayList();
 				//utilizar solo valores del obstemporal					
 				if (!listaRecurso.isEmpty()) {
-					System.out.println("CATEGORIA SELECT: " + categoria);
+						System.out.println("CATEGORIA SELECT: " + categoria);
 					if (categoria.getDescripcion().equals("Todas las Categorias")) {
 						//muestra todos los valores de la lista temporal que existen para el recurso
 						for (int i = 0; i < listaRecurso.size(); i++) {
@@ -395,7 +401,7 @@ public class RecursoPrincipalController {
 					}else {
 						//mostrar lista de MEDIOS por el tipo.
 						for (Recurso rec : listaRecurso) {	
-							if(rec.getIdsCategoria().contains(categoria.getDescripcion()))
+							if(rec.getIdsCategoria().contains(categoria.getId()))
 								obsAux.add(rec);
 						}
 					}

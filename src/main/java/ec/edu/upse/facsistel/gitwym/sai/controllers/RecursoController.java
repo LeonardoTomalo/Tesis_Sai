@@ -571,7 +571,12 @@ public class RecursoController {
 
     @FXML
     void buscarRecursoEnMapa(ActionEvent event) {
-    	
+    	try {
+    		General.showModalWithParent("/viewMaps/MapGluon.fxml");
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML
@@ -591,6 +596,7 @@ public class RecursoController {
     				params.put("c", lst_listaSenderos.getSelectionModel().getSelectedItem().getId());
     				rest.delete(uriSendero + "/delete/{c}", params);
     				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
+    				gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeSenderos, (double) 288);
     			}
     			if (listaSenderoTemporal.size() > 0) 	
     				listaSenderoTemporal.remove(sendero);

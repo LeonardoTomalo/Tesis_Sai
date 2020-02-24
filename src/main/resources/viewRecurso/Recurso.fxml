@@ -92,7 +92,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Provincia" GridPane.rowIndex="4">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Provincia" visible="false" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -107,17 +107,17 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Parroquia" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Parroquia" visible="false" GridPane.columnIndex="6" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Canton" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Canton" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ranking" GridPane.columnIndex="9" GridPane.rowIndex="4">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ranking" GridPane.columnIndex="9" GridPane.rowIndex="3">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
@@ -132,17 +132,17 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <JFXComboBox fx:id="cmb_provinciaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                  <JFXComboBox fx:id="cmb_provinciaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="5.0" right="10.0" />
                      </padding>
                   </JFXComboBox>
-                  <JFXComboBox fx:id="cmb_cantonRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                  <JFXComboBox fx:id="cmb_cantonRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." visible="false" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="5.0" right="10.0" />
                      </padding>
                   </JFXComboBox>
-                  <JFXComboBox fx:id="cmb_parroquiaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                  <JFXComboBox fx:id="cmb_parroquiaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." visible="false" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="4">
                      <padding>
                         <Insets left="5.0" right="10.0" />
                      </padding>

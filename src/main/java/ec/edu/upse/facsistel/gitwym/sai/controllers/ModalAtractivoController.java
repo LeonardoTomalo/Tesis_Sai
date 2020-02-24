@@ -100,6 +100,7 @@ public class ModalAtractivoController {
     @FXML
     void cancelar(ActionEvent event) {
     	try {
+    		Context.getInstance().setAtractivoTipo(null);
 			Context.getInstance().setAtractivoContext(null);
 			Context.getInstance().getStageModalBaseAtractivo().close();
 		} catch (Exception e) {
@@ -137,7 +138,7 @@ public class ModalAtractivoController {
     			lst_listaImagenes.getItems().add(Context.getInstance().getMediaContext());
 			}
     		Context.getInstance().setMediaContext(null);
-    		Context.getInstance().setAtractivoTipo(false);
+    		Context.getInstance().setAtractivoTipo(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Message.showErrorNotification("Surgió un error al agregar imagen.!!");

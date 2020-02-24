@@ -298,6 +298,7 @@ public class PopoverMediaCloudController {
     @FXML
     void cancelarMedia(ActionEvent event) {
     	try {
+    		Context.getInstance().setAtractivoTipo(null);
     		Context.getInstance().setMediaContext(null);
     		Context.getInstance().getStageModalBase().close();
 		} catch (Exception e) {
@@ -403,15 +404,18 @@ public class PopoverMediaCloudController {
 			    if (media.getFileTemporal() != null) {
 			        Image image = new Image("file:" + media.getFileTemporal().getAbsolutePath());
 			        gcsw.showMediaInContenedor(image, contenedorDeMedios, (double) 288);
+					fileTraer = true;
 			    }
 			}else if(media.getTipoMedia().getDescripcion().equals("Video")) {
 				if (media.getFileTemporal() != null) {
 					File d = new File(media.getFileTemporal().getAbsolutePath().replace("\\","/"));
 			        Media video = new Media(d.toURI().toString());
-			        gcsw.showMediaInContenedor(video, contenedorDeMedios);						        
+			        gcsw.showMediaInContenedor(video, contenedorDeMedios);			
+					fileTraer = true;			        
 				}
 			}else {
 				//CONTENIDO 3D
+				fileTraer = true;
 			}	
 		}
 					

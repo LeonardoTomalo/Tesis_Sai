@@ -173,9 +173,18 @@
                      <tabs>
                      	<Tab text="Recorrido">
                      		<content>
-                     			<AnchorPane>
+                              <HBox>
+                                 <children>
+                           			<AnchorPane fx:id="anch_recorrido" HBox.hgrow="ALWAYS">
                      			
                      			</AnchorPane>
+                                    <VBox>
+                                       <children>
+                                          <Label text="Lista de Coordenadas" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
                      		</content>
                      	</Tab>
                         <Tab text="Multimedia">

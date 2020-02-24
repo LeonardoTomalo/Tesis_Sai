@@ -15,6 +15,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.gluonhq.maps.MapPoint;
+import com.gluonhq.maps.MapView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -36,12 +38,14 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Transporte;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PoiLayer;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -49,6 +53,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
@@ -100,6 +105,7 @@ public class ModalSenderoController {
     @FXML private JFXButton btn_modificarAtractivo;
     @FXML private AnchorPane contenedorDeAtractivos;
     @FXML private AnchorPane anch_comentarios;
+    @FXML private AnchorPane anch_recorrido;
 
     // CONSUMIR WEB SERVICES
    	RestTemplate rest = new RestTemplate();
@@ -168,11 +174,26 @@ public class ModalSenderoController {
  	List<Equipamiento> listaEquipamiento = new ArrayList<Equipamiento>();
  	private static ResponseEntity<List<Equipamiento>> listRespEquipamiento;
 	ObservableList<Equipamiento> obsListEquipamiento = FXCollections.observableArrayList();
-	
+
+	//Definimos el mapa de Gluon Maps
+	MapView map = new MapView();
+	PoiLayer poi = new PoiLayer();
 	
 	public void initialize() {
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
+
+		General.setMapatoAnchorPane(map, anch_recorrido);
+		MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
+		map.setCenter(mapPoint);
+		map.setZoom(9.5);
+		map.flyTo(1., mapPoint, 2.);		
+		map.setOnMouseClicked(e -> {
+			
+	        MapPoint mapPosition = map.getMapPosition(e.getX(), e.getY());
+	        System.out.println("mapPosition: " + mapPosition.getLatitude()+ ", " + mapPosition.getLongitude());
+	        setPointMap(mapPosition.getLatitude(), mapPosition.getLongitude());
+	    });
 		
 		listasCellFactory();
 		loadTipoMedios();
@@ -1102,6 +1123,13 @@ public class ModalSenderoController {
 		}
 	}	
 
+	private void setPointMap(Double lat, Double lon) {
+		Image icon = new Image("placeholder-3.png", 32, 32, true, true);
+		Node node = new ImageView(icon);
+		//
+		poi.addPoint(new MapPoint(lat, lon), node);
+		map.addLayer(poi);
+	}
 	
 
 }
