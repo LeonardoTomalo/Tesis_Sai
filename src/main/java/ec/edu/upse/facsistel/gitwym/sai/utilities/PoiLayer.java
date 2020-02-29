@@ -15,13 +15,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Pair;
 
 public class PoiLayer extends MapLayer {
@@ -84,32 +80,20 @@ public class PoiLayer extends MapLayer {
 		Node icon = pair.getValue();
 		MapPoint point = pair.getKey();
 		//		
-		final Stage primaryStage = (Stage) icon.getScene().getWindow();
-		final Stage popupStage = new Stage();
-		popupStage.initStyle(StageStyle.UNDECORATED);
-		popupStage.initModality(Modality.APPLICATION_MODAL);
-		popupStage.initOwner(primaryStage);
-
-		VBox box = new VBox(5);
-		box.setPadding(new Insets(5));
+		PopOver po = new PopOver();
+		//
+		VBox box = new VBox(2);
+		box.setPadding(new Insets(2));
 		box.getChildren().addAll(new Label(""),
 				new Label("Lat: " + String.format("%2.6fº", point.getLatitude())),
 				new Label("Lon: " + String.format("%2.6fº", point.getLongitude())));
-		Label close = new Label("X");
+		box.setAlignment(Pos.TOP_CENTER);
+		box.setFillWidth(true);
+		po.setContentNode(box);
 		
-		close.setOnMouseClicked(a -> popupStage.close());
-
-		StackPane.setAlignment(close, Pos.TOP_RIGHT);
-		final StackPane stackPane = new StackPane(box, close);
-		stackPane.setPadding(new Insets(5));
-		stackPane.setStyle("-fx-background-color: lightgreen;");
-
-		Scene scene = new Scene(stackPane, 150, 100);
+		final Stage primaryStage = (Stage) icon.getScene().getWindow();
 		Bounds iconBounds = icon.localToScene(icon.getBoundsInLocal());
-		popupStage.setX(primaryStage.getX() + primaryStage.getScene().getX() + iconBounds.getMaxX() );
-		popupStage.setY(primaryStage.getY() + primaryStage.getScene().getY() + iconBounds.getMaxY());
-		popupStage.setScene(scene);
-		popupStage.show();
+		po.show(primaryStage, iconBounds.getMaxX(), iconBounds.getMaxY());
 	}
 	
 	public void showPopover(HelpClass<MapPoint, Node, Recurso> hc) {
@@ -144,18 +128,4 @@ public class PoiLayer extends MapLayer {
 		return point;
 	}
 	
-	private MapPoint getMapPosition(double sceneX, double sceneY) {
-	    double x = sceneX - this.getTranslateX();
-	    double y = sceneY - this.getTranslateY();
-	    double z = 9.5;
-	    double latrad = Math.PI - (2 * Math.PI * y) / (Math.pow(2, z) * 256);
-	    double mlat = Math.toDegrees(Math.atan(Math.sinh(latrad)));
-	    double mlon = x / (256 * Math.pow(2, z)) * 360 - 180;
-	    return new MapPoint(mlat, mlon);
-	}
-	
-	public MapPoint getMapPositionm(double sceneX, double sceneY) {
-	    return getMapPosition(sceneX, sceneY);
-	}
-
 }

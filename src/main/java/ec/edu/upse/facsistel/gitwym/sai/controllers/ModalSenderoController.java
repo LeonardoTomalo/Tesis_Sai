@@ -38,14 +38,14 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Transporte;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
-import ec.edu.upse.facsistel.gitwym.sai.utilities.PoiLayer;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PolylineLayer;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -53,10 +53,13 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class ModalSenderoController {
 
@@ -177,23 +180,45 @@ public class ModalSenderoController {
 
 	//Definimos el mapa de Gluon Maps
 	MapView map = new MapView();
-	PoiLayer poi = new PoiLayer();
+//	PoiLayer poi = new PoiLayer();
+	PolylineLayer poi = new PolylineLayer();
 	
 	public void initialize() {
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
-
+		map.requestFocus();
 		General.setMapatoAnchorPane(map, anch_recorrido);
 		MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
 		map.setCenter(mapPoint);
-		map.setZoom(9.5);
-		map.flyTo(1., mapPoint, 2.);		
+		map.setZoom(10);
+		map.flyTo(1., mapPoint, 2.);	
+		
 		map.setOnMouseClicked(e -> {
-			
-	        MapPoint mapPosition = map.getMapPosition(e.getX(), e.getY());
-	        System.out.println("mapPosition: " + mapPosition.getLatitude()+ ", " + mapPosition.getLongitude());
-	        setPointMap(mapPosition.getLatitude(), mapPosition.getLongitude());
+			MapPoint mapPosition = map.getMapPosition(e.getX(), e.getY());
+			if (poi.getAuxIcon() != null) {//modifica
+				poi.updatePoint(mapPosition.getLatitude(), mapPosition.getLongitude());
+				poi.setAuxIcon(null);
+			}else {//crea
+		        setPointMap(mapPosition.getLatitude(), mapPosition.getLongitude());
+			}	        
 	    });
+		
+//		map.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//            public void handle(KeyEvent ke) {
+//                if (ke.getCode().equals(KeyCode.S)) {
+//    				poi.setAuxIcon(null);
+//    				System.out.println("S");
+//    			}
+//            }			
+//		});
+//		map.setOnKeyReleased(new EventHandler<KeyEvent>() {
+//            public void handle(KeyEvent ke) {
+//                if (ke.getCode().equals(KeyCode.S)) {
+//    				poi.setAuxIcon(null);
+//    				System.out.println("S");
+//    			}
+//            }			
+//		});
 		
 		listasCellFactory();
 		loadTipoMedios();
@@ -227,6 +252,8 @@ public class ModalSenderoController {
 
     @FXML
     void guardar(ActionEvent event) {
+//    	poi.getLine().getPoints();
+    	System.out.println("PUNTOS DEL MAPA: " + poi.getLine().getPoints());
     	try {
     		// validaciones respectivas
     		if (txt_nombreSendero.getText().isEmpty() || txt_nombreSendero.getText().isBlank()) {
@@ -1124,10 +1151,10 @@ public class ModalSenderoController {
 	}	
 
 	private void setPointMap(Double lat, Double lon) {
-		Image icon = new Image("placeholder-3.png", 32, 32, true, true);
-		Node node = new ImageView(icon);
+//		Image icon = new Image("placeholder-3.png", 32, 32, true, true);
+//		Node node = new ImageView(icon);
 		//
-		poi.addPoint(new MapPoint(lat, lon), node);
+		poi.addPoint(new MapPoint(lat, lon), new Circle(5, Color.RED));
 		map.addLayer(poi);
 	}
 	

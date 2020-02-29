@@ -3,7 +3,6 @@ package ec.edu.upse.facsistel.gitwym.sai.controllers;
 import com.gluonhq.maps.MapPoint;
 import com.gluonhq.maps.MapView;
 
-import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.PoiLayer;
 import javafx.fxml.FXML;

@@ -21,7 +21,8 @@ public class Context {
 	private final static Context instance = new Context();	
 	
 	//Controller
-	private AnchorPane anch_Contenido;	
+	private AnchorPane anch_Contenido;
+	private AnchorPane anch_Inicial;	
 	private Stage stage;
 	private MapView mapViewContext;
 	private Stage stageModalBase;
