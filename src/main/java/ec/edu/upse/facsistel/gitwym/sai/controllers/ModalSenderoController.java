@@ -33,6 +33,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.DificultadRecorrido;
 import ec.edu.upse.facsistel.gitwym.sai.models.DisponibilidadCelular;
 import ec.edu.upse.facsistel.gitwym.sai.models.Equipamiento;
 import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
+import ec.edu.upse.facsistel.gitwym.sai.models.Recorrido;
 import ec.edu.upse.facsistel.gitwym.sai.models.Sendero;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoAtractivo;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoMedia;
@@ -265,7 +266,7 @@ public class ModalSenderoController {
     		}
     		
     		sendero.setNombre(txt_nombreSendero.getText());
-    		if (!txt_distanciaSendero.getText().isBlank() || !txt_distanciaSendero.getText().isEmpty()) {
+    		if (!txt_tiempoSendero.getText().isBlank() || !txt_tiempoSendero.getText().isEmpty()) {
         		sendero.setTiempoRecorrido(Float.parseFloat(txt_tiempoSendero.getText()));
     		}            	
     		sendero.setDescripcion(txt_descripcionSendero.getText());
@@ -321,6 +322,20 @@ public class ModalSenderoController {
     		}
 			sendero.setCostoServicio(auxCosto);
 			//guardando recurso con costo FIN		
+			//guardando sendero con Recorrido
+			ArrayList<Recorrido> auxRecorrido = new ArrayList<Recorrido>();
+			if (lst_listaPuntos.getItems() != null) {
+				if(sendero.getRecorridoRuta() != null)sendero.getRecorridoRuta().clear();
+				for (int i = 0; i < lst_listaPuntos.getItems().size(); i++) {
+					Integer id = i + 1;
+					auxRecorrido.add(new Recorrido(id.toString(), "", lst_listaPuntos.getItems().get(i)));
+				}
+//				for (String puntos : lst_listaPuntos.getItems()) {
+//					
+//				}
+			}
+			sendero.setRecorridoRuta(auxRecorrido);
+			//guardando sendero con Recorrido FIN			
 			//guardando recurson con Equipamiento
 			ArrayList<String> auxAcce = new ArrayList<>();
 			if(chklst_equipamiento.getCheckModel().getCheckedItems().size() > 0) {
@@ -759,7 +774,6 @@ public class ModalSenderoController {
     				}
     			}
     		});
-    		
     		//		
     		po.setArrowLocation(ArrowLocation.TOP_CENTER);
     		po.show(btn_ModificarPunto);
@@ -1248,7 +1262,40 @@ public class ModalSenderoController {
 		}
 		
     }
-     	
+
+	private void cargarListaRecorrido(List<Recorrido> lista) {
+    	ObservableList<String> obsRecorrido = FXCollections.observableArrayList();
+    	lst_listaPuntos.setPlaceholder(new Label("---  La lista de puntos de recorrido se encuentra vacia. ---"));
+		if (!lista.isEmpty()) {
+    		for (int i = 0; i < lista.size(); i++) {
+    			obsRecorrido.add(lista.get(i).getCoordenadas());
+			}
+    		lst_listaPuntos.setItems(obsRecorrido);
+    		setPointGraphMap(obsRecorrido);
+		}		
+    }
+	
+	private void setPointGraphMap(List<String> lista) {
+		for (String coord : lista) {
+			//convert coord
+			String[] array = coord.substring(coord.indexOf(""), coord.lastIndexOf("")).split(",");
+			double lat = Double.parseDouble(array[0]);
+			double lon = Double.parseDouble(array[1]);
+//			//Image Point
+//			Image icon = new Image("placeholder-3.png", 32, 32, true, true);
+//			Node node = new ImageView(icon);
+//			//
+//			poi.addPoint(new MapPoint(lat, lon), node, r);
+			poi.addPoint(new MapPoint(lat, lon), new Circle(4, Color.RED));
+//			map.addLayer(poi);
+//			setPointMap(lat, lon);
+			//
+
+		}
+//		System.out.println("1");
+		map.addLayer(poi);
+	}
+	
     private void cargarDatosSendero(Sendero sendero) {
     	txt_descripcionSendero.setText(sendero.getDescripcion());
     	if (sendero.getDistanciaAproximada() != null) {
@@ -1271,6 +1318,10 @@ public class ModalSenderoController {
     	if (sendero.getCostoServicio() != null) {
     		cargarListaCostos(sendero.getCostoServicio());
 		}
+    	//llenar recorrido
+    	if (sendero.getRecorridoRuta() != null) {
+			cargarListaRecorrido(sendero.getRecorridoRuta());
+		}
     	//checkear accesibilidad
     	if (sendero.getIdsEquipamiento() != null) {
 			for (Equipamiento ac : listaEquipamiento) {
@@ -1279,12 +1330,6 @@ public class ModalSenderoController {
 				}
 			}
 		}
-    	
-    	
-    	
-//    	cmb_dificultadSendero.getSelectionModel().select();
-    	
-    	
     	
     }    
 
