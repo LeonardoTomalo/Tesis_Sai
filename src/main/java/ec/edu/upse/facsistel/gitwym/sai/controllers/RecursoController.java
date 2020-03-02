@@ -52,6 +52,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -63,6 +64,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.util.Pair;
 
 public class RecursoController {
 
@@ -1473,19 +1475,29 @@ public class RecursoController {
 		lst_listaSenderos.getSelectionModel().selectedItemProperty()
 		.addListener((ObservableValue<? extends Sendero> ov, Sendero old_val, Sendero new_val) -> {
 			if (lst_listaSenderos.getSelectionModel().getSelectedItem() != null) {
-				sendero = lst_listaSenderos.getSelectionModel().getSelectedItem();
-							
+				sendero = lst_listaSenderos.getSelectionModel().getSelectedItem();	
+				List<String> l = new ArrayList<>();
+				if (poi.getPoints() != null) {
+					for (Pair<MapPoint, Node> p : poi.getPoints()) {
+						l.add(p.getKey().getLatitude() + ", " + p.getKey().getLongitude());
+					}
+				}
+				if (!l.isEmpty()) {
+					for (String str : l) {
+						poi.deletePoint(str);
+					}
+				}
+				
 				if (sendero.getRecorridoRuta() != null) {
 					List<Recorrido> lista = sendero.getRecorridoRuta();
 					if (!lista.isEmpty()) {
+						poi = new PolylineLayer();
 						for (int i = 0; i < lista.size(); i++) {
 							String coord = lista.get(i).getCoordenadas();
 							String[] array = coord.substring(coord.indexOf(""), coord.lastIndexOf("")).split(",");
 							double lat = Double.parseDouble(array[0]);
 							double lon = Double.parseDouble(array[1]);
-							poi.addPoint(new MapPoint(lat, lon), new Circle(4, Color.RED));							
-//							map.setZoom(16);
-							
+							poi.addPoint(new MapPoint(lat, lon), new Circle(4, Color.RED));		
 						}
 						map.addLayer(poi);
 					}
