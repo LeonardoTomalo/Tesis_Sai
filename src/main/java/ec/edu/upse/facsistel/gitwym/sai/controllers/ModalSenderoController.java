@@ -202,10 +202,6 @@ public class ModalSenderoController {
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
 		map.requestFocus();
 		General.setMapatoAnchorPane(map, anch_recorrido);
-		MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
-		map.setCenter(mapPoint);
-		map.setZoom(10);
-		map.flyTo(1., mapPoint, 2.);
 		
 		map.setOnMouseClicked(e -> {
 			MapPoint mapPosition = map.getMapPosition(e.getX(), e.getY());
@@ -240,6 +236,11 @@ public class ModalSenderoController {
 			loadMedios();
 			loadAtractivos();
 			loadTransportes();
+		}else {
+			MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
+			map.setCenter(mapPoint);
+			map.setZoom(10);
+			map.flyTo(1., mapPoint, 2.);
 		}
 		
 	}
@@ -1281,18 +1282,11 @@ public class ModalSenderoController {
 			String[] array = coord.substring(coord.indexOf(""), coord.lastIndexOf("")).split(",");
 			double lat = Double.parseDouble(array[0]);
 			double lon = Double.parseDouble(array[1]);
-//			//Image Point
-//			Image icon = new Image("placeholder-3.png", 32, 32, true, true);
-//			Node node = new ImageView(icon);
-//			//
-//			poi.addPoint(new MapPoint(lat, lon), node, r);
 			poi.addPoint(new MapPoint(lat, lon), new Circle(4, Color.RED));
-//			map.addLayer(poi);
-//			setPointMap(lat, lon);
-			//
-
+			map.setCenter(new MapPoint(lat, lon));
+//			map.setCenter(lat, lon);
+			map.setZoom(16);
 		}
-//		System.out.println("1");
 		map.addLayer(poi);
 	}
 	
@@ -1321,6 +1315,11 @@ public class ModalSenderoController {
     	//llenar recorrido
     	if (sendero.getRecorridoRuta() != null) {
 			cargarListaRecorrido(sendero.getRecorridoRuta());
+		}else {
+			MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
+			map.setCenter(mapPoint);
+			map.setZoom(10);
+			map.flyTo(1., mapPoint, 2.);
 		}
     	//checkear accesibilidad
     	if (sendero.getIdsEquipamiento() != null) {

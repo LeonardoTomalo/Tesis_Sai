@@ -16,6 +16,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.gluonhq.maps.MapPoint;
+import com.gluonhq.maps.MapView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -35,6 +37,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.Idiomas;
 import ec.edu.upse.facsistel.gitwym.sai.models.MediaCloudResources;
 import ec.edu.upse.facsistel.gitwym.sai.models.Parroquia;
 import ec.edu.upse.facsistel.gitwym.sai.models.Provincia;
+import ec.edu.upse.facsistel.gitwym.sai.models.Recorrido;
 import ec.edu.upse.facsistel.gitwym.sai.models.Recurso;
 import ec.edu.upse.facsistel.gitwym.sai.models.Sendero;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoAtractivo;
@@ -42,6 +45,7 @@ import ec.edu.upse.facsistel.gitwym.sai.models.TipoMedia;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.PolylineLayer;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -57,6 +61,8 @@ import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class RecursoController {
 
@@ -122,10 +128,10 @@ public class RecursoController {
     @FXML private JFXButton btn_EliminarSendero;
     @FXML private JFXButton btn_modificarSendero;
     @FXML private AnchorPane contenedorDeSenderos;
-    @FXML private JFXTextArea txt_descripcionSendero;
-    @FXML private JFXTextArea txt_instruccionesSendero;
-    @FXML private JFXTextField txt_distanciaAproxSendero;
-    @FXML private JFXTextField txt_tiempoRecorridoSendero;
+//    @FXML private JFXTextArea txt_descripcionSendero;
+//    @FXML private JFXTextArea txt_instruccionesSendero;
+//    @FXML private JFXTextField txt_distanciaAproxSendero;
+//    @FXML private JFXTextField txt_tiempoRecorridoSendero;
     @FXML private AnchorPane anch_comentarios;
     @FXML private Accordion acco_Izq;
     @FXML private Accordion acco_Der;
@@ -157,7 +163,7 @@ public class RecursoController {
 	List<MediaCloudResources> listaMedia = new ArrayList<MediaCloudResources>();
 	List<MediaCloudResources> listaMediaTemporal = new ArrayList<MediaCloudResources>();
 	private static ResponseEntity<List<MediaCloudResources>> listRespMedia;
-	private static ResponseEntity<List<MediaCloudResources>> listRespMediaSendero;	
+//	private static ResponseEntity<List<MediaCloudResources>> listRespMediaSendero;	
 	ObservableList<MediaCloudResources> obsListMedia = FXCollections.observableArrayList();
 	GoogleCloudStorageWorker gcsw = new GoogleCloudStorageWorker();
     
@@ -226,11 +232,21 @@ public class RecursoController {
 	private static ResponseEntity<List<Sendero>> listRespSendero;
 	ObservableList<Sendero> obsListSendero = FXCollections.observableArrayList();	
 
+	//Definimos el mapa de Gluon Maps
+	MapView map = new MapView();
+	//		PoiLayer poi = new PoiLayer();
+	PolylineLayer poi = new PolylineLayer();
 
 	public void initialize() {	
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
-		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeSenderos, (double) 288);
+//		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeSenderos, (double) 288);
+
+		General.setMapatoAnchorPane(map, contenedorDeSenderos);
+		MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
+		map.setCenter(mapPoint);
+		map.setZoom(10);
+		map.flyTo(1., mapPoint, 2.);
 		listasCellFactory();
 		loadTipoMedios();
 		loadTipoAtractivo();
@@ -596,7 +612,7 @@ public class RecursoController {
     				params.put("c", lst_listaSenderos.getSelectionModel().getSelectedItem().getId());
     				rest.delete(uriSendero + "/delete/{c}", params);
     				Message.showSuccessNotification("Se eliminaron exitosamente los datos.!!");
-    				gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeSenderos, (double) 288);
+//    				gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeSenderos, (double) 288);
     			}
     			if (listaSenderoTemporal.size() > 0) 	
     				listaSenderoTemporal.remove(sendero);
@@ -1458,42 +1474,22 @@ public class RecursoController {
 		.addListener((ObservableValue<? extends Sendero> ov, Sendero old_val, Sendero new_val) -> {
 			if (lst_listaSenderos.getSelectionModel().getSelectedItem() != null) {
 				sendero = lst_listaSenderos.getSelectionModel().getSelectedItem();
-				
-				txt_descripcionSendero.setText(sendero.getDescripcion());
-				txt_instruccionesSendero.setText(sendero.getInstrucciones());
-				if (sendero.getTiempoRecorrido() != null) {
-		        	txt_tiempoRecorridoSendero.setText(sendero.getTiempoRecorrido().toString());
-				}else {
-					txt_tiempoRecorridoSendero.setText("");
-				}
-				if (sendero.getDistanciaAproximada() != null) {
-					txt_distanciaAproxSendero.setText(sendero.getDistanciaAproximada().toString());
-				}else {
-					txt_distanciaAproxSendero.setText("");
-				}
-				
-				//cargar las imagenes
-				if (sendero.getIdsMediaCloudResources() != null) {
-					listRespMediaSendero = rest.exchange(uriMediaCloud + "/getAll", HttpMethod.GET, null,
-							new ParameterizedTypeReference<List<MediaCloudResources>>() {
-							});
-					List<MediaCloudResources> listaaux = listRespMediaSendero.getBody();
-					for (MediaCloudResources mc : listaaux) {
-						if (sendero.getIdsMediaCloudResources().contains(mc.getId())) {
-							if (mc.getIsPrincipal()) {	
-								if (mc.getTipoMedia().getDescripcion().equals("Imagen")) {
-									Image img = gcsw.getImageMediaCR(mc.getId());
-									gcsw.showMediaInContenedor(img, contenedorDeSenderos, (double) 288);	
-									return;
-								}else if(mc.getTipoMedia().getDescripcion().equals("Video")) {
-									Media video = gcsw.getMediaFromMediaCR(mc.getId());
-							        gcsw.showMediaInContenedor(video, contenedorDeSenderos);	
-							        return;
-								}
-							}
+							
+				if (sendero.getRecorridoRuta() != null) {
+					List<Recorrido> lista = sendero.getRecorridoRuta();
+					if (!lista.isEmpty()) {
+						for (int i = 0; i < lista.size(); i++) {
+							String coord = lista.get(i).getCoordenadas();
+							String[] array = coord.substring(coord.indexOf(""), coord.lastIndexOf("")).split(",");
+							double lat = Double.parseDouble(array[0]);
+							double lon = Double.parseDouble(array[1]);
+							poi.addPoint(new MapPoint(lat, lon), new Circle(4, Color.RED));							
+//							map.setZoom(16);
+							
 						}
+						map.addLayer(poi);
 					}
-				}				
+				}			
 			}
 		});
 	}

@@ -537,7 +537,7 @@
                                  <children>
                                     <HBox prefHeight="264.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <VBox prefWidth="350.0">
+                                          <VBox minWidth="-Infinity" prefWidth="350.0">
                                              <children>
                                                 <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <VBox.margin>
@@ -574,58 +574,7 @@
                                                    </children>
                                                 </HBox>
                                                 <Separator opacity="0.5" prefWidth="200.0" />
-                                                <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                                   <columnConstraints>
-                                                      <ColumnConstraints hgrow="NEVER" minWidth="70.0" prefWidth="70.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                   </columnConstraints>
-                                                   <rowConstraints>
-                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                                                      <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                                                   </rowConstraints>
-                                                   <children>
-                                                      <AnchorPane fx:id="contenedorDeSenderos" GridPane.columnSpan="4" GridPane.rowSpan="4" GridPane.vgrow="NEVER" />
-                                                   </children>
-                                                </GridPane>
-                                             </children>
-                                          </VBox>
-                                          <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
-                                             <padding>
-                                                <Insets left="7.0" right="5.0" />
-                                             </padding>
-                                          </Separator>
-                                          <VBox alignment="TOP_CENTER" prefWidth="350.0">
-                                             <children>
-                                                <Label text="Detalles del sendero">
-                                                   <VBox.margin>
-                                                      <Insets top="10.0" />
-                                                   </VBox.margin>
-                                                </Label>
-                                                <Separator opacity="0.5" prefWidth="200.0" />
-                                                <JFXTextArea fx:id="txt_descripcionSendero" editable="false" labelFloat="true" promptText="Descripcion del sendero">
-                                                   <VBox.margin>
-                                                      <Insets top="20.0" />
-                                                   </VBox.margin>
-                                                </JFXTextArea>
-                                                <JFXTextArea fx:id="txt_instruccionesSendero" editable="false" labelFloat="true" promptText="Instrucciones del sendero">
-                                                   <VBox.margin>
-                                                      <Insets top="20.0" />
-                                                   </VBox.margin>
-                                                </JFXTextArea>
-                                                <JFXTextField fx:id="txt_distanciaAproxSendero" editable="false" labelFloat="true" promptText="Distancia aproximada">
-                                                   <VBox.margin>
-                                                      <Insets top="20.0" />
-                                                   </VBox.margin>
-                                                </JFXTextField>
-                                                <JFXTextField fx:id="txt_tiempoRecorridoSendero" editable="false" labelFloat="true" promptText="Tiempo de recorrido">
-                                                   <VBox.margin>
-                                                      <Insets bottom="20.0" top="20.0" />
-                                                   </VBox.margin>
-                                                </JFXTextField>
+                                                <AnchorPane fx:id="contenedorDeSenderos" VBox.vgrow="ALWAYS" />
                                              </children>
                                           </VBox>
                                        </children>
