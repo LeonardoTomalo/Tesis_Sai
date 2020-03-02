@@ -29,6 +29,7 @@ public class Context {
 	private Stage stageModalBaseAtractivo;
 	private Stage stageModalBaseSendero;
 	private Boolean atractivoTipo;
+	private String coordenadas;
 	
 	//POJOS
 	private Contacto contactoP;

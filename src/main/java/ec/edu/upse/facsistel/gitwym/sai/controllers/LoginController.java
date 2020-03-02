@@ -43,6 +43,8 @@ public class LoginController {
 	
     public void initialize() {
     	txt_userName.requestFocus();
+    	txt_userName.setText("DON TEO");
+    	txt_password.setText("sa");
     	txt_userName.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent ke){

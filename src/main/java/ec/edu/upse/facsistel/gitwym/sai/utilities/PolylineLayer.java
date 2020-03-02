@@ -23,13 +23,13 @@ import lombok.Setter;
 
 public class PolylineLayer extends MapLayer{
 	
-	private final ObservableList<Pair<MapPoint, Node>> points = FXCollections.observableArrayList();
+	@Getter @Setter private ObservableList<Pair<MapPoint, Node>> points = FXCollections.observableArrayList();
 	@Getter @Setter private Polyline line;	
 	@Getter @Setter Node auxIcon;
 	
 	public PolylineLayer() {
 		line = new Polyline();
-		line.setStrokeWidth(5);
+		line.setStrokeWidth(6);
 		line.setStroke(Color.CHARTREUSE);		
 		this.getChildren().add(line);
 	}
@@ -60,22 +60,52 @@ public class PolylineLayer extends MapLayer{
 		this.markDirty();
 	}
 	
-	public void updatePoint(double lat, double lon) {		
-	    for (Pair<MapPoint, Node> candidate : points) {
-	    	if(auxIcon.equals(candidate.getValue())){
-//	    		MapPoint point = candidate.getKey();
-//		        if (point.equals(p)) {
-	    			candidate.getKey().update(lat, lon);
-//		            p.update(lat, lon);
-		            System.out.println("update: " + lat +", "+ lon);
-		            this.markDirty();
-		            break;
-//		        }
-	    	}
-	        
-	    }
+	public void updatePoint(double lat, double lon) {
+		for (Pair<MapPoint, Node> candidate : points) {
+			if (auxIcon != null) {
+				if(auxIcon.equals(candidate.getValue())){
+					candidate.getKey().update(lat, lon);
+					System.out.println("update: " + lat +", "+ lon);
+					this.markDirty();
+					break;
+				}
+			}
+			
+			String a = candidate.getKey().getLatitude() + ", " + candidate.getKey().getLongitude();
+			if (Context.getInstance().getCoordenadas() != null) {
+				if (a.equals(Context.getInstance().getCoordenadas())) {
+					candidate.getKey().update(lat, lon);
+					System.out.println("update: " + lat +", "+ lon);
+					this.markDirty();
+					break;
+				}
+			}
+		}
 	}
 	
+	public void deletePoint(String point) {
+		ObservableList<Pair<MapPoint, Node>> pointsNEW = FXCollections.observableArrayList();
+		for (Pair<MapPoint, Node> candidate : points) {
+			String p = candidate.getKey().getLatitude() + ", " + candidate.getKey().getLongitude();
+			if (auxIcon != null) {
+				if(!auxIcon.equals(candidate.getValue())){	
+					pointsNEW.add(candidate);
+				}else {
+					this.getChildren().remove(candidate.getValue());
+				}
+			}else if (!point.isEmpty()){
+				if (!p.equals(point)) {
+					pointsNEW.add(candidate);
+				}else {
+					this.getChildren().remove(candidate.getValue());
+				}
+			}
+		}
+		if(!points.isEmpty()) points.clear();
+		points = pointsNEW;
+		this.markDirty();
+	}
+
 	public static void showPopup(Pair<MapPoint, Node>  pair) {		
 		Node icon = pair.getValue();
 		MapPoint point = pair.getKey();

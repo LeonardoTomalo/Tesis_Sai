@@ -178,10 +178,39 @@
                            			<AnchorPane fx:id="anch_recorrido" HBox.hgrow="ALWAYS">
                      			
                      			</AnchorPane>
-                                    <VBox>
+                                    <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0" />
+                                    <VBox alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="271.0" prefWidth="282.0" HBox.hgrow="NEVER">
                                        <children>
-                                          <Label text="Lista de Coordenadas" />
+                                          <Label text="Puntos del recorrido" />
+                                          <Separator opacity="0.5" prefWidth="200.0" />
+                                          <HBox>
+                                             <children>
+                                                <JFXButton fx:id="btn_AddPunto" buttonType="RAISED" maxWidth="1.7976931348623157E308" onAction="#AddPunto" text="Agregar" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btn_ModificarPunto" buttonType="RAISED" maxWidth="1.7976931348623157E308" onAction="#ModificarPunto" text="Modificar" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btn_EliminarPunto" buttonType="RAISED" maxWidth="1.7976931348623157E308" onAction="#EliminarPunto" text="Eliminar" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="5.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                                <JFXButton fx:id="btn_ActualizarPunto" buttonType="RAISED" maxWidth="1.7976931348623157E308" onAction="#ActualizarPunto" text="Actualizar" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                          <JFXListView fx:id="lst_listaPuntos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
                                        </children>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets top="5.0" />
+                                       </padding>
                                     </VBox>
                                  </children>
                               </HBox>
@@ -482,4 +511,7 @@
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </AnchorPane>

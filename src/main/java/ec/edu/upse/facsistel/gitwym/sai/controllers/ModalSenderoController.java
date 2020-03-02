@@ -10,6 +10,8 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 
 import org.controlsfx.control.CheckListView;
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.PopOver.ArrowLocation;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +48,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -57,9 +62,11 @@ import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.util.Pair;
 
 public class ModalSenderoController {
 
@@ -109,6 +116,12 @@ public class ModalSenderoController {
     @FXML private AnchorPane contenedorDeAtractivos;
     @FXML private AnchorPane anch_comentarios;
     @FXML private AnchorPane anch_recorrido;
+    @FXML private JFXButton btn_AddPunto;
+    @FXML private JFXButton btn_ModificarPunto;
+    @FXML private JFXButton btn_EliminarPunto;
+    @FXML private JFXButton btn_ActualizarPunto;
+    @FXML private JFXListView<String> lst_listaPuntos;
+
 
     // CONSUMIR WEB SERVICES
    	RestTemplate rest = new RestTemplate();
@@ -191,35 +204,25 @@ public class ModalSenderoController {
 		MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
 		map.setCenter(mapPoint);
 		map.setZoom(10);
-		map.flyTo(1., mapPoint, 2.);	
+		map.flyTo(1., mapPoint, 2.);
 		
 		map.setOnMouseClicked(e -> {
 			MapPoint mapPosition = map.getMapPosition(e.getX(), e.getY());
 			if (poi.getAuxIcon() != null) {//modifica
 				poi.updatePoint(mapPosition.getLatitude(), mapPosition.getLongitude());
 				poi.setAuxIcon(null);
+				ActualizarPunto();
 			}else {//crea
-		        setPointMap(mapPosition.getLatitude(), mapPosition.getLongitude());
-			}	        
+		        try {
+		        	setPointMap(mapPosition.getLatitude(), mapPosition.getLongitude());
+				} catch (Exception e2) {
+					//
+				}finally {
+			        ActualizarPunto();
+				}
+			}
 	    });
-		
-//		map.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//            public void handle(KeyEvent ke) {
-//                if (ke.getCode().equals(KeyCode.S)) {
-//    				poi.setAuxIcon(null);
-//    				System.out.println("S");
-//    			}
-//            }			
-//		});
-//		map.setOnKeyReleased(new EventHandler<KeyEvent>() {
-//            public void handle(KeyEvent ke) {
-//                if (ke.getCode().equals(KeyCode.S)) {
-//    				poi.setAuxIcon(null);
-//    				System.out.println("S");
-//    			}
-//            }			
-//		});
-		
+				
 		listasCellFactory();
 		loadTipoMedios();
 		loadSenalCelular();
@@ -689,7 +692,217 @@ public class ModalSenderoController {
     void showMediaMapa(ActionEvent event) {
 
     }
+
+    @FXML
+    void AddPunto(ActionEvent event) {
+    	try {
+    		if(poi.getAuxIcon() != null)poi.setAuxIcon(null);
+    		//
+    		PopOver po = new PopOver();
+    		//
+    		JFXButton btn = new JFXButton(" GUARDAR ");
+    		btn.setButtonType(com.jfoenix.controls.JFXButton.ButtonType.RAISED);
+    		btn.maxWidthProperty();
+    		JFXTextField txt_Coor = new JFXTextField();
+    		txt_Coor.setPromptText("Ingrese Coordenadas");
+    		txt_Coor.setLabelFloat(true);
+    		txt_Coor.maxWidthProperty();
+    		VBox vb = new VBox(2);
+    		vb.setPadding(new Insets(2));
+    		vb.getChildren().addAll(new Label(""), txt_Coor, btn);
+    		vb.setAlignment(Pos.TOP_CENTER);
+    		vb.setFillWidth(true);		
+    		po.setContentNode(vb);
+    		
+    		btn.setOnMouseClicked(a-> {
+    			//validar que sea coordenada.
+    			if (!txt_Coor.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+    				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+    				return;
+    			}
+    			String coord = txt_Coor.getText();
+    			String[] array = coord.substring(coord.indexOf(""), coord.lastIndexOf("")).split(",");
+    			double lat = Double.parseDouble(array[0]);
+    			double lon = Double.parseDouble(array[1]);
+    			
+    			try {
+					setPointMap(lat, lon);
+				} catch (Exception e) {					
+				}finally {
+	    			ActualizarPunto();
+	    			lst_listaPuntos.requestFocus();			
+	    			po.hide();
+				}    			
+    		});
+    		txt_Coor.setOnKeyPressed(new EventHandler<KeyEvent>(){
+    			@Override
+    			public void handle(KeyEvent ke){
+    				if (ke.getCode().equals(KeyCode.ENTER)){
+    					//validar que sea coordenada.
+    	    			if (!txt_Coor.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+    	    				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+    	    				return;
+    	    			}
+    	    			String coord = txt_Coor.getText();
+    	    			String[] array = coord.substring(coord.indexOf(""), coord.lastIndexOf("")).split(",");
+    	    			double lat = Double.parseDouble(array[0]);
+    	    			double lon = Double.parseDouble(array[1]);
+    	    			
+    	    			try {
+    						setPointMap(lat, lon);
+    					} catch (Exception e) {					
+    					}finally {
+    		    			ActualizarPunto();
+    		    			lst_listaPuntos.requestFocus();			
+    		    			po.hide();
+    					}    			
+    				}
+    			}
+    		});
+    		
+    		//		
+    		po.setArrowLocation(ArrowLocation.TOP_CENTER);
+    		po.show(btn_ModificarPunto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al crear un nuevo punto en el mapa.!!");
+		}    	
+    }
+
+    @FXML
+    void EliminarPunto(ActionEvent event) {
+    	try {
+    		Boolean b = false;
+        	if (poi.getAuxIcon() != null) {
+        		b = true;
+    		}
+        	if (!lst_listaPuntos.getSelectionModel().getSelectedItems().isEmpty()) {
+        		b = true;
+    		}
+        	if (!b) {
+    			Message.showWarningNotification("Escoger el punto a eliminar en el mapa o en la lista.!!");
+    			return;
+    		}
+        	System.out.println("PUNTO A ELIMINAR: " + lst_listaPuntos.getSelectionModel().getSelectedItem());
+        	poi.deletePoint(lst_listaPuntos.getSelectionModel().getSelectedItem());
+        	ActualizarPunto();
+        	Message.showSuccessNotification("Punto eliminado con exito.!!");    	
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al eliminar punto en el mapa.!!");
+		}    	
+    }
+
+    @FXML
+    void ModificarPunto(ActionEvent event) {
+    	try {
+    		Boolean b = false;
+        	if (poi.getAuxIcon() != null) {
+        		b = true;
+    		}
+        	if (!lst_listaPuntos.getSelectionModel().getSelectedItems().isEmpty()) {
+        		b = true;
+    		}
+        	if (!b) {
+    			Message.showWarningNotification("Escoger el punto a modificar en el mapa o en la lista.!!");
+    			return;
+    		}
+        	System.out.println("PUNTO A MODIFICAR: " + lst_listaPuntos.getSelectionModel().getSelectedItem());
+        	//
+    		PopOver po = new PopOver();
+    		//
+    		JFXButton btn = new JFXButton(" GUARDAR ");
+    		btn.setButtonType(com.jfoenix.controls.JFXButton.ButtonType.RAISED);
+    		btn.maxWidthProperty();
+    		JFXTextField txt_Coor = new JFXTextField();
+    		txt_Coor.setPromptText("Ingrese Coordenadas");
+    		txt_Coor.setLabelFloat(true);
+    		txt_Coor.maxWidthProperty();
+    		VBox vb = new VBox(2);
+    		vb.setPadding(new Insets(2));
+    		vb.getChildren().addAll(new Label(""), 
+    				txt_Coor,
+    				btn);
+    		vb.setAlignment(Pos.TOP_CENTER);
+    		vb.setFillWidth(true);		
+    		po.setContentNode(vb);
+    		
+    		for (Pair<MapPoint, Node> p : poi.getPoints()) {
+    			if (poi.getAuxIcon() != null) {
+    				if (poi.getAuxIcon().equals(p.getValue())) {
+    					txt_Coor.setText(p.getKey().getLatitude() + ", " + p.getKey().getLongitude());
+    				}
+    			}else if (!lst_listaPuntos.getSelectionModel().getSelectedItems().isEmpty()) {
+    				txt_Coor.setText(lst_listaPuntos.getSelectionModel().getSelectedItem());					
+    			}				
+    		}
+    		
+    		btn.setOnMouseClicked(a-> {
+    			//validar que sea coordenada.
+    			if (!txt_Coor.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+    				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+    				return;
+    			}
+    			String coord = txt_Coor.getText();
+    			String[] array = coord.substring(coord.indexOf(""), coord.lastIndexOf("")).split(",");
+    			double lat = Double.parseDouble(array[0]);
+    			double lon = Double.parseDouble(array[1]);
+    			if (poi.getAuxIcon() != null) {				
+    				poi.updatePoint(lat, lon);
+    				poi.setAuxIcon(null);
+    			}else if (!lst_listaPuntos.getSelectionModel().getSelectedItems().isEmpty()) {
+    				Context.getInstance().setCoordenadas(lst_listaPuntos.getSelectionModel().getSelectedItem());
+    				poi.updatePoint(lat, lon);
+    				Context.getInstance().setCoordenadas(null);
+    			}
+    			ActualizarPunto();
+    			lst_listaPuntos.requestFocus();			
+    			po.hide();
+    		});
+    		txt_Coor.setOnKeyPressed(new EventHandler<KeyEvent>(){
+    			@Override
+    			public void handle(KeyEvent ke){
+    				if (ke.getCode().equals(KeyCode.ENTER)){
+    					//validar que sea coordenada.
+    	    			if (!txt_Coor.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+    	    				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+    	    				return;
+    	    			}
+    	    			String coord = txt_Coor.getText();
+    	    			String[] array = coord.substring(coord.indexOf(""), coord.lastIndexOf("")).split(",");
+    	    			double lat = Double.parseDouble(array[0]);
+    	    			double lon = Double.parseDouble(array[1]);
+    	    			if (poi.getAuxIcon() != null) {				
+    	    				poi.updatePoint(lat, lon);
+    	    				poi.setAuxIcon(null);
+    	    			}else if (!lst_listaPuntos.getSelectionModel().getSelectedItems().isEmpty()) {
+    	    				Context.getInstance().setCoordenadas(lst_listaPuntos.getSelectionModel().getSelectedItem());
+    	    				poi.updatePoint(lat, lon);
+    	    				Context.getInstance().setCoordenadas(null);
+    	    			}
+    	    			ActualizarPunto();
+    	    			lst_listaPuntos.requestFocus();			
+    	    			po.hide();
+    				}
+    			}
+    		});
+    		//		
+    		po.setArrowLocation(ArrowLocation.TOP_CENTER);		
+    		po.show(btn_ModificarPunto );
+		} catch (Exception e) {
+			e.printStackTrace();
+			Message.showErrorNotification("Ha surgido un error al modificar punto en el mapa.!!");
+		}    	
+    }
     
+    @FXML
+    void ActualizarPunto() {
+    	if (lst_listaPuntos.getItems() != null) lst_listaPuntos.getItems().clear(); 
+    	for (Pair<MapPoint, Node> p : poi.getPoints()) {
+    		lst_listaPuntos.getItems().add(new String(p.getKey().getLatitude() + ", " + p.getKey().getLongitude()));    		
+		}
+    }
+
 
     void buscarPorNombre() {
 		txt_buscarNombreMedio.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -1154,8 +1367,9 @@ public class ModalSenderoController {
 //		Image icon = new Image("placeholder-3.png", 32, 32, true, true);
 //		Node node = new ImageView(icon);
 		//
-		poi.addPoint(new MapPoint(lat, lon), new Circle(5, Color.RED));
+		poi.addPoint(new MapPoint(lat, lon), new Circle(4, Color.RED));
 		map.addLayer(poi);
+		
 	}
 	
 
