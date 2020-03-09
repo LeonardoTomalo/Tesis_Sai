@@ -15,6 +15,7 @@ import com.jfoenix.controls.JFXTextField;
 import ec.edu.upse.facsistel.gitwym.sai.models.Comodidades;
 import ec.edu.upse.facsistel.gitwym.sai.models.TipoComodidad;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Context;
+import ec.edu.upse.facsistel.gitwym.sai.utilities.General;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.Message;
 import ec.edu.upse.facsistel.gitwym.sai.utilities.PropertyManager;
 import javafx.collections.FXCollections;
@@ -82,6 +83,14 @@ public class ModalComodidadController {
     			Message.showWarningNotification("Debe agregar el nombre de contacto.!!");
     			return;
     		}
+    		if (txt_coordenadas.getText().isEmpty() || txt_coordenadas.getText().isBlank()) {
+    			Message.showWarningNotification("Debe agregar las coordenadas del recurso.!!");
+    			return;
+    		}
+    		if (!txt_coordenadas.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+				return;
+			}
     		Boolean a = false;
     		if(cmb_tipoComodidad.getValue() != null) a = true;    		
 			if (a.equals(false)) {
@@ -109,7 +118,24 @@ public class ModalComodidadController {
 
     @FXML
     void mostrarMapa(ActionEvent event) {
-
+    	try {
+    		if (!txt_coordenadas.getText().isBlank() || !txt_coordenadas.getText().isEmpty()) {
+    			if (!txt_coordenadas.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+    				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+    				return;
+    			}else {
+    				Context.getInstance().setCoordDeMapa(txt_coordenadas.getText());
+    	    	}
+			}
+    		
+    		General.showModalWithParentMAPA("/viewMaps/MapGluon.fxml");
+    		if (Context.getInstance().getCoordDeMapa() != null) {
+    			txt_coordenadas.setText(Context.getInstance().getCoordDeMapa());
+    		}
+    		Context.getInstance().setCoordDeMapa(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
     
     private void loadTipoComodidad() {

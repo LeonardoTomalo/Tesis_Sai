@@ -213,6 +213,10 @@ public class PopoverMediaCloudController {
     			Message.showWarningNotification("Debe agregar las coordenadas del medio.!!");
     			return;
     		}
+    		if (!txt_coordenadasMedio.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+				return;
+			}
     		media.setAutor(txt_autorMedio.getText());//
     		media.setCoordenadas(txt_coordenadasMedio.getText());//
     		media.setDescripcion(txt_descripcionMedio.getText());//
@@ -308,7 +312,24 @@ public class PopoverMediaCloudController {
     
     @FXML
     void showMapaUbicacion(ActionEvent event) {
-
+    	try {
+    		if (!txt_coordenadasMedio.getText().isBlank() || !txt_coordenadasMedio.getText().isEmpty()) {
+    			if (!txt_coordenadasMedio.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+    				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+    				return;
+    			}else {
+    				Context.getInstance().setCoordDeMapa(txt_coordenadasMedio.getText());
+    	    	}
+			}
+    		
+    		General.showModalWithParentMAPA("/viewMaps/MapGluon.fxml");
+    		if (Context.getInstance().getCoordDeMapa() != null) {
+    			txt_coordenadasMedio.setText(Context.getInstance().getCoordDeMapa());
+    		}
+    		Context.getInstance().setCoordDeMapa(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
     
     private void loadTipoMedios() {

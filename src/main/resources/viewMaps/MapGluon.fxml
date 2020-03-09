@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane fx:id="anch_Map" prefHeight="594.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.MapGluon">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.MapGluon">
+   <children>
+      <VBox prefHeight="594.0" prefWidth="1030.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="COORDENADAS: " />
+                  <JFXTextField fx:id="txt_coordenadas" minWidth="-Infinity" prefWidth="300.0" promptText="Ingrese coordenadas: ejemplo: -2.222, -80.222" />
+                  <JFXButton fx:id="btn_graficar" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" onAction="#graficarPuntoEnMapa" prefWidth="100.0" text="Graficar">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <JFXButton fx:id="btn_Guardar" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" onAction="#guardarCoordenadas" prefWidth="150.0" text="Guardar y Salir" />
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <AnchorPane fx:id="anch_Map" prefHeight="594.0" prefWidth="1030.0">
 	<!-- TODO Add Nodes -->
+</AnchorPane>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

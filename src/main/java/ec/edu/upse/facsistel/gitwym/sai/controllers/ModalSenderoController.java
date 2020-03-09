@@ -201,6 +201,10 @@ public class ModalSenderoController {
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeMedios, (double) 288);
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
 		map.requestFocus();
+
+		btn_verMediaMapa.setVisible(false);
+//		btn_verComodidadMapa.setVisible(false);
+		btn_verAtractivoMapa.setVisible(false);
 		General.setMapatoAnchorPane(map, anch_recorrido);
 		
 		map.setOnMouseClicked(e -> {

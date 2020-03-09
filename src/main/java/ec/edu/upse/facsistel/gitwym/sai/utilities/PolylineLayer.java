@@ -62,24 +62,24 @@ public class PolylineLayer extends MapLayer{
 	
 	public void updatePoint(double lat, double lon) {
 		for (Pair<MapPoint, Node> candidate : points) {
-			if (auxIcon != null) {
-				if(auxIcon.equals(candidate.getValue())){
-					candidate.getKey().update(lat, lon);
-					System.out.println("update: " + lat +", "+ lon);
-					this.markDirty();
-					break;
-				}
-			}
-			
 			String a = candidate.getKey().getLatitude() + ", " + candidate.getKey().getLongitude();
 			if (Context.getInstance().getCoordenadas() != null) {
 				if (a.equals(Context.getInstance().getCoordenadas())) {
 					candidate.getKey().update(lat, lon);
 					System.out.println("update: " + lat +", "+ lon);
 					this.markDirty();
-					break;
+//					break;
 				}
 			}
+			if (auxIcon != null) {
+				if(auxIcon.equals(candidate.getValue())){
+					candidate.getKey().update(lat, lon);
+					System.out.println("update: " + lat +", "+ lon);
+					this.markDirty();
+//					break;
+				}
+			}
+			
 		}
 	}
 	
@@ -123,6 +123,6 @@ public class PolylineLayer extends MapLayer{
 		
 		final Stage primaryStage = (Stage) icon.getScene().getWindow();
 		Bounds iconBounds = icon.localToScene(icon.getBoundsInLocal());
-		po.show(primaryStage, iconBounds.getMaxX(), iconBounds.getMaxY());
+		po.show(primaryStage, iconBounds.getMinX(), iconBounds.getMinY());
 	}
 }

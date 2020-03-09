@@ -107,7 +107,7 @@ public class PoiLayer extends MapLayer {
 		btn.maxWidthProperty();
 		VBox vb = new VBox(2);
 		vb.setPadding(new Insets(2));
-		vb.getChildren().addAll(new Label(""), 
+		vb.getChildren().addAll(new Label(""),
 				new Label(r.getNombre()),
 				new Label(r.getCoordenadas()),
 				new Label(r.getDireccion()),
@@ -117,6 +117,7 @@ public class PoiLayer extends MapLayer {
 		po.setContentNode(vb);
 		btn.setOnMouseClicked(a-> {
 			Context.getInstance().setRecursoContext(r);
+			po.hide();
 			General.setContentParent("/viewRecurso/Recurso.fxml", Context.getInstance().getAnch_Contenido());});
 		//		
 		final Stage primaryStage = (Stage) icon.getScene().getWindow();

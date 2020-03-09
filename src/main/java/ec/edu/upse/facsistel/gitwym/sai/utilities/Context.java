@@ -1,5 +1,7 @@
 package ec.edu.upse.facsistel.gitwym.sai.utilities;
 
+import java.util.List;
+
 import com.gluonhq.maps.MapView;
 
 import ec.edu.upse.facsistel.gitwym.sai.models.Atractivo;
@@ -28,8 +30,11 @@ public class Context {
 	private Stage stageModalBase;
 	private Stage stageModalBaseAtractivo;
 	private Stage stageModalBaseSendero;
+	private Stage stageModalBaseMAPA;
+	private Stage stageModalBaseMAPAPOINT;
 	private Boolean atractivoTipo;
 	private String coordenadas;
+	private String coordDeMapa;
 	
 	//POJOS
 	private Contacto contactoP;
@@ -42,6 +47,10 @@ public class Context {
 	private Atractivo atractivoContext;
 	private Sendero senderoContext;
 	private Transporte transporteContext;
+	private List<MediaCloudResources> listaMediaContext;
+	private List<Comodidades> listaComoContext;
+	private List<Atractivo> listaAtractContext;
+	
 	
 	
 	public static Context getInstance() {

@@ -244,6 +244,10 @@ public class RecursoController {
 		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeAtractivos, (double) 288);
 //		gcsw.showMediaInContenedor(new Image("albums.png",250,500,true,false), contenedorDeSenderos, (double) 288);
 
+		btn_verMediaMapa.setVisible(false);
+		btn_verComodidadMapa.setVisible(false);
+		btn_verAtractivoMapa.setVisible(false);
+		
 		General.setMapatoAnchorPane(map, contenedorDeSenderos);
 		MapPoint mapPoint = new MapPoint(-2.206610, -80.692470);
 		map.setCenter(mapPoint);
@@ -294,6 +298,10 @@ public class RecursoController {
     			Message.showWarningNotification("Debe agregar las coordenadas del recurso.!!");
     			return;
     		}
+    		if (!txt_coordenadasRecurso.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+				return;
+			}
     		//guardando recurso simple
     		recurso.setNombre(txt_nombreRecurso.getText());
     		recurso.setPropietario(txt_propietarioRecurso.getText());
@@ -590,8 +598,20 @@ public class RecursoController {
     @FXML
     void buscarRecursoEnMapa(ActionEvent event) {
     	try {
-    		General.showModalWithParent("/viewMaps/MapGluon.fxml");
+    		if (!txt_coordenadasRecurso.getText().isBlank() || !txt_coordenadasRecurso.getText().isEmpty()) {
+    			if (!txt_coordenadasRecurso.getText().matches("^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?),\\s*[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")) {
+    				Message.showErrorNotification("Ingrese una coordenada valida, por favor.!! \nEjmplo: -2.2222, -80.3333");
+    				return;
+    			}else {
+    				Context.getInstance().setCoordDeMapa(txt_coordenadasRecurso.getText());
+    	    	}
+			}
     		
+    		General.showModalWithParentMAPA("/viewMaps/MapGluon.fxml");
+    		if (Context.getInstance().getCoordDeMapa() != null) {
+    			txt_coordenadasRecurso.setText(Context.getInstance().getCoordDeMapa());
+    		}
+    		Context.getInstance().setCoordDeMapa(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -900,17 +920,59 @@ public class RecursoController {
 
     @FXML
     void showAtractivoMapa(ActionEvent event) {
-
+    	try {
+    		if (lst_listaAtractivos.getItems().size() <= 0) {
+				Message.showWarningNotification("No existen datos en la lista.");
+				return;
+			}
+    		Context.getInstance().setListaAtractContext(lst_listaAtractivos.getItems());
+    		
+    		General.showModalWithParentMAPAPOINT("/viewMaps/MapShowPoints.fxml");
+    		
+    		Context.getInstance().setListaAtractContext(null);
+    		Context.getInstance().getStageModalBaseMAPAPOINT().close();
+    		System.out.println("SALIO DEL MODAL");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}    	
     }
 
     @FXML
     void showComodidadMapa(ActionEvent event) {
-
+    	try {
+    		if (lst_listaComodidadesRecurso.getItems().size() <= 0) {
+				Message.showWarningNotification("No existen datos en la lista.");
+				return;
+			}
+    		Context.getInstance().setListaComoContext(lst_listaComodidadesRecurso.getItems());
+    		
+    		General.showModalWithParentMAPAPOINT("/viewMaps/MapShowPoints.fxml");
+    		
+    		Context.getInstance().setListaComoContext(null);
+    		Context.getInstance().getStageModalBaseMAPAPOINT().close();
+    		System.out.println("SALIO DEL MODAL");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}    	
     }
 
     @FXML
     void showMediaMapa(ActionEvent event) {
-
+    	try {
+    		if (lst_listaMedios.getItems().size() <= 0) {
+				Message.showWarningNotification("No existen datos en la lista.");
+				return;
+			}
+    		Context.getInstance().setListaMediaContext(lst_listaMedios.getItems());
+    		
+    		General.showModalWithParentMAPAPOINT("/viewMaps/MapShowPoints.fxml");
+    		
+    		Context.getInstance().setListaMediaContext(null);
+    		Context.getInstance().getStageModalBaseMAPAPOINT().close();
+    		System.out.println("SALIO DEL MODAL");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}    	
     }
 
     /*
