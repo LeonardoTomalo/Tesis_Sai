@@ -181,6 +181,12 @@ public class PopoverMediaCloudController {
 					Message.showWarningNotification("El contenido a subir no debe exceder de " + valor + " Mb..!!");
 					return;
 				}
+				if (medioFile != null) {
+//			    	File d = new File(medioFile.getAbsolutePath().replace("\\","/"));
+//			        Media video = new Media(d.toURI().toString());
+//			        gcsw.showMediaInContenedor(video, contenedorDeMedios);
+			        fileTraer = true;
+			    }
 			}	
 
 		} catch (IOException e) {
