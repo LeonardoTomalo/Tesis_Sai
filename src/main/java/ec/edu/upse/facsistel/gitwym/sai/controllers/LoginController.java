@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -30,6 +31,7 @@ public class LoginController {
     @FXML private JFXPasswordField txt_password;
     @FXML private JFXButton btn_entrar;
     @FXML private JFXButton btn_salir;
+    @FXML private ImageView img_login;
 
     // CONSUMIR WEB SERVICES
    	RestTemplate rest = new RestTemplate();
@@ -42,6 +44,7 @@ public class LoginController {
 	private static ResponseEntity<List<Usuario>> listRespUsuario;
 	
     public void initialize() {
+		General.setImageView("login.png", img_login);
     	txt_userName.requestFocus();
     	txt_userName.setText("DON TEO");
     	txt_password.setText("sa");

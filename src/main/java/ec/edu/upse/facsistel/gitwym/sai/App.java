@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 @SpringBootApplication
 public class App extends Application {
@@ -19,6 +21,9 @@ public class App extends Application {
 			Context.getInstance().setStage(primaryStage);
 			Parent root = FXMLLoader.load(getClass().getResource("/viewBase/Base.fxml"));
 			Scene scene = new Scene(root);
+//			root.se
+			scene.setFill(Color.TRANSPARENT);
+			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			scene.getStylesheets().add("/styles.css");
 			primaryStage.setScene(scene);
 			primaryStage.setMaximized(true);

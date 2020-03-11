@@ -1,33 +1,42 @@
-
-/* .jfx-list-cell:selected {
-	-fx-background-color: #3d8c91;	
+.root {	
+	-fx-background-color: transparent;	
 }
-.jfx-list-cell {
-	-fx-background-insets: 0.0;	
+/*ANCHOR PANE CONFIGURACION */
+#anchor{
+	-fx-background-color: #1C5B79;	
 }
-.jfx-list-cell .jfx-rippler {
-	-fx-rippler-fill:BLUE;	
+#anchor_Center{
+	/*-fx-background-radius:30;  #BBEAEF*/
+	-fx-background-color: #C6E1EE;	
+	/*-fx-background-image: url("degr.jpg");	*/
 }
-.jfx-list-cell:hover {
+#anch_bo {
+	-fx-background-color: white;	
+	-fx-border-color: #1C5B79;
+}
+/*CONFIGURACION PARA LOS BOTONES */
+.jfx-button:hover{
+	-fx-background-color:#F5F5F5;
+}
+/*CONFIGURACION PARA LOS LISTVIEW */
+.list-cell:hover {
 	-fx-background-color: #1bd79c;	
 }
-.jfx-list-view {
-	-fx-background-insets: 0;	
-	-fx-cell-vertical-margin: 10.0;
-	-fx-vertical-gap: 10;
-	-fx-pref-width: 150;
-}*/
-.root {
+.list-cell{
+    -fx-cell-size: 34 ;
 }
-
-.list-cell:hover {
-     -fx-background-color : #1bd79c ;
+/*CONFIGURACION PARA LOS TABPANE */
+.jfx-tab-pane .tab-header-area .tab-header-background {
+    /*-fx-opacity: #1C5B79;*/
 }
-
-.list-cell:selected {
-     -fx-background-color : #3d8c91 ;
+.jfx-tab-pane .tab .tab-label {
+    -fx-font-weight: normal;
+    -fx-text-fill: black;
+    -fx-font-size: 14;
 }
-
-jfx-list-cell .jfx-rippler  {
-     -fx-rippler-fill : BLUE ;
+.jfx-tab-pane .tab-header-area .jfx-rippler{
+    -jfx-rippler-fill :#1C5B79;
+}
+.jfx-tab-pane .tab-selected-line{
+    -fx-stroke : #1C5B79;
 }

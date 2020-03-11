@@ -26,177 +26,185 @@
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="200.0">
+            <AnchorPane id="anch_bo">
                <children>
-                  <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
-                     <HBox.margin>
-                        <Insets bottom="7.0" top="7.0" />
-                     </HBox.margin>
-                  </Separator>
-                  <JFXButton fx:id="btn_guardar" blendMode="DARKEN" buttonType="RAISED" onAction="#guardarRecurso" prefHeight="35.0" prefWidth="80.0" text="Guardar">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </JFXButton>
-                  <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
-                     <HBox.margin>
-                        <Insets bottom="7.0" top="7.0" />
-                     </HBox.margin>
-                  </Separator>
-                  <JFXButton fx:id="btn_atras" blendMode="DARKEN" buttonType="RAISED" onAction="#atras" prefHeight="35.0" prefWidth="80.0" text="Atras">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </JFXButton>
+                  <HBox alignment="CENTER_RIGHT" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets bottom="7.0" top="7.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <JFXButton fx:id="btn_guardar" blendMode="DARKEN" buttonType="RAISED" onAction="#guardarRecurso" prefHeight="35.0" prefWidth="80.0" text="Guardar">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                        <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets bottom="7.0" top="7.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <JFXButton fx:id="btn_atras" blendMode="DARKEN" buttonType="RAISED" onAction="#atras" prefHeight="35.0" prefWidth="80.0" text="Atras">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </AnchorPane>
             <Separator opacity="0.5" prefWidth="200.0" />
-            <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-              <columnConstraints>
-                  <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="65.0" prefWidth="85.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
-                  <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="65.0" prefWidth="85.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
-                  <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="65.0" prefWidth="85.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
-                  <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="65.0" prefWidth="85.0" />
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="100.0" />
-                <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="40.0" prefWidth="50.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
-                  <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
-                  <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
-                <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
-                <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
-              </rowConstraints>
+            <AnchorPane id="anch_bo">
                <children>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Recurso">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Descripcion" GridPane.rowIndex="1">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Direccion" GridPane.rowIndex="3">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Provincia" visible="false" GridPane.rowIndex="4">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Propietario" GridPane.columnIndex="6">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Inf. General" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Parroquia" visible="false" GridPane.columnIndex="6" GridPane.rowIndex="4">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Canton" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ranking" GridPane.columnIndex="9" GridPane.rowIndex="3">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Seguridad" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Coordenadas" GridPane.columnIndex="9">
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <JFXComboBox fx:id="cmb_provinciaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
-                     <padding>
-                        <Insets left="5.0" right="10.0" />
-                     </padding>
-                  </JFXComboBox>
-                  <JFXComboBox fx:id="cmb_cantonRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." visible="false" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
-                     <padding>
-                        <Insets left="5.0" right="10.0" />
-                     </padding>
-                  </JFXComboBox>
-                  <JFXComboBox fx:id="cmb_parroquiaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." visible="false" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="4">
-                     <padding>
-                        <Insets left="5.0" right="10.0" />
-                     </padding>
-                  </JFXComboBox>
-                  <JFXTextField fx:id="txt_nombreRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Nombre del recurso..." GridPane.columnIndex="1" GridPane.columnSpan="5">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                     <padding>
-                        <Insets left="5.0" right="10.0" />
-                     </padding>
-                  </JFXTextField>
-                  <JFXTextArea fx:id="txt_descripcionRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Descripcion breve..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                     <padding>
-                        <Insets left="5.0" right="10.0" top="8.0" />
-                     </padding>
-                     <GridPane.margin>
-                        <Insets bottom="7.0" />
-                     </GridPane.margin>
-                  </JFXTextArea>
-                  <JFXTextArea fx:id="txt_infGeneralRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Informacion general..." GridPane.columnIndex="7" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                     <padding>
-                        <Insets left="5.0" right="10.0" top="8.0" />
-                     </padding>
-                     <GridPane.margin>
-                        <Insets bottom="7.0" />
-                     </GridPane.margin>
-                  </JFXTextArea>
-                  <JFXTextField fx:id="txt_coordenadasRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Buscar coordenadas..." GridPane.columnIndex="10">
-                     <padding>
-                        <Insets left="5.0" right="10.0" />
-                     </padding>
-                  </JFXTextField>
-                  <JFXButton fx:id="btn_buscarCoordRecurso" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#buscarRecursoEnMapa" text="Buscar" GridPane.columnIndex="11">
-                     <padding>
-                        <Insets left="1.0" />
-                     </padding>
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </JFXButton>
-                  <JFXTextField fx:id="txt_direccionRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Direccion especifica..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="3">
-                     <padding>
-                        <Insets left="5.0" right="10.0" />
-                     </padding>
-                  </JFXTextField>
-                  <JFXTextField fx:id="txt_propietarioRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Propietario del recurso..." GridPane.columnIndex="7" GridPane.columnSpan="2">
-                     <padding>
-                        <Insets left="5.0" right="10.0" />
-                     </padding>
-                  </JFXTextField>
+                  <GridPane alignment="CENTER" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="186.0" prefWidth="940.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="65.0" prefWidth="85.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                        <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="65.0" prefWidth="85.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                        <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="65.0" prefWidth="85.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="75.0" />
+                        <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="65.0" prefWidth="85.0" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="100.0" />
+                      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="40.0" prefWidth="50.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
+                      <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
+                      <RowConstraints minHeight="-Infinity" prefHeight="35.0" />
+                    </rowConstraints>
+                     <children>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Recurso">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Descripcion" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Direccion" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Provincia" visible="false" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Propietario" GridPane.columnIndex="6">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Inf. General" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Parroquia" visible="false" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Canton" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ranking" GridPane.columnIndex="9" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Seguridad" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Coordenadas" GridPane.columnIndex="9">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <JFXComboBox fx:id="cmb_provinciaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets left="5.0" right="10.0" />
+                           </padding>
+                        </JFXComboBox>
+                        <JFXComboBox fx:id="cmb_cantonRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." visible="false" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets left="5.0" right="10.0" />
+                           </padding>
+                        </JFXComboBox>
+                        <JFXComboBox fx:id="cmb_parroquiaRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Escoger opcion..." visible="false" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                           <padding>
+                              <Insets left="5.0" right="10.0" />
+                           </padding>
+                        </JFXComboBox>
+                        <JFXTextField fx:id="txt_nombreRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Nombre del recurso..." GridPane.columnIndex="1" GridPane.columnSpan="5">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="5.0" right="10.0" />
+                           </padding>
+                        </JFXTextField>
+                        <JFXTextArea fx:id="txt_descripcionRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Descripcion breve..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                           <padding>
+                              <Insets left="5.0" right="10.0" top="8.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets bottom="7.0" />
+                           </GridPane.margin>
+                        </JFXTextArea>
+                        <JFXTextArea fx:id="txt_infGeneralRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Informacion general..." GridPane.columnIndex="7" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                           <padding>
+                              <Insets left="5.0" right="10.0" top="8.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets bottom="7.0" />
+                           </GridPane.margin>
+                        </JFXTextArea>
+                        <JFXTextField fx:id="txt_coordenadasRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Buscar coordenadas..." GridPane.columnIndex="10">
+                           <padding>
+                              <Insets left="5.0" right="10.0" />
+                           </padding>
+                        </JFXTextField>
+                        <JFXButton fx:id="btn_buscarCoordRecurso" buttonType="RAISED" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#buscarRecursoEnMapa" text="Buscar" GridPane.columnIndex="11">
+                           <padding>
+                              <Insets left="1.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </JFXButton>
+                        <JFXTextField fx:id="txt_direccionRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Direccion especifica..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets left="5.0" right="10.0" />
+                           </padding>
+                        </JFXTextField>
+                        <JFXTextField fx:id="txt_propietarioRecurso" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Propietario del recurso..." GridPane.columnIndex="7" GridPane.columnSpan="2">
+                           <padding>
+                              <Insets left="5.0" right="10.0" />
+                           </padding>
+                        </JFXTextField>
+                     </children>
+                  </GridPane>
                </children>
-            </GridPane>
-            <AnchorPane fx:id="anch_tabs" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+            </AnchorPane>
+            <AnchorPane id="anch_bo" fx:id="anch_tabs" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -213,7 +221,7 @@
                                              <children>
                                                 <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <children>
-                                                      <JFXComboBox fx:id="cmb_tipoMediaBusqueda" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Busqueda por tipo..." HBox.hgrow="ALWAYS" />
+                                                      <JFXComboBox fx:id="cmb_tipoMediaBusqueda" maxWidth="1.7976931348623157E308" promptText="Busqueda por tipo..." HBox.hgrow="ALWAYS" />
                                                       <JFXButton fx:id="btn_verMediaMapa" buttonType="RAISED" maxHeight="1.7976931348623157E308" onAction="#showMediaMapa" text="Ver en mapa" HBox.hgrow="NEVER">
                                                          <HBox.margin>
                                                             <Insets left="10.0" />
@@ -221,16 +229,19 @@
                                                       </JFXButton>
                                                    </children>
                                                    <VBox.margin>
-                                                      <Insets top="10.0" />
+                                                      <Insets />
                                                    </VBox.margin>
                                                 </HBox>
                                                 <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
-                                                <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                                   <content>
-                                                      <JFXListView fx:id="lst_listaMedios" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                                                   </content>
-                                                </ScrollPane>
+                                                <JFXListView fx:id="lst_listaMedios" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
+                                                </JFXListView>
                                              </children>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
                                           </VBox>
                                           <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
                                              <padding>
@@ -286,7 +297,8 @@
                                           <Insets top="5.0" />
                                        </padding>
                                     </HBox>
-                                 </children></AnchorPane>
+                                 </children>
+                              </AnchorPane>
                            </content>
                         </Tab>
                         <Tab text="Facilidades">
@@ -435,10 +447,11 @@
                                           </Accordion>
                                        </children>
                                        <padding>
-                                          <Insets top="5.0" />
+                                          <Insets left="10.0" right="10.0" top="5.0" />
                                        </padding>
                                     </HBox>
-                                 </children></AnchorPane>
+                                 </children>
+                              </AnchorPane>
                            </content>
                         </Tab>
                         <Tab text="Atractivos">
@@ -451,7 +464,7 @@
                                              <children>
                                                 <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <children>
-                                                      <JFXComboBox fx:id="cmb_tipoAtractivoBusqueda" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Busqueda por tipo..." HBox.hgrow="ALWAYS" />
+                                                      <JFXComboBox fx:id="cmb_tipoAtractivoBusqueda" maxWidth="1.7976931348623157E308" promptText="Busqueda por tipo..." HBox.hgrow="ALWAYS" />
                                                       <JFXButton fx:id="btn_verAtractivoMapa" buttonType="RAISED" maxHeight="1.7976931348623157E308" onAction="#showAtractivoMapa" text="Ver en mapa" HBox.hgrow="NEVER">
                                                          <HBox.margin>
                                                             <Insets left="10.0" />
@@ -459,16 +472,19 @@
                                                       </JFXButton>
                                                    </children>
                                                    <VBox.margin>
-                                                      <Insets top="10.0" />
+                                                      <Insets />
                                                    </VBox.margin>
                                                 </HBox>
                                                 <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
-                                                <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                                   <content>
-                                                      <JFXListView fx:id="lst_listaAtractivos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                                                   </content>
-                                                </ScrollPane>
+                                                <JFXListView fx:id="lst_listaAtractivos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
+                                                </JFXListView>
                                              </children>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
                                           </VBox>
                                           <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
                                              <padding>
@@ -528,7 +544,8 @@
                                           <Insets top="5.0" />
                                        </padding>
                                     </HBox>
-                                 </children></AnchorPane>
+                                 </children>
+                              </AnchorPane>
                            </content>
                         </Tab>
                         <Tab text="Senderos">
@@ -541,19 +558,18 @@
                                              <children>
                                                 <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <VBox.margin>
-                                                      <Insets top="10.0" />
+                                                      <Insets bottom="5.0" top="10.0" />
                                                    </VBox.margin>
                                                    <children>
                                                       <Label maxWidth="1.7976931348623157E308" text="Lista de Senderos" HBox.hgrow="ALWAYS" />
                                                    </children>
                                                 </HBox>
                                                 <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
-                                                <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                                   <content>
-                                                      <JFXListView fx:id="lst_listaSenderos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                                                   </content>
-                                                </ScrollPane>
+                                                <JFXListView fx:id="lst_listaSenderos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
                                              </children>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
                                           </VBox>
                                           <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
                                              <padding>
@@ -582,7 +598,8 @@
                                           <Insets top="5.0" />
                                        </padding>
                                     </HBox>
-                                 </children></AnchorPane>
+                                 </children>
+                              </AnchorPane>
                            </content>
                         </Tab>
                         <Tab text="Comentarios">

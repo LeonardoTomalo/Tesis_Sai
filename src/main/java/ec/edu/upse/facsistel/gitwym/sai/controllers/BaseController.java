@@ -14,7 +14,7 @@ public class BaseController {
     @FXML private Label lbl_empresa;
     @FXML private AnchorPane anch_Inicial;
     
-    static String nombreEmpresa = "prefectura de santa elena";
+    static String nombreEmpresa = "entidad administradora de turismo";
 
 	public void initialize() {
 		General.setImageView("Upse.png", img_logoIzq);

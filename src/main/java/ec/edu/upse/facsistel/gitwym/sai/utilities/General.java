@@ -119,6 +119,7 @@ public class General {
 			AnchorPane.setRightAnchor(page, 00.0);
 			Stage stage = new Stage();
 			Scene scene = new Scene(page, Color.WHITE);
+			scene.getStylesheets().add("/styles.css");
 //			stage.b
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -140,6 +141,7 @@ public class General {
 			AnchorPane.setRightAnchor(page, 00.0);
 			Stage stage = new Stage();
 			Scene scene = new Scene(page, Color.WHITE);
+			scene.getStylesheets().add("/styles.css");
 //			stage.b
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -161,6 +163,7 @@ public class General {
 			AnchorPane.setRightAnchor(page, 00.0);
 			Stage stage = new Stage();
 			Scene scene = new Scene(page, Color.WHITE);
+			scene.getStylesheets().add("/styles.css");
 //			stage.b
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -183,6 +186,7 @@ public class General {
 			AnchorPane.setRightAnchor(page, 00.0);
 			Stage stage = new Stage();
 			Scene scene = new Scene(page, Color.WHITE);
+			scene.getStylesheets().add("/styles.css");
 			stage.setMaximized(true);
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -206,6 +210,7 @@ public class General {
 			Stage stage = new Stage();
 			Scene scene = new Scene(page, Color.WHITE);
 //			stage.b
+			scene.getStylesheets().add("/styles.css");
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initOwner(Context.getInstance().getStage());

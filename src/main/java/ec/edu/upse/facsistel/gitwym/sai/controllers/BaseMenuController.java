@@ -24,6 +24,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class BaseMenuController{
 
@@ -71,6 +73,14 @@ public class BaseMenuController{
 	    		protected void updateItem(Menu item, boolean empty) {
 	    			super.updateItem(item, empty);
 	    			setText(empty ? "" : item.getNombre());
+	    			
+					Circle cir = new Circle(5);
+	    			if (item != null) {		
+						cir.setFill(Color.rgb(28, 91, 121));		
+						setGraphic(cir);		
+					} else {
+						setGraphic(null);
+					}
 	    		};
 	    	});   
 		}		

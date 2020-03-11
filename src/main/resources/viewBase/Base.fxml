@@ -14,57 +14,59 @@
    <top>
       <VBox prefHeight="60.0" prefWidth="675.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="675.0" VBox.vgrow="ALWAYS">
+            <AnchorPane id="anchor" VBox.vgrow="ALWAYS">
                <children>
-                  <ImageView fx:id="img_logoIzq" fitHeight="40.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <VBox alignment="CENTER" prefHeight="50.0" prefWidth="415.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="72.0" prefWidth="675.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label fx:id="lbl_empresa" text="EMPRESA">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Label>
-                        <HBox alignment="CENTER">
+                        <ImageView fx:id="img_logoIzq" fitHeight="40.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <VBox alignment="CENTER" prefHeight="50.0" prefWidth="415.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label text="GUIA MOVIL DE RECURSOS NATURALES">
+                              <Label fx:id="lbl_empresa" text="EMPRESA" textFill="WHITE">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="System Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <Separator opacity="0.5" prefWidth="5.0">
-                                 <HBox.margin>
-                                    <Insets left="7.0" right="7.0" />
-                                 </HBox.margin>
-                              </Separator>
-                              <Label text="SISTEMA ADMINISTRADOR DE INFORMACION">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Label text="GUÍA MÓVIL DE RECURSOS NATURALES" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Separator opacity="0.5" prefWidth="5.0">
+                                       <HBox.margin>
+                                          <Insets left="7.0" right="7.0" />
+                                       </HBox.margin>
+                                    </Separator>
+                                    <Label text="SISTEMA ADMINISTRADOR DE INFORMACIÓN" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </HBox>
                            </children>
-                           <VBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </VBox.margin>
-                        </HBox>
+                        </VBox>
+                        <ImageView fx:id="img_logoDer" fitHeight="40.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </ImageView>
                      </children>
-                  </VBox>
-                  <ImageView fx:id="img_logoDer" fitHeight="40.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets right="30.0" />
-                     </HBox.margin>
-                  </ImageView>
+                  </HBox>
                </children>
-            </HBox>
+            </AnchorPane>
             <Separator opacity="0.5" prefWidth="200.0">
                <VBox.margin>
                   <Insets />
-               </VBox.margin>
-            </Separator>
-            <Separator opacity="0.5" prefWidth="200.0" />
+               </VBox.margin></Separator>
          </children>
       </VBox>
    </top>
@@ -81,15 +83,19 @@
                   <Insets />
                </VBox.margin>
             </Separator>
-            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="675.0">
+            <AnchorPane id="anchor">
                <children>
-                  <Label text="Creado por Don Teo" />
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="675.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Creado por Don Teo" textFill="WHITE" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </AnchorPane>
          </children>
       </VBox>
    </bottom>
    <center>
-      <AnchorPane fx:id="anch_Inicial" BorderPane.alignment="TOP_LEFT" />
+      <AnchorPane id="anchor_Center" fx:id="anch_Inicial" BorderPane.alignment="TOP_LEFT" />
    </center>
 </BorderPane>
