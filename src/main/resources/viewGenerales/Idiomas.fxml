@@ -5,7 +5,6 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,21 +13,21 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="456.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.IdiomaController">
+<AnchorPane prefHeight="456.0" prefWidth="673.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.IdiomaController">
    <children>
       <HBox prefHeight="448.0" prefWidth="264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="286.0" prefWidth="429.0">
+            <AnchorPane id="anch_bo">
                <children>
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="35.0" text="Lista de Idiomas" />
-                  <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
-                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <content>
-                        <JFXListView fx:id="lst_listaIdiomas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                     </content>
-                  </ScrollPane>
+                  <VBox prefHeight="456.0" prefWidth="429.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="35.0" text="Lista de Idiomas" />
+                        <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
+                        <JFXListView fx:id="lst_listaIdiomas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
+            </AnchorPane>
             <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
                <padding>
                   <Insets left="7.0" right="5.0" />
@@ -36,7 +35,7 @@
             </Separator>
             <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_RIGHT">
+                  <HBox id="anch_bo" alignment="CENTER_RIGHT">
                      <children>
                         <JFXButton fx:id="btn_Nuevo" buttonType="RAISED" onAction="#addNuevoIdioma" prefHeight="35.0" text="Nuevo" HBox.hgrow="NEVER" />
                         <JFXButton fx:id="btn_Eliminar" buttonType="RAISED" maxHeight="-Infinity" minHeight="-Infinity" onAction="#eliminarIdioma" prefHeight="35.0" text="Eliminar" HBox.hgrow="NEVER" />
@@ -48,26 +47,30 @@
                      </children>
                   </HBox>
                   <Separator opacity="0.5" prefWidth="200.0" />
-                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="70.0" prefWidth="70.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
+                  <AnchorPane id="anch_bo" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="IDIOMA" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                        <JFXTextField fx:id="txt_nombreIdioma" labelFloat="true" promptText="nombre de idioma..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="418.0" prefWidth="370.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="NEVER" minWidth="70.0" prefWidth="70.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="IDIOMA" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                              <JFXTextField fx:id="txt_nombreIdioma" labelFloat="true" promptText="nombre de idioma..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
                      </children>
-                  </GridPane>
+                  </AnchorPane>
                </children>
             </VBox>
          </children>

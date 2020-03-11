@@ -5,7 +5,6 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,21 +13,21 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="446.0" prefWidth="721.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.UsuarioController">
+<AnchorPane prefHeight="446.0" prefWidth="721.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.UsuarioController">
    <children>
       <HBox prefHeight="388.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="286.0" prefWidth="429.0">
+            <AnchorPane id="anch_bo">
                <children>
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="35.0" text="Lista de Usuarios" />
-                  <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
-                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <content>
-                        <JFXListView fx:id="lst_listaUsuarios" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                     </content>
-                  </ScrollPane>
+                  <VBox prefHeight="448.0" prefWidth="429.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="35.0" text="Lista de Usuarios" />
+                        <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
+                        <JFXListView fx:id="lst_listaUsuarios" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
+            </AnchorPane>
             <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
                <padding>
                   <Insets left="7.0" right="5.0" />
@@ -36,7 +35,7 @@
             </Separator>
             <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_RIGHT">
+                  <HBox id="anch_bo" alignment="CENTER_RIGHT">
                      <children>
                         <JFXButton fx:id="btn_Nuevo" buttonType="RAISED" onAction="#addNuevoUsuarios" prefHeight="35.0" text="Nuevo" HBox.hgrow="NEVER" />
                         <JFXButton fx:id="btn_Eliminar" buttonType="RAISED" maxHeight="-Infinity" minHeight="-Infinity" onAction="#eliminarUsuarios" prefHeight="35.0" text="Eliminar" HBox.hgrow="NEVER" />
@@ -48,112 +47,116 @@
                      </children>
                   </HBox>
                   <Separator opacity="0.5" prefWidth="200.0" />
-                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="70.0" prefWidth="70.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="80.0" prefWidth="70.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
+                  <AnchorPane id="anch_bo" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Usuario Detalles" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" />
-                        <Label text="Nombre:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                        <Label text="Usuario:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                        <JFXTextField fx:id="txt_nombreUsuario" promptText="nombre usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                        <Label text="Roles Seleccionados:" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9" />
-                        <Label text="Roles Disponibles:" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="9" />
-                        <JFXListView fx:id="lst_rolesSeleccionados" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="10" GridPane.rowSpan="4" />
-                        <JFXListView fx:id="lst_rolesDisponibles" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="10" GridPane.rowSpan="4" />
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="10" GridPane.rowSpan="4">
+                        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="710.0" prefWidth="650.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="NEVER" minWidth="70.0" prefWidth="70.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="NEVER" minWidth="80.0" prefWidth="70.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <JFXButton fx:id="btn_addAllRoles" minWidth="50.0" onAction="#addAllRoles" text="&lt;&lt;">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </JFXButton>
-                              <JFXButton fx:id="btn_quitAllRoles" minWidth="50.0" onAction="#quitAllRoles" text="&gt;&gt;">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </JFXButton>
+                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Usuario Detalles" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" />
+                              <Label text="Nombre:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <Label text="Usuario:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                              <JFXTextField fx:id="txt_nombreUsuario" promptText="nombre usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <Label text="Roles Seleccionados:" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9" />
+                              <Label text="Roles Disponibles:" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+                              <JFXListView fx:id="lst_rolesSeleccionados" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="10" GridPane.rowSpan="4" />
+                              <JFXListView fx:id="lst_rolesDisponibles" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="10" GridPane.rowSpan="4" />
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="10" GridPane.rowSpan="4">
+                                 <children>
+                                    <JFXButton fx:id="btn_addAllRoles" minWidth="50.0" onAction="#addAllRoles" text="&lt;&lt;">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btn_quitAllRoles" minWidth="50.0" onAction="#quitAllRoles" text="&gt;&gt;">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXButton>
+                                 </children>
+                              </VBox>
+                              <JFXTextField fx:id="txt_aliasUsuario" promptText="alias del usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                              <Label text="Correo:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label text="Celular:" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label text="Teléfono:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Contraseña:" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label text="Apellidos:" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <JFXTextField fx:id="txt_apellidosUsuario" promptText="apellidos usuario..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <JFXTextField fx:id="txt_contraseñaUsuario" promptText="contraseña de acceso..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                              <Label text="Facebook:" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label text="Twitter:" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                              <Label text="Instagram:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <Label text="Imagen:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <JFXTextField fx:id="txt_telefonoUsuario" promptText="teléfono de usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                              <JFXTextField fx:id="txt_correoUsuario" promptText="correo del usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                              <JFXTextField fx:id="txt_celularUsuario" promptText="celular del usuario..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                              <JFXTextField fx:id="txt_facebookUsuario" promptText="facebook del usuario..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                              <JFXTextField fx:id="txt_instagramUsuario" promptText="instagram de usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                              <JFXTextField fx:id="txt_twitterUsuario" promptText="twitter del usuario..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="6" />
                            </children>
-                        </VBox>
-                        <JFXTextField fx:id="txt_aliasUsuario" promptText="alias del usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                        <Label text="Correo:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <Label text="Celular:" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Teléfono:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="Contraseña:" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Apellidos:" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <JFXTextField fx:id="txt_apellidosUsuario" promptText="apellidos usuario..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                        <JFXTextField fx:id="txt_contraseñaUsuario" promptText="contraseña de acceso..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                        <Label text="Facebook:" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Twitter:" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Instagram:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <Label text="Imagen:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <JFXTextField fx:id="txt_telefonoUsuario" promptText="teléfono de usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                        <JFXTextField fx:id="txt_correoUsuario" promptText="correo del usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                        <JFXTextField fx:id="txt_celularUsuario" promptText="celular del usuario..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                        <JFXTextField fx:id="txt_facebookUsuario" promptText="facebook del usuario..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                        <JFXTextField fx:id="txt_instagramUsuario" promptText="instagram de usuario..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                        <JFXTextField fx:id="txt_twitterUsuario" promptText="twitter del usuario..." GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                        </GridPane>
                      </children>
-                  </GridPane>
+                  </AnchorPane>
                </children>
             </VBox>
          </children>

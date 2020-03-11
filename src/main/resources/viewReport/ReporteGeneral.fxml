@@ -15,77 +15,89 @@
    <children>
       <HBox prefHeight="425.0" prefWidth="716.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefWidth="325.0">
+            <AnchorPane id="anch_bo">
                <children>
-                  <Label text="RECURSOS TURÍSTICOS" />
-                  <Separator prefWidth="200.0" />
-                  <HBox alignment="CENTER_LEFT">
+                  <VBox alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="478.0" prefWidth="325.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Circle fill="LIME" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Label text="Completos">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Label>
+                        <Label text="RECURSOS TURÍSTICOS" />
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Circle fill="LIME" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Label text="Completos">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Circle fill="DARKORANGE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Label text="Incompletos">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <JFXListView fx:id="lst_listaRecursos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" top="5.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT">
-                     <children>
-                        <Circle fill="DARKORANGE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Label text="Incompletos">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <Separator prefWidth="200.0" />
-                  <JFXListView fx:id="lst_listaRecursos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                  </VBox>
                </children>
-            </VBox>
+            </AnchorPane>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <Accordion fx:id="accd_agre" VBox.vgrow="ALWAYS">
-                    <panes>
-                      <TitledPane fx:id="tlp_a" text="Datos Agregados">
-                        <content>
-                          <AnchorPane>
-                                 <children>
-                                    <HBox prefHeight="156.0" prefWidth="433.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane id="anch_bo" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Accordion fx:id="accd_agre" prefHeight="212.0" prefWidth="455.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <panes>
+                            <TitledPane fx:id="tlp_a" text="Datos Agregados">
+                              <content>
+                                <AnchorPane>
                                        <children>
-                                          <JFXListView fx:id="lst_agregados" HBox.hgrow="ALWAYS" />
+                                          <HBox prefHeight="156.0" prefWidth="433.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <JFXListView fx:id="lst_agregados" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
                                        </children>
-                                    </HBox>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </TitledPane>
-                    </panes>
-                  </Accordion>
-                  <Accordion fx:id="accd_fal" VBox.vgrow="ALWAYS">
-                     <panes>
-                        <TitledPane fx:id="tlp_F" text="Datos Faltantes">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <HBox prefHeight="188.0" prefWidth="443.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    </AnchorPane>
+                              </content>
+                            </TitledPane>
+                          </panes>
+                        </Accordion>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane id="anch_bo" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Accordion fx:id="accd_fal" prefHeight="119.0" prefWidth="385.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <panes>
+                              <TitledPane fx:id="tlp_F" text="Datos Faltantes">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <JFXListView fx:id="lst_faltantes" HBox.hgrow="ALWAYS" />
+                                          <HBox prefHeight="188.0" prefWidth="443.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <JFXListView fx:id="lst_faltantes" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
                                        </children>
-                                    </HBox>
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </TitledPane>
-                     </panes>
-                  </Accordion>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                           </panes>
+                        </Accordion>
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
          </children>

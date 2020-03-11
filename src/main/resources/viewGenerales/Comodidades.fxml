@@ -6,7 +6,6 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -15,36 +14,35 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="478.0" prefWidth="758.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.ComodidadesController">
+<AnchorPane prefHeight="478.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.upse.facsistel.gitwym.sai.controllers.ComodidadesController">
    <children>
       <HBox prefHeight="448.0" prefWidth="264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="286.0" prefWidth="429.0">
+            <AnchorPane id="anch_bo">
                <children>
-                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="35.0" text="Lista de Comodidades" />
-                  <Separator opacity="0.5" prefWidth="200.0" />
-                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
+                  <VBox prefHeight="478.0" prefWidth="429.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <JFXComboBox fx:id="cmb_tipoComodidad" labelFloat="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Tipo de comodidad..." HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets left="10.0" right="15.0" top="10.0" />
-                           </HBox.margin>
-                        </JFXComboBox>
-                        <JFXButton fx:id="btn_verAllMapa" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#showAllComodidadesMapa" text="Ver Mapa" HBox.hgrow="NEVER" />
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="35.0" text="Lista de Comodidades" />
+                        <Separator opacity="0.5" prefWidth="200.0" />
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <children>
+                              <JFXComboBox fx:id="cmb_tipoComodidad" labelFloat="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Tipo de comodidad..." HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="15.0" top="10.0" />
+                                 </HBox.margin>
+                              </JFXComboBox>
+                              <JFXButton fx:id="btn_verAllMapa" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#showAllComodidadesMapa" text="Ver Mapa" HBox.hgrow="NEVER" />
+                           </children>
+                        </HBox>
+                        <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
+                        <JFXListView fx:id="lst_listaComodidades" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
                      </children>
-                  </HBox>
-                  <Separator opacity="0.5" prefWidth="200.0" VBox.vgrow="NEVER" />
-                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <content>
-                        <JFXListView fx:id="lst_listaComodidades" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                     </content>
-                  </ScrollPane>
+                  </VBox>
                </children>
-            </VBox>
+            </AnchorPane>
             <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0">
                <padding>
                   <Insets left="7.0" right="5.0" />
@@ -52,7 +50,7 @@
             </Separator>
             <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_RIGHT">
+                  <HBox id="anch_bo" alignment="CENTER_RIGHT">
                      <children>
                         <JFXButton fx:id="btn_Nuevo" buttonType="RAISED" onAction="#addNuevaComodidad" prefHeight="35.0" text="Nuevo" HBox.hgrow="NEVER" />
                         <JFXButton fx:id="btn_Eliminar" buttonType="RAISED" maxHeight="-Infinity" minHeight="-Infinity" onAction="#eliminarComodidad" prefHeight="35.0" text="Eliminar" HBox.hgrow="NEVER" />
@@ -64,44 +62,48 @@
                      </children>
                   </HBox>
                   <Separator opacity="0.5" prefWidth="200.0" />
-                  <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                        <ColumnConstraints hgrow="NEVER" minWidth="140.0" prefWidth="140.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
+                  <AnchorPane id="anch_bo" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="COMODIDAD DETALLE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                        <Label text="Tipo de Comodidad:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                        <Label text="Recurso al que pertenece:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                        <Label text="Ubicación:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="Descripción:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <JFXTextField fx:id="txt_descripcionComodidad" labelFloat="true" promptText="Descripción de comodidad..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                        <HBox alignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="440.0" prefWidth="440.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                              <ColumnConstraints hgrow="NEVER" minWidth="140.0" prefWidth="140.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="30.0" prefHeight="50.0" vgrow="NEVER" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
                            <children>
-                              <JFXTextField fx:id="txt_coordenadasComodidades" labelFloat="true" promptText="Coordenadas de comodidad..." HBox.hgrow="ALWAYS">
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </JFXTextField>
-                              <JFXButton fx:id="btn_buscarMapa" maxHeight="1.7976931348623157E308" onAction="#showMapaUbicacion" text="Buscar Mapa" HBox.hgrow="NEVER" />
+                              <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="COMODIDAD DETALLE" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                              <Label text="Tipo de Comodidad:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <Label text="Recurso al que pertenece:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                              <Label text="Ubicación:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Descripción:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <JFXTextField fx:id="txt_descripcionComodidad" labelFloat="true" promptText="Descripción de comodidad..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                              <HBox alignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                                 <children>
+                                    <JFXTextField fx:id="txt_coordenadasComodidades" labelFloat="true" promptText="Coordenadas de comodidad..." HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </JFXTextField>
+                                    <JFXButton fx:id="btn_buscarMapa" maxHeight="1.7976931348623157E308" onAction="#showMapaUbicacion" text="Buscar Mapa" HBox.hgrow="NEVER" />
+                                 </children>
+                              </HBox>
+                              <JFXComboBox fx:id="cmb_tipoComodidadDetalle" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Seleccione tipo..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <JFXComboBox fx:id="cmb_recursos" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Seleccione recurso..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
                            </children>
-                        </HBox>
-                        <JFXComboBox fx:id="cmb_tipoComodidadDetalle" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Seleccione tipo..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                        <JFXComboBox fx:id="cmb_recursos" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Seleccione recurso..." GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                        </GridPane>
                      </children>
-                  </GridPane>
+                  </AnchorPane>
                </children>
             </VBox>
          </children>
